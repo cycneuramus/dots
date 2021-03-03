@@ -1,0 +1,5 @@
+UUID=088795d3-d659-4fee-8b90-df2887862e09 / ext4 defaults 0 0
+UUID=CAD7-86DB /boot/efi vfat defaults 0 0
+/swap.img	none	swap	sw	0	0
+# UUID=63c7ab15-be2c-44a5-a515-8d2889e5071f /mnt/externliten ext4 defaults,nofail,x-systemd.device-timeout=4,auto,users,rw 0 2
+UUID=64073cce-9b55-4231-af58-cf0b0206ecc2 /mnt/extern ext4 defaults,nofail,x-systemd.device-timeout=4,auto,users,rw 0 2

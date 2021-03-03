@@ -1,0 +1,22 @@
+version: "3" 
+
+networks:
+  default:
+    external: 
+      name: caddy_net
+
+services: 
+  gotify:
+    image: gotify/server
+    container_name: gotify
+    restart: always
+    # ports:
+    #     - 5657:5657
+    volumes: 
+        - ./data:/app/data
+    environment:
+        - TZ=Europe/Stockholm
+        - PUID=1000
+        - PGID=1000
+        - GOTIFY_SERVER_PORT=5657
+

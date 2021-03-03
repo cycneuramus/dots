@@ -1,0 +1,22 @@
+version: "3.7"  
+
+networks:
+  default:
+    external:
+      name: caddy_net
+
+services:
+  terraforming-mars:
+    container_name: terraforming-mars
+    build: ./terraforming-mars
+    restart: always
+    # ports:
+    #   - "1080:8080"
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+        # - ./terraforming-mars:/home/node/app
+      - tm-db:/usr/src/app/db
+
+volumes:
+  tm-db:

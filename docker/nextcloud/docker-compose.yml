@@ -1,0 +1,63 @@
+version: '3' 
+
+networks:
+  default:
+    external: 
+      name: caddy_net
+  nextcloud-network:
+    external: false
+
+services:
+  db:
+    image: mariadb:latest
+    container_name: nextcloud-db
+    volumes:
+      - ./db:/var/lib/mysql
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      - MYSQL_ROOT_PASSWORD=$mysql_root_password
+      - mysql_password=$mysql_password
+      - mysql_database=nextcloud
+      - mysql_user=nextcloud
+    restart: always
+    networks:
+      - nextcloud-network
+
+  redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: always
+    networks:
+      - nextcloud-network
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    restart: always
+    ports:
+      - 4444:80
+    networks:
+      - nextcloud-network
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./nextcloud:/var/www/html
+      - ./config:/var/www/html/config
+      - ./custom_apps:/var/www/html/custom_apps
+      - ./data:/var/www/html/data
+      - ./themes:/var/www/html/themes
+      - /mnt/extern:/mnt/extern
+    environment:
+      - TZ=Europe/Stockholm
+      - REDIS_HOST=nextcloud-redis
+      - MYSQL_HOST=db
+      - MYSQL_PASSWORD=$mysql_password
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
+      - OVERWRITEHOST=$nextcloud_domain
+      - OVERWRITEPROTOCOL=https
+#    user: 1000:1000
+#    sysctls:
+#      - net.ipv4.ip_unprivileged_port_start=0

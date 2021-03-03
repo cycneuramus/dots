@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+
+  caddy:
+    image: "caddy/caddy"
+    container_name: "caddy"
+    hostname: "caddy"
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMAIN=$domain
+      - EMAIL=$email
+      - TM_USER=$tm_user
+      - TM_PASSWORD=$tm_password
+      - TZ=Europe/Stockholm
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./data:/data
+      - ./config:/config
+networks:
+  default:
+    external:
+      name: caddy_net

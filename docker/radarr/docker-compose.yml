@@ -1,0 +1,20 @@
+version: "3" 
+
+services: 
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    restart: always
+    ports:
+        - 7878:7878
+    volumes: 
+        - ./config:/config
+        - /home/antsva/docker/qbittorrent/downloads:/downloads
+        - /mnt/extern/Media/Filmer/Övrigt:/movies
+        - /mnt/extern/Media/Dokumentärer:/documentaries
+        - "/mnt/extern/Media/Filmer/Jackie Chan:/jackie"
+        - /home/antsva/bin:/usrbin:ro
+    environment:
+        - TZ=Europe/Stockholm
+        - PUID=1000
+        - PGID=1000
