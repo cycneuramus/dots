@@ -1,0 +1,31 @@
+{ 
+	email {$EMAIL}
+}
+
+(security) {
+	header {
+		Strict-Transport-Security max-age=31536000;
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy no-referrer-when-downgrade
+	}
+}
+
+nextcloud.{$DOMAIN} {
+	reverse_proxy {$IP}:4444
+	header Strict-Transport-Security max-age=31536000; # Nextcloud behöver endast detta (snarare än hela "security"-blocket)	
+	redir /.well-known/carddav /remote.php/carddav 301
+	redir /.well-known/caldav /remote.php/caldav 301
+}
+
+photos.{$DOMAIN} {
+	reverse_proxy photoprism-app:2342
+	# reverse_proxy librephotos-proxy:80
+	import security
+}
+
+yt.{$DOMAIN} {
+	reverse_proxy invidious-app:3000
+	# reverse_proxy 75.119.131.54:3001
+	import security
+}
