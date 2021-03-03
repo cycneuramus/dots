@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-. secrets
+. $HOME/bin/secrets
 
 termux-wake-lock
 
