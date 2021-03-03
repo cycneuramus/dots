@@ -37,15 +37,15 @@ crontab -u antsva -l > /home/antsva/bak/crontab-antsva.bak
 docker pause $(docker ps -q)
 
 echo "Påbörjar säkerhetskopiering..."
-borg create                             \
-    --exclude-caches                    \
+borg create								\
+    --exclude-caches					\
 	--exclude-from $exclude				\
-    --stats                             \
-    --list                              \
-    --filter=AME                        \
-    --compression auto,zstd,6           \
-                                        \
-    ::'{hostname}-{now:%Y%m%d_%H%M%S}'  \
+	--stats								\
+    --list								\
+    --filter=AME						\
+    --compression auto,zstd,6			\
+										\
+    ::'{hostname}-{now:%Y%m%d_%H%M%S}'	\
     /home/antsva
 
 backup_exit=$?
@@ -53,22 +53,22 @@ backup_exit=$?
 docker unpause $(docker ps -q)
 
 echo "Trimmar säkerhetskopior..."
-borg prune                          \
-    --list                          \
-    --prefix '{hostname}-'          \
-    --keep-daily    1               \
-    --keep-weekly   2               \
-    --keep-monthly  2				\
+borg prune							\
+    --list							\
+    --prefix '{hostname}-'			\
+    --keep-daily	1				\
+    --keep-weekly	2               \
+    --keep-monthly	2				\
 	--keep-yearly	1
 
 prune_exit=$?
 
 if (( $backup_exit + $prune_exit == 0 )); then
-    rclone sync $src_path $remote_path -v   \
-        --config=$rclone_cfg                \
-        --fast-list                         \
-        --transfers=16                      \
-        --delete-excluded                   \
+    rclone sync $src_path $remote_path -v	\
+        --config=$rclone_cfg				\
+        --fast-list							\
+        --transfers=16						\
+        --delete-excluded					\
         --stats=10s
     rclone_exit=$?
 else
