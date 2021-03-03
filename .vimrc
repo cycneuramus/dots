@@ -106,7 +106,7 @@
 	augroup end
 
 " Vim hard-mode default setting
-	let g:hardtime_default_on = 1
+	let g:hardtime_default_on = 0
 
 " Enable autosave on Vim startup
 	let g:auto_save = 1
