@@ -1,0 +1,39 @@
+<!DOCTYPE patchbay>
+<patchbay name="jack" version="0.5.9">
+ <output-sockets>
+  <socket name="alsa_in 1" client="alsa_in" exclusive="off" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+  </socket>
+  <socket name="gx_head_amp 1" client="gx_head_amp" exclusive="off" type="jack-audio">
+   <plug>out_0</plug>
+  </socket>
+  <socket name="gx_head_fx 1" client="gx_head_fx" exclusive="off" type="jack-audio">
+   <plug>out_0</plug>
+   <plug>out_1</plug>
+  </socket>
+  <socket name="system 1" client="system" exclusive="off" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket name="gx_head_amp 1" client="gx_head_amp" exclusive="off" type="jack-audio">
+   <plug>in_0</plug>
+  </socket>
+  <socket name="gx_head_fx 1" client="gx_head_fx" exclusive="off" type="jack-audio">
+   <plug>in_0</plug>
+  </socket>
+  <socket name="system 1" client="system" exclusive="off" type="jack-audio">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable input="gx_head_fx 1" output="gx_head_amp 1" type="jack-audio"/>
+  <cable input="system 1" output="gx_head_fx 1" type="jack-audio"/>
+  <cable input="gx_head_amp 1" output="alsa_in 1" type="jack-audio"/>
+ </cables>
+</patchbay>
+

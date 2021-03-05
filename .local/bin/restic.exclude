@@ -1,0 +1,32 @@
+# /home/antsva/.config/Signal/attachments.noindex
+/home/antsva/.local/share/baloo
+/home/antsva/.local/share/klipper
+/home/antsva/.local/share/Trash
+/home/antsva/.local/share/Steam
+# /home/antsva/.local/share/plasma-vault
+/home/antsva/.local/share/RecentDocuments
+/home/antsva/.Trash
+/home/antsva/.protonvpn-cli
+/home/antsva/.pvpn-cli
+/home/antsva/.borgbak
+/home/antsva/.cargo
+/home/antsva/.config/Nextcloud/logs
+*/.cache
+*/.Cache
+
+/home/antsva/Hämtningar
+/home/antsva/Nextcloud
+/home/antsva/Skrivbord
+/home/antsva/Publikt
+/home/antsva/Vaults
+/home/antsva/Valv
+# /home/antsva/Video
+# /home/antsva/VirtualBox
+*/borg
+*/cache
+*/Cache
+
+*.log
+*.tmp
+*thumbnails-digikam.db
+*xorg-session.log

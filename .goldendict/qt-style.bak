@@ -1,0 +1,15 @@
+MainWindow #searchPane #translateLine, MainWindow #searchPane #wordList
+{
+	background: #181818;
+	color: #eff0f1;
+}
+MainWindow #favoritesPane #favoritesTree
+{
+	background: #181818;
+	color: #eff0f1;
+}
+MainWindow #translateLine, ScanPopup #translateLine, MainWindow #wordList, MainWindow #dictsPane #dictsList, MainWindow #historyPane #historyList
+{
+	background: #181818;
+	color: #eff0f1
+}

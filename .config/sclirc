@@ -1,0 +1,7 @@
+notification-command=bash /home/antsva/.local/bin/scli-notification.sh "%s" "%m"
+enable-notifications=true
+save-history=true
+wrap-at=65
+color=true
+# show-names=true
+# group-contacts=true

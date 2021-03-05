@@ -1,0 +1,381 @@
+body {
+  margin-top: 1px;
+  margin-right: 3px;
+  margin-left: 2px;
+  margin-bottom: 3px;
+  background: #2e3440;
+  color: #d8dee9;
+  font-family: Bookerly, Noto Sans, Segoe UI, Palatino Linotype, Arial Unicode MS;
+}
+
+a:link {
+  color: #8fbcbb;
+}
+
+ul {
+  color: #d8dee9;
+}
+
+.gdarticle {
+  background: #2e3440;
+  color: #d8dee9;
+  margin-top: 0.1em;
+  margin-bottom: 0.4em;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #8fbcbb
+}
+
+.gdactivearticle {
+  border: none;
+  border-bottom: 1px solid #8fbcbb;
+  padding: 2ch;
+}
+
+.gdarticleseparator + script + .gdactivearticle .gddictname {
+  border-top: 1px solid #8fbcbb;
+}
+
+.gdarticleseparator {
+  display: none;
+}
+
+.gddictname {
+  font-size: 14px;
+  font-weight: normal;
+  float: right;
+  border: 0px;
+  margin: -6px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  padding-right: 0.4em;
+
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.gdactivearticle .gddictname {
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0px;
+  float: right;
+  border: none;
+}
+
+.gddicticon {
+  display: none;
+}
+
+.gdfromprefix {
+  display: none;
+}
+
+.collapse_expand_area {
+  width: 17px;
+  height: 18px;
+}
+
+.collapse_expand_area > img {
+  margin-left: 4px;
+  /* display: none; */
+  opacity: 0;
+}
+
+.collapse_expand_area::after {
+  content: "  ";
+  position: relative;
+  left: -16px;
+  pointer-events: none;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10.4px 6px 0 6px;
+  border-color: #8fbcbb transparent transparent transparent;
+}
+
+/**
+ * Old Dictionaries using DSL format
+ */
+.gdarticlebody > span:first-child .dsl_headwords,
+.gdarticlebody > h3:first-child {
+  margin-top: -3px;
+  display: inline-block;
+}
+
+.gdspellsuggestion {
+  /* Add some vertical space before the article */
+  margin-top: 1.5em;
+}
+
+.dsl_article,
+.dsl_definition,
+.dsl_ex,
+.dsl_opt,
+.dsl_lang,
+.dsl_m0,
+.dsl_m1,
+.dsl_m2,
+.dsl_m3,
+.dsl_m4,
+.dsl_u,
+.dsl_b,
+.dsl_i {
+  color: #d8dee9 !important;
+}
+
+.dsl_p {
+  color: #d08770 !important;
+}
+
+.dsl_b font {
+  color: #ebcb8b !important;
+}
+
+.dsl_m2 font {
+  color: #a3be8c !important;
+}
+
+.dsl_i font {
+  color: #d8dee9 !important;
+}
+
+.dsl_article .dsl_definition {
+  color: #ebcb8b !important;
+}
+
+.dsl_article .dsl_definition font[color="darkcyan"] {
+  color: #ebcb8b !important;
+}
+
+.dsl_article .dsl_definition font[color="teal"] {
+  color: #ebcb8b !important;
+}
+
+.dsl_article .dsl_definition font[color="darkslategray"] {
+  color: #bf616ae !important;
+}
+
+.dsl_article .dsl_definition font[color="darkslateblue"] {
+  color: #bf616ae !important;
+}
+
+.dsl_article .dsl_definition font[color="darkmagenta"] {
+  color: #bf616ae !important;
+}
+
+.dsl_article .dsl_definition font[color="sienna"] {
+  color: #bf616ae !important;
+}
+
+.dsl_article .dsl_definition font[color="rosybrown"] {
+  color: #bf616ae !important;
+}
+
+.dsl_article .dsl_definition font[color="dimgray"] {
+  color: #d8dee9 !important;
+}
+
+.dsl_article .dsl_definition font[color="green"] {
+  color: #bf616ae !important;
+}
+
+.dsl_article .dsl_definition font[color="darkgreen"] {
+  color: #bf616ae !important;
+}
+
+::selection {
+  background: #8fbcbb;
+  color: #d8dee9;
+}
+
+code::selection {
+  background: #d8dee9;
+}
+
+.dsl_s_wav img,
+.lsa_play img,
+.forvo_play img[alt="Play"] {
+  /**
+  display: none;
+  **/
+}
+
+.dsl_s_wav a,
+.lsa_play td:nth-of-type(1) a,
+.forvo_play td:nth-of-type(1) a {
+  color: #d8dee9;
+  width: 18px;
+  height: 14px;
+  /**
+  display: inline-block;
+  background: url('file:///control_play_lingvo.png') no-repeat center;
+  vertical-align: text-bottom;
+  -webkit-user-select: none;
+  user-select: none;
+  **/
+}
+
+/**
+ * OALD9 Dictionary
+ */
+
+.mdict,
+.mdict ol,
+.head-jump-pos,
+.head-jump-entry,
+.h-g,
+sn-gs,
+.sn-g,
+.x-gs,
+.xg,
+.rx-g,
+.x,
+.num,
+.def,
+.label-g,
+.collapse {
+  color: #d8dee9 !important;
+}
+
+.head-jump-pos a {
+  display: inline-block;
+  background-color: #a3be8c;
+  color: #d8dee9 !important;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  text-decoration: none;
+  font-size: 90%;
+  border-radius: 2px;
+}
+
+.mdict .if-gs {
+  color: #bf616ae !important;
+}
+
+.mdict .gram-g {
+  color: #d08770 !important;
+}
+
+.mdict .top-container {
+  line-height: 1.2em !important;
+}
+
+.mdict .collapse,
+.mdict .webtop-g {
+  background-color: #88c0d0 !important;
+  border-left: 3px solid #88c0d0 !important;
+}
+
+.mdict .collapse .body .h1,
+.mdict .collapse .body .deflist .li .eb {
+  color: #bf616a !important;
+}
+
+.mdict .collapse .body .inline .li {
+  color: #b48ead !important;
+}
+
+/** Fix numbered list **/
+.mdict ol {
+  list-style-type: none;
+}
+
+.mdict ol li {
+  counter-increment: step-counter;
+}
+
+.mdict ol li::before {
+  content: counter(step-counter);
+  color: #bf616ae !important;
+  font-weight: bold;
+}
+
+/** Fix phonetics **/
+
+.mdict .phon {
+  color: #bf616ae !important;
+  font-weight: bold;
+}
+
+/**
+ * Longman Dictionary 6
+ */
+
+.entry,
+.example,
+.collocate,
+.collgloss,
+.sense,
+.neutral,
+.exas li {
+  color: #d8dee9 !important;
+}
+
+.hyphenation,
+.homnum,
+.frequent {
+  color: #ebcb8b !important;
+}
+
+.pron,
+.amevarpron {
+  color: #bf616a !important;
+  font-weight: bold;
+}
+
+.gram,
+.registerlab {
+  color: #88c0d0 !important;
+}
+
+.propformprep,
+.expr,
+.colloc,
+.collo,
+.exp,
+.display,
+.nodeword {
+  color: #b48ead !important;
+}
+
+.sensenum {
+  color: #bf616ae !important;
+}
+
+.collobox {
+  background-color: #5e81ac !important;
+  border-color: #5e81ac !important;
+}
+
+.thesbox {
+  background-color: #ebcb8b !important;
+  border-color: #ebcb8b !important;
+}
+
+.grambox .expl,
+.grambox .compareword,
+.collobox .section,
+.thesbox .section {
+  background-color: #4b5162 !important;
+}
+
+.secheading {
+  background-color: #88c0d0 !important;
+}
+
+table,
+#definition_T_id,
+#mh_n_T_id,
+#mh_T_id,
+#C_C {
+  color: #d8dee9 !important;
+}
+
+#C_C font {
+  color: #d8dee9 !important;

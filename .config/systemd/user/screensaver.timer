@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer för Matrix-pseudoskärmsläckare
+
+[Timer]
+Persistent=false
+OnCalendar=*:0/1
+Unit=screensaver.service
+
+[Install]
+WantedBy=timers.target
