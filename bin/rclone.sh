@@ -38,7 +38,7 @@ if [[ $1 == diverse || $1 == allt ]]; then
     rclone sync $src_path $remote_path -v \
 	--filter "- **Image-ExifTool*/**" \
 	--filter "- Tasker/userguide/**" \
-        --filter "+ {bible,data,Inspelningar,Kustom,Librera,Notifications,Ringtones,Signal,sleep-data,Tasker,Träning}/**" \
+        --filter "+ {bible,data,Inspelningar,Librera,Signal,Träning}/**" \
         --filter "- *" # \
 	# --dry-run
 
@@ -62,19 +62,6 @@ if [[ $1 == läsning || $1 == allt ]]; then
     rclone copy $src_path $remote_path -v # \
 	# --dry-run
 
-fi
-
-if [[ $1 == markdown ]]; then
-	src_path=$"$HOME/storage/shared/Markdown"
-	remote_path="Nextcloud:Arbeten/Markdown"
-
-	if [[ $2 == push ]]; then
-		rclone sync $src_path $remote_path -v \
-		 --dry-run
-	elif [[ $2 == pull ]]; then
-		rclone sync $remote_path $src_path -v \
-        	--dry-run
-	fi
 fi
 
 if [[ $1 == tibu || $1 == allt ]]; then
