@@ -72,7 +72,7 @@ bt() {
 }
 
 
-# Workaround bluetooth bug
+# Workaround for bluetooth bug
 bt-fix() {
 	sudo modprobe -r btusb
 	sleep 1

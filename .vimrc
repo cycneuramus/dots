@@ -41,7 +41,7 @@
 	let g:nord_bold = 1
 	let g:nord_underline = 1
 
-" Syntax highlighting for bash variables in vim-nord
+" Syntax highlighting for bash variables in nord-vim
 	augroup nord
 		autocmd!
 		autocmd ColorScheme nord highlight shDerefSimple ctermfg=6 guifg=#88C0D0
