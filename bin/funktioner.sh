@@ -43,7 +43,6 @@ signal-file() {
 }
 
 signal-link() {
-	. secrets
 	$HOME/bin/signal-cli/bin/signal-cli link -n signal-cli-$(hostname) > qr & sleep 5; qrencode -t ANSI $(cat qr)
 }
 
