@@ -6,8 +6,8 @@
 export RESTIC_REPOSITORY="$restic_repo"
 export RESTIC_PASSWORD="$restic_pass"
 
-pacman=$LOG/paket.pacman
-aur=$LOG/paket.aur
+pacman=$LOG/pkg.pacman
+aur=$LOG/pkg.aur
 log=$LOG/restic-backup.log
 exclude=$BIN/restic.exclude
 rclone_args="serve restic --stdio --verbose --stats=10s"

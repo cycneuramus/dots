@@ -15,7 +15,7 @@ sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.
 # Config files etc.
 sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 ln -s /home/antsva/.local/bin/autostart.sh /home/antsva/.config/autostart-scripts/autostart.sh
-sudo cp /home/antsva/.local/cfg/Numix.qss /usr/share/albert/org.albert.frontend.widgetboxmodel/themes/Numix.qss
+cp /home/antsva/.local/cfg/Nord.qss /home/antsva/.local/share/albert/org.albert.frontend.widgetboxmodel/themes/Nord.qss
 
 # LaTeX
 # sudo ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
@@ -61,7 +61,7 @@ if [[ $(which avahi-daemon) ]]; then
 	sudo systemctl start avahi-daemon.service
 fi
 if [[ ! $(which nss-mdns) ]]; then
-	echo "Skrivarstöd: paketet 'nss-mdns' saknas. Installera med 'yay nss-mdns'."
+	echo "Skrivarstöd: paketet 'nss-mdns' fattas."
 fi
 
 # Battery life for laptops

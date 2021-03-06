@@ -55,13 +55,14 @@ else
 	echo "Usage: dots.sh [init]/[bootstrap branch]"
 fi
 
-# Usage:
+# Usage after setup:
+
 # dots add .bashrc
 # dots commit -m 'Add bashrc'
 # dots push
 
-# Handy function designed for automation (put in .bashrc):
-# Auto-generated commit message and 'commit -a' eliminates the need to 'dots add <file>' manually before each push 
+# Handy function designed for automation:
+# Auto-generated commit message and 'commit -a' eliminates the need to 'dots add <changed file>' manually before each push 
 # dots-sync() {
 #     commit_msg=$(date +"%Y%m%d-%H%M%S")
 # 
