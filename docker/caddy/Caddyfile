@@ -3,17 +3,21 @@
 }
 
 (security) {
-	header {
-		Strict-Transport-Security max-age=31536000;
-		X-Content-Type-Options nosniff
-		X-Frame-Options DENY
-		Referrer-Policy no-referrer-when-downgrade
-	}
+    header {
+        Strict-Transport-Security "max-age=31536000;"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        X-Robots-Tag "none"
+        X-Permitted-Cross-Domain-Policies "none"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "no-referrer-when-downgrade"
+        Content-Security-Policy "default-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; img-src https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none'; form-action 'self'; worker-src     'none'; frame-src https://youtube-nocookie.com;"
+    }   
 }
 
 nextcloud.{$DOMAIN} {
 	reverse_proxy {$IP}:4444
-	header Strict-Transport-Security max-age=31536000; # Nextcloud behöver endast detta (snarare än hela "security"-blocket)	
+	header Strict-Transport-Security max-age=31536000; # Nextcloud does not need the whole security block	
 	redir /.well-known/carddav /remote.php/carddav 301
 	redir /.well-known/caldav /remote.php/caldav 301
 }
@@ -26,6 +30,5 @@ photos.{$DOMAIN} {
 
 yt.{$DOMAIN} {
 	reverse_proxy invidious-app:3000
-	# reverse_proxy 75.119.131.54:3001
 	import security
 }
