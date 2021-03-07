@@ -59,7 +59,6 @@
 	augroup END
 	
 " Customize vim-pandoc and vim-pandoc-syntax
- 	" let g:pandoc#modules#enabled = ["bibliographies","completion"]
  	let g:pandoc#modules#enabled = ["bibliographies","completion"]
  	let g:pandoc#biblio#sources = "bgy"
  	let g:pandoc#biblio#bibs = ["/home/antsva/Nextcloud/Arbeten/Referensbibliotek.bib"]
@@ -169,6 +168,9 @@
 
 " Saner defaults for placement of splits
 	set splitbelow splitright
+
+" Shorter wait for keysequence completion
+ 	set timeoutlen=200
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
