@@ -17,6 +17,8 @@ services:
     environment:
       - DOMAIN=$domain
       - EMAIL=$email
+      - INVIDIOUS_USER=$invidious_user
+      - INVIDIOUS_PASSWORD=$invidious_password
       - IP=$ip
       - TZ=Europe/Stockholm
     volumes:

@@ -11,7 +11,6 @@
         X-Permitted-Cross-Domain-Policies "none"
         X-XSS-Protection "1; mode=block"
         Referrer-Policy "no-referrer-when-downgrade"
-        Content-Security-Policy "default-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; img-src https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none'; form-action 'self'; worker-src     'none'; frame-src https://youtube-nocookie.com;"
     }   
 }
 
@@ -31,4 +30,7 @@ photos.{$DOMAIN} {
 yt.{$DOMAIN} {
 	reverse_proxy invidious-app:3000
 	import security
+	basicauth /* {
+		{$INVIDIOUS_USER} {$INVIDIOUS_PASSWORD}
+	}
 }
