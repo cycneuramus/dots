@@ -44,6 +44,8 @@
 " Saner defaults for placement of splits
 	set splitbelow splitright
 
+" Shorter wait for key sequence completion
+	set timeoutlen=200
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """"""""""""""""""""""""""""""""""""""""""""""""""
