@@ -6,8 +6,8 @@ if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/
 fi 
 
 # Install packages
-sudo pacman -S --needed - < /home/antsva/.local/log/pkg-explicit.pacman
-yay -S --needed - < /home/antsva/.local/log/pkg-explicit.aur
+sudo pacman -S --needed - < /home/antsva/.local/cfg/pkg-explicit.pacman
+yay -S --needed - < /home/antsva/.local/cfg/pkg-explicit.aur
 
 # Network automations
 sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh && sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
