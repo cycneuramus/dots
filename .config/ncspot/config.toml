@@ -1,4 +1,5 @@
 gapless = true
+use_nerdfort = true
 
 [keybindings]
 "Space" = "playpause"

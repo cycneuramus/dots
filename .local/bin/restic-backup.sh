@@ -33,7 +33,7 @@ notify-send "Säkerhetskopiering" "Påbörjar synkronisering..."
 echo "Påbörjar säkerhetskopiering..."
 restic backup						\
 	-o rclone.args="$rclone_args"	\
-	--quiet							\
+	--verbose						\
 	--exclude-caches				\
 	--exclude-file="$exclude"		\
 	$HOME

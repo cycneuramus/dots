@@ -488,6 +488,7 @@ vm-create() {
 		disk="$(basename "$1" .iso).qcow2"
 		qemu-img create -f qcow2 $HOME/.vm/"$disk" 20G
 		qemu-system-x86_64 -cdrom "$1" -boot order=d -drive file=$HOME/.vm/"$disk",format=qcow2,if=virtio,aio=native,cache.direct=on -nic user,model=virtio -enable-kvm -m 8G -smp cores=$(nproc) -cpu host &
+		exit
 	fi
 }
 
@@ -495,7 +496,6 @@ vm-create() {
 vm-start() {
 	select vm in $(ls $HOME/.vm); do
 		qemu-system-x86_64 -drive file="$HOME/.vm/$vm",if=virtio,aio=native,cache.direct=on -nic user,model=virtio -enable-kvm -m 8G -smp cores=$(nproc) -cpu host &
-		# qemu-system-x86_64 "$HOME/.vm/$vm" -enable-kvm -m 8G -smp cores=$(nproc) -cpu host &
 		break
 	done
 }
