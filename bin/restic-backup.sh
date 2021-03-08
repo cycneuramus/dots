@@ -20,8 +20,9 @@ export RESTIC_PASSWORD=$restic_pass
 docker pause $(docker ps -q)
 
 restic backup /home/antsva			\
+	--verbose						\
 	--exclude-caches				\
-	--exclude="/home/antsva/mnt"	\
+	--exclude="/home/antsva/mnt"	
 backup_exit=$?
 
 docker unpause $(docker ps -q)
