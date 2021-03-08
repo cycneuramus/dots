@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=scli
+Comment=Terminalklient för Signal
+Icon=signal-desktop
+Exec=scli
+Terminal=true
+Categories=Network;InstantMessaging

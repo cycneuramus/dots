@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Spotify
+Comment=Terminalklient för Spotify
+Icon=Spotify
+# Exec=spt
+Exec=ncspot
+Terminal=true
+Categories=Audio;Player;Music
