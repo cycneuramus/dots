@@ -15,6 +15,7 @@ fi
 # export BORG_REPO=ssh://antsva@localhost//mnt/extern/backup/x230/borgbak
 export BORG_REPO=/mnt/extern/backup/x230/borgbak
 export BORG_PASSPHRASE="$borg_pass"
+export RCLONE_CONFIG_PASS="$rclone_config_pass"
 
 remote_path="$borg_repo"
 src_path=/mnt/extern/backup/x230/borgbak
