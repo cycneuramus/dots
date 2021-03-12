@@ -14,8 +14,6 @@ sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.
 
 # Config files etc.
 sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
-ln -s /home/antsva/.local/bin/autostart.sh /home/antsva/.config/autostart-scripts/autostart.sh
-cp /home/antsva/.local/cfg/Nord.qss /home/antsva/.local/share/albert/org.albert.frontend.widgetboxmodel/themes/Nord.qss
 
 # LaTeX
 # sudo ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
@@ -42,7 +40,6 @@ fi
 
 # Touchpad gestures
 if [[ $(which libinput-gestures) ]]; then
-	ln -s /home/antsva/.local/cfg/libinput-gestures.conf /home/antsva/.config/libinput-gestures.conf
 	sudo gpasswd -a $USER input
 elif [[ $(which gebaar) ]]; then
 	ln -s /home/antsva/.local/cfg/gebaard.toml /home/antsva/.config/gebaar/gebaard.toml
