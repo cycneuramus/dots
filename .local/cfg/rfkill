@@ -1,0 +1,1 @@
+antsva ALL=(ALL) NOPASSWD: /usr/bin/rfkill
