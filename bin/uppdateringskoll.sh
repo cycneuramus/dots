@@ -14,9 +14,9 @@ updateable=$(echo "$output" | grep -E '^Inst ' | wc -l)
 
 if [ $updateable -ne 0 ]; then
 
-  # Skapa lista över uppdaterbara paket och avisera på telefon
-  pkg=$(echo "$output" | grep -E '^Inst' | cut -d ' ' -f 2)
-  newline=$'\n'
-  push "${updateable} paket kan uppdateras${newline}${newline}${pkg}"
+	# Skapa lista över uppdaterbara paket och avisera på telefon
+	pkg=$(echo "$output" | grep -E '^Inst' | cut -d ' ' -f 2)
+	newline=$'\n'
+	push "${updateable} paket kan uppdateras${newline}${newline}${pkg}"
 
 fi
