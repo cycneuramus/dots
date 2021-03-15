@@ -34,9 +34,9 @@ padding-right = 0
 module-margin-left = 2
 module-margin-right = 2
 
-font-0 = NotoSans Nerd Font:pixelsize=10;1
-font-1 = NotoSans Nerd Font:pixelsize=12;2
-font-2 = NotoSans Nerd Font:pixelsize=13;3
+font-0 = Noto Sans:pixelsize=10;1
+font-1 = Noto Sans:pixelsize=12;2
+font-2 = Symbols Nerd Font:pixelsize=13;3
 
 modules-left = i3
 modules-center = date
