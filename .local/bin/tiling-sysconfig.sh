@@ -40,10 +40,6 @@ sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.
 # Touchpad settings
 sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 
-# Set typematic delay 
-sudo kbdrate -d 300 -r 30 	# virtual console 
-xset r rate 300 30			# xorg
-
 # LaTeX
 # sudo ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
 # fc-cache && mkfontscale && mkfontdir
