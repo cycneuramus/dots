@@ -6,7 +6,7 @@ use_nerdfort = true
 "Shift+p" = "queue"
 
 [theme]
-primary = "white"
+primary = "light white"
 secondary = "light black"
 title = "blue"
 # title = "#4c566a"

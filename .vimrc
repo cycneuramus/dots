@@ -70,13 +70,15 @@
 	let g:sneak#label = 1
 	let g:sneak#use_ic_scs = 1
 
-" 2-character Sneak (default)
+" normal-mode
+    nmap ö <Plug>Sneak_s
+    nmap Ö <Plug>Sneak_S
 " visual-mode
-    xmap s <Plug>Sneak_s
-    xmap S <Plug>Sneak_S
+    xmap ö <Plug>Sneak_s
+    xmap Ö <Plug>Sneak_S
 " operator-pending-mode
-    omap s <Plug>Sneak_s
-    omap S <Plug>Sneak_S
+    omap ö <Plug>Sneak_s
+    omap Ö <Plug>Sneak_S
 
 "" Ensure :q to quit even when Goyo is active
 "	function! s:goyo_enter()
@@ -228,9 +230,11 @@
 	nnoremap <leader>p :!if [[ -f "%:r.pdf" ]]; then okular "%:r.pdf" & disown; fi<CR><CR>
 
 " Search 
-	noremap <leader>s /
+	noremap - /
+	" noremap <leader>s /
 " Search and replace
-	noremap <leader>S :%s//g<Left><Left>
+	noremap _ :%s//g<Left><Left>
+	" noremap <leader>S :%s//g<Left><Left>
 
 " More intuitive redo binding
 	nnoremap U <c-r>
