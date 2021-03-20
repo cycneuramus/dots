@@ -57,7 +57,7 @@ elif [[ $1 == "bootstrap" ]]; then
 
 	git clone https://github.com/elasticdog/transcrypt.git
 	cd dots-tmp
-	git status > dev/null # prevents "dirty repo" complaints from transcrypt
+	git status > /dev/null # prevents "dirty repo" complaints from transcrypt
 
 	echo "Input transcrypt password:"
 	read pass
