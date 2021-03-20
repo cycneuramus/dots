@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg ]]; then
-	echo "Källmappar saknas, avbryter..."
+	echo "Source folders missing"
 	exit
 fi 
 
