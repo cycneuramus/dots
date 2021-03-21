@@ -1,7 +1,5 @@
 #!/bin/bash
 
-test
-
 if [[ ! $(which git) ]]; then
 	echo "git not found, aborting..."
 	exit

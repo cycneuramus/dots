@@ -18,13 +18,14 @@ sudo rm -r yay
 sudo pacman -S --needed - < /home/antsva/.local/cfg/pkg-explicit.pacman
 yay -S --needed - < /home/antsva/.local/cfg/pkg-explicit.aur
 
-# Enable LightDM webkit2 greeter
-sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
+if [[ $(which lightdm) ]]; then
+	# Enable LightDM webkit2 greeter
+	sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
 
-# Set Nord theme for LightDM
-sudo git clone https://github.com/AlphaNecron/lightdm-gab-nord /usr/share/lightdm-webkit/themes/lightdm-gab-nord/
-
-sudo sed -i "s/webkit_theme.*/webkit_theme = lightdm-gab-nord/" /etc/lightdm/lightdm-webkit2-greeter.conf
+	# Set Nord theme for LightDM
+	sudo git clone https://github.com/AlphaNecron/lightdm-gab-nord /usr/share/lightdm-webkit/themes/lightdm-gab-nord/
+	sudo sed -i "s/webkit_theme.*/webkit_theme = lightdm-gab-nord/" /etc/lightdm/lightdm-webkit2-greeter.conf
+fi
 
 # Enable networking
 sudo systemctl enable NetworkManager
