@@ -1,5 +1,11 @@
-`curl https://raw.githubusercontent.com/cycneuramus/dots/tiling/.local/bin/dots-setup.sh > dots-setup.sh`
+On a fresh Arch Linux host:
 
-`chmod +x dots-setup.sh`
+`curl https://raw.githubusercontent.com/cycneuramus/dots/tiling/.local/bin/dots-setup.sh > dots-setup.sh
 
-`./dots-setup.sh bootstrap tiling`
+chmod +x dots-setup.sh
+
+./dots-setup.sh bootstrap tiling
+
+rm dots-setup.sh
+
+.local/bin/sysconfig.sh`
