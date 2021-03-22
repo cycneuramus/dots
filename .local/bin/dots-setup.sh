@@ -5,20 +5,12 @@ if [[ ! $(which git) ]]; then
 	exit
 fi
 
-if [[ -f secrets ]]; then
-	. secrets
-else
-	echo "Input remote repo:"
-	read git_repo
-	echo "Input git username:"
-	read git_username
-	echo "Input git email:"
-	read git_email
-fi
-
-remote_repo="$git_repo"
-user_name="$git_username"
-user_email="$git_email"
+echo "Input remote repo:"
+read remote_repo
+echo "Input git username:"
+read git_username
+echo "Input git email:"
+read git_email
 
 if [[ $1 == "init" ]]; then
 
@@ -53,21 +45,27 @@ elif [[ $1 == "bootstrap" ]]; then
 	fi
 
 	echo "Bootstrapping from branch "$2"..." 
+
+	cd $HOME
 	git clone -b $2 --separate-git-dir=$HOME/.dots $remote_repo dots-tmp
 
-	git clone https://github.com/elasticdog/transcrypt.git
 	cd dots-tmp
-	git status > /dev/null # prevents "dirty repo" complaints from transcrypt
+	rsync --recursive --verbose --exclude '.git' dots-tmp/ $HOME/
+
+	cd $HOME
+	rm -r dots-tmp
+
+	git clone https://github.com/elasticdog/transcrypt.git
 
 	echo "Input transcrypt password:"
 	read pass
+
+	cd $HOME/.dots
+	git status > /dev/null # prevents "dirty repo" complaints from transcrypt
+
 	yes | ~/transcrypt/transcrypt -c aes-256-cbc -p "$pass"
-
-	cd ..
+	cd $HOME
 	yes | rm -r transcrypt/
-
-	rsync --recursive --verbose --exclude '.git' dots-tmp/ $HOME/
-	rm --recursive dots-tmp
 
 else
 	echo "Usage: dots.sh [init]/[bootstrap branch]"
