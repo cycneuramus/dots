@@ -48,24 +48,20 @@ elif [[ $1 == "bootstrap" ]]; then
 
 	cd $HOME
 	git clone -b $2 --separate-git-dir=$HOME/.dots $remote_repo dots-tmp
-
-	cd dots-tmp
-	rsync --recursive --verbose --exclude '.git' dots-tmp/ $HOME/
-
-	cd $HOME
-	rm -r dots-tmp
-
 	git clone https://github.com/elasticdog/transcrypt.git
 
 	echo "Input transcrypt password:"
 	read pass
+	cd dots-tmp
 
-	cd $HOME/.dots
 	git status > /dev/null # prevents "dirty repo" complaints from transcrypt
-
 	yes | ~/transcrypt/transcrypt -c aes-256-cbc -p "$pass"
+
 	cd $HOME
+	rsync --recursive --verbose --exclude '.git' dots-tmp/ $HOME/
+	yes | rm -r dots-tmp/
 	yes | rm -r transcrypt/
+
 
 else
 	echo "Usage: dots.sh [init]/[bootstrap branch]"
