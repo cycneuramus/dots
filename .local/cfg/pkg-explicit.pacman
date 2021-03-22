@@ -44,6 +44,7 @@ i3blocks
 i3lock
 i3status
 imagemagick
+intel-ucode
 jack2
 jack_capture
 jpegexiforient
@@ -54,6 +55,7 @@ kvantum-qt5
 libreoffice-fresh
 libreoffice-fresh-sv
 libtool
+libva-intel-driver
 lightdm
 lightdm-webkit2-greeter
 linux
@@ -71,6 +73,7 @@ network-manager-applet
 networkmanager
 networkmanager-openvpn
 nextcloud-client
+noto-fonts
 nss-mdns
 openresolv
 pacman
@@ -114,6 +117,7 @@ vim-spell-en
 vim-spell-sv
 vlc
 vulkan-icd-loader
+vulkan-intel
 wget
 which
 wireguard-tools
