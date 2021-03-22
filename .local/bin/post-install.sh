@@ -18,14 +18,11 @@ sudo rm -r yay
 sudo pacman -S --needed - < /home/antsva/.local/cfg/pkg-explicit.pacman
 yay -S --needed - < /home/antsva/.local/cfg/pkg-explicit.aur
 
-# if [[ $(which lightdm) ]]; then
-# 	# Enable LightDM webkit2 greeter
-# 	sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
-# 
-# 	# Set Nord theme for LightDM
-# 	sudo git clone https://github.com/AlphaNecron/lightdm-gab-nord /usr/share/lightdm-webkit/themes/lightdm-gab-nord/
-# 	sudo sed -i "s/webkit_theme.*/webkit_theme = lightdm-gab-nord/" /etc/lightdm/lightdm-webkit2-greeter.conf
-# fi
+# Litarvan theme for lightdm
+if [[ $(which lightdm) && $(which lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
+	sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
+	sudo sed -i "s/webkit_theme.*/webkit_theme = litarvan/" /etc/lightdm/lightdm-webkit2-greeter.conf
+fi
 
 # Enable networking
 sudo systemctl enable NetworkManager
@@ -48,6 +45,9 @@ sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.
 
 # Touchpad settings
 sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
+
+# Force kitty to recognize font in ~/.config/fontconfig/fonts.conf
+fc-cache -r
 
 # LaTeX
 # sudo ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
