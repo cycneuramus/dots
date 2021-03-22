@@ -196,7 +196,7 @@ format-font = 3
 [module/updates]
 type = custom/script
 exec = ~/.config/polybar/scripts/updates.sh
-interval = 7200
+interval = 18000
 format-font = 3
 
 # [module/battery]
