@@ -18,7 +18,6 @@ if [[ $1 == "init" ]]; then
 	git init --bare $HOME/.dots
 
 	git --git-dir=$HOME/.dots/ --work-tree=$HOME remote add origin $remote_repo
-	git --git-dir=$HOME/.dots/ --work-tree=$HOME config status.showUntrackedFiles no
 	git --git-dir=$HOME/.dots/ --work-tree=$HOME remote set-url origin $remote_repo
 
 	echo ""
@@ -67,6 +66,7 @@ else
 	echo "Usage: dots.sh [init]/[bootstrap branch]"
 fi
 
+git --git-dir=$HOME/.dots/ --work-tree=$HOME config status.showUntrackedFiles no
 git config --global credential.helper store # Save credentials after first login
 git config --global user.name "$git_username"
 git config --global user.email "$git_email"
