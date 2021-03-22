@@ -7,5 +7,5 @@ chmod +x dots-setup.sh
 ./dots-setup.sh bootstrap tiling
 rm dots-setup.sh
 
-.local/bin/sysconfig.sh
+.local/bin/post-install.sh
 ```
