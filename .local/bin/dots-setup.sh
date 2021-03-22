@@ -68,8 +68,8 @@ else
 fi
 
 git config --global credential.helper store # Save credentials after first login
-git config --global user.name "$user_name"
-git config --global user.email "$user_email"
+git config --global user.name "$git_username"
+git config --global user.email "$git_email"
 
 # Usage after setup:
 
