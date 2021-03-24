@@ -22,6 +22,10 @@ if [[ $1 == *pending* ]]; then
 	done
 fi
 
+if [[ ! $(find storage/shared/DCIM/Camera -newermt '2 minutes ago' -type f -iname '*.jp*' -a -not -iname '*pending*') ]]; then
+	exit
+fi
+
 if [[ $(termux-wifi-connectioninfo | jq '.ssid') == *$ssid_home* ]]; then
 	loc=$loc_home 
 	sleep 5
