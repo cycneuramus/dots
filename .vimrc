@@ -158,14 +158,14 @@
 	let g:sneak#use_ic_scs = 1
 "
 "	" 2-character Sneak (default)
-"    " nmap f <Plug>Sneak_s
-"    " nmap F <Plug>Sneak_S
+	nmap ö <Plug>Sneak_s
+	nmap Ö <Plug>Sneak_S
 "    " visual-mode
-    xmap s <Plug>Sneak_s
-    xmap S <Plug>Sneak_S
+    xmap ö <Plug>Sneak_s
+    xmap Ö <Plug>Sneak_S
 "    " operator-pending-mode
-    omap s <Plug>Sneak_s
-    omap S <Plug>Sneak_S
+    omap ö <Plug>Sneak_s
+    omap Ö <Plug>Sneak_S
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Key mappings 
@@ -195,8 +195,8 @@
 	nnoremap <leader>p :!if [[ -f "%:r.pdf" ]]; then okular "%:r.pdf" & disown; fi<CR><CR>
 
 " Search functions
-	noremap <leader>s /
-	noremap <leader>S :%s//g<Left><Left>
+	noremap - /
+	noremap _ :%s//g<Left><Left>
 
 " More intuitive redo binding
 	nnoremap U <c-r>
