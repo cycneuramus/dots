@@ -27,7 +27,7 @@
 
 #inputLine {
   padding: 2px;
-  font: 36px "Noto Sans";
+  font: 36px "Fira Sans";
   selection-color: #fdf6e3;
   selection-background-color: #8fbcbb;
   border: none;
@@ -102,7 +102,7 @@ QListView#actionList::item{
 QListView#resultsList {
   icon-size: 36px;
   font-size: 26px;
-  font: 20px "Noto Sans";
+  font: 20px "Fira Sans";
   background-color: transparent;
   border: none;
 }
