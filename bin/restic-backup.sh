@@ -14,7 +14,7 @@ export RESTIC_REPOSITORY=$restic_repo
 export RESTIC_PASSWORD=$restic_pass 
 
 # First run:
-# restic -r b2:antsva-VPS:restic init
+# restic -r $restic_repo init
 # exit 
 
 docker pause $(docker ps -q)

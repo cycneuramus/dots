@@ -2,7 +2,7 @@ version: '3'
 
 networks:
 #   default:
-#     external: 
+#     external:
 #       name: caddy_net
   nextcloud-network:
     external: false
@@ -19,21 +19,21 @@ services:
       - MYSQL_PASSWORD=$mysql_password
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-    restart: always
+    restart: unless-stopped
     networks:
       - nextcloud-network
 
   redis:
     image: redis:alpine
     container_name: nextcloud-redis
-    restart: always
+    restart: unless-stopped
     networks:
       - nextcloud-network
 
   app:
     image: nextcloud:latest
     container_name: nextcloud-app
-    restart: always
+    restart: unless-stopped
     ports:
       - 4444:80
     networks:
@@ -57,6 +57,15 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
       - OVERWRITEHOST=$nextcloud_domain
       - OVERWRITEPROTOCOL=https
+#   collabora:
+#     image: collabora/code
+#     container_name: nextcloud-collabora
+#     networks:
+#       - nextcloud-network
+#     environment:
+#       - username="$collabora_username"
+#       - password="$collabora_password"
+#     restart: unless-stopped
 #    user: 1000:1000
 #    sysctls:
 #      - net.ipv4.ip_unprivileged_port_start=0
