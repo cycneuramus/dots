@@ -17,6 +17,26 @@ signal_send() {
     # $signal_cli -u $signal_from send -g $signal_to # Till grupp
 }
 
+# TODO multi-artist
+# artists="devin devinband dreamtheater leprous lte symphonyx"
+# 
+# for artist in $artists; do
+# 	log=/home/antsva/log/bot-metal/$artist.log
+# 	if [[ $artist == "leprous" ]]; then
+# 		artist_id="1927912"
+# 	elif [[ $artist == "dreamtheater" ]]; then
+# 		artist_id="260935"
+# 	elif [[ $artist == "devin" ]]; then
+# 		artist_id="251249"
+# 	elif [[ $artist == "devinband" ]]; then
+# 		artist_id="1441645"
+# 	elif [[ $artist == "lte" ]]; then
+# 		artist_id="94846"
+# 	elif [[ $artist == "symphonyx" ]]; then
+# 		artist_id="291495"
+# 	fi	
+# done
+
 release_json=$(curl "https://api.discogs.com/artists/291495/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "FooBarApp/3.0" | jq -r '.releases[0]')
 release_title_year="$(echo "$release_json" | jq '.title') ($(echo "$release_json" | jq '.year'))"
 

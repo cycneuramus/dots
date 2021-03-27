@@ -5,7 +5,7 @@
 # sudo borg extract /home/antsva/mnt::x230-20201130_040002 home/antsva/
 
 if (( $EUID != 0 )); then
-    echo "Var vänlig kör som root"
+    echo "Needs to be run as root"
     exit
 fi
 
