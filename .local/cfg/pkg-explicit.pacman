@@ -11,6 +11,7 @@ bison
 blueman
 bluez-utils
 chromium
+copyq
 cups
 dosfstools
 dunst
@@ -97,6 +98,7 @@ realtime-privileges
 redshift
 restic
 rsync
+scrot
 sed
 simplescreenrecorder
 sshfs
