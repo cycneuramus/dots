@@ -64,10 +64,10 @@ av-scan() {
 # Toggle bluetooth
 bt() { 
 	if [[ $(bluetooth) == *off* ]]; then
-		bluetooth on 
+		sudo bluetooth on 
 		bluetoothctl power on 
 	else
-		bluetooth off
+		sudo bluetooth off
 	fi
 }
 

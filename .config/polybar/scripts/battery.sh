@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH_AC="/sys/class/power_supply/AC"
+PATH_AC="/sys/class/power_supply/AC0"
 PATH_BATTERY_0="/sys/class/power_supply/BAT0"
 PATH_BATTERY_1="/sys/class/power_supply/BAT1"
 
@@ -14,20 +14,20 @@ if [ -f "$PATH_AC/online" ]; then
     ac=$(cat "$PATH_AC/online")
 fi
 
-if [ -f "$PATH_BATTERY_0/energy_now" ]; then
-    battery_level_0=$(cat "$PATH_BATTERY_0/energy_now")
+if [ -f "$PATH_BATTERY_0/charge_now" ]; then
+    battery_level_0=$(cat "$PATH_BATTERY_0/charge_now")
 fi
 
-if [ -f "$PATH_BATTERY_0/energy_full" ]; then
-    battery_max_0=$(cat "$PATH_BATTERY_0/energy_full")
+if [ -f "$PATH_BATTERY_0/charge_full" ]; then
+    battery_max_0=$(cat "$PATH_BATTERY_0/charge_full")
 fi
 
-if [ -f "$PATH_BATTERY_1/energy_now" ]; then
-    battery_level_1=$(cat "$PATH_BATTERY_1/energy_now")
+if [ -f "$PATH_BATTERY_1/charge_now" ]; then
+    battery_level_1=$(cat "$PATH_BATTERY_1/charge_now")
 fi
 
-if [ -f "$PATH_BATTERY_1/energy_full" ]; then
-    battery_max_1=$(cat "$PATH_BATTERY_1/energy_full")
+if [ -f "$PATH_BATTERY_1/charge_full" ]; then
+    battery_max_1=$(cat "$PATH_BATTERY_1/charge_full")
 fi
 
 battery_level=$(("$battery_level_0 + $battery_level_1"))

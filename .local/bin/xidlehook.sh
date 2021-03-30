@@ -11,5 +11,5 @@ xidlehook \
   	'$HOME/.local/bin/screensaver.sh' \
 	'xdotool key q' \
   --timer 600 \
-    'systemctl suspend' \
+    '$HOME/.local/bin/lock.sh && systemctl suspend' \
     ''

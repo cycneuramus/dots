@@ -19,8 +19,8 @@ rclone_args="serve restic --stdio --verbose --stats=10s"
 # Limit execution to every 24 hours by checking for age of log file
 if [[ -f "$log" && ! $(find "$log" -mmin +1440) ]]; then exit; fi
 
-pacman -Qqe | grep -vx "$(pacman -Qqm)" > $pacman
-pacman -Qqm > $aur
+pacman -Qqen > $pacman
+pacman -Qqem > $aur
 
 commit_msg=$(date +"%Y%m%d_%H%M%S")
 git --git-dir=$HOME/.dots/ --work-tree=$HOME commit -a -m "$commit_msg"

@@ -5,6 +5,9 @@ if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/
 	exit
 fi 
 
+# Prepare log directory various script outputs
+mkdir $HOME/.local/log
+
 # AUR helper
 cd $HOME
 sudo pacman -S git base-devel --noconfirm
@@ -37,8 +40,9 @@ echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 # To change backlight with xbacklight (via acpilight package)
 sudo usermod -aG video $USER
 
-# Allow passwordless rfkill (e.g. sudo rfkill block bluetooth)
+# Allow passwordless commands (e.g. sudo rfkill block bluetooth)
 sudo cp $HOME/.local/cfg/rfkill /etc/sudoers.d/rfkill
+sudo cp $HOME/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
 
 # Network automations
 sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh && sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
