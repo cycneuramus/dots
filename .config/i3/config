@@ -147,6 +147,13 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
 
+mode "sysctl" {
+		bindsym b exec notify-send "test"
+		bindsym Return mode "default"
+}
+
+bindsym $mod+Shift+i mode "sysctl"
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
 		# These bindings trigger as soon as you enter the resize mode
@@ -181,15 +188,18 @@ bindsym $mod+r mode "resize"
 # }
 
 exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
-exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
 exec_always --no-startup-id autotiling
-exec_always --no-startup-id copyq
 exec_always --no-startup-id picom
 exec_always --no-startup-id libinput-gestures-setup start
+exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
+exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
+exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
+exec --no-startup-id copyq
+exec --no-startup-id nextcloud
+exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
-# exec --no-startup-id blueman-applet
-# exec --no-startup-id mate-power-manager
+exec --no-startup-id mate-power-manager
 exec --no-startup-id albert
 exec --no-startup-id feh --bg-fill --randomize .local/share/backgrounds/nord
 exec --no-startup-id $HOME/.local/bin/autostart.sh

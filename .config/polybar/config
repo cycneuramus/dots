@@ -41,10 +41,11 @@ font-2 = Symbols Nerd Font:pixelsize=13;3
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-modules-right = updates battery bluetooth 
+# modules-right = updates battery bluetooth 
+modules-right = updates 
 
 tray-position = right
-tray-padding = 5
+tray-padding = 6
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm

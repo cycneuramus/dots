@@ -17,11 +17,11 @@ if [[ $(pgrep -f "audacity|zoom|ffmpeg|vlc") || $(lid) == "closed" || $(ps -fA) 
 # fi
 
 # if (( $idletime > $targettime )); then
-	# Start screensaver on external monitor if found 
-	if [[ $(xrandr --listmonitors | grep HDMI | wc -l) == 1 ]]; then 
-		# konsole --fullscreen -geometry 1920x1200+0-0 -e unimatrix -l Gg -s 90 &   
-		kitty --start-as fullscreen -e unimatrix -l Gg -s 90 &   
-	fi
-	# konsole --fullscreen -geometry 1920x1200+0-0 -e unimatrix -l Gg -s 90 &   
-	kitty --start-as fullscreen -e unimatrix -l Gg -s 90 &
+# 	Start screensaver on external monitor if found 
+# 	if [[ $(xrandr --listmonitors | grep HDMI | wc -l) == 1 ]]; then 
+# 		konsole --fullscreen -geometry 1920x1200+0-0 -e unimatrix -l Gg -s 90 &   
+# 	fi
+# 	konsole --fullscreen -geometry 1920x1200+0-0 -e unimatrix -l Gg -s 90 &   
 # fi
+
+kitty --start-as fullscreen -e unimatrix -l Gg -s 90 &

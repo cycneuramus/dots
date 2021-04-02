@@ -1,8 +1,27 @@
 #!/bin/bash
-TMPBG=/tmp/screen.png
-LOCK=$HOME/lock.png
-RES=$(xrandr | grep 'current' | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')
- 
-ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -i $LOCK -filter_complex "boxblur=5:1,overlay=(main_w-overlay_w)/2:(main_h-overlay_h)/2" -vframes 1 $TMPBG -loglevel quiet
-i3lock -u -i $TMPBG
-rm $TMPBG
+
+C='#4c566a'
+D='#3b4252'
+H='#81a1c1'
+T='#eceff4'
+W='#Bf616a'
+
+i3lock \
+--insidevercolor=$C   \
+--ringvercolor=$D     \
+\
+--insidewrongcolor=$D \
+--ringwrongcolor=$W   \
+\
+--insidecolor=$D      \
+--ringcolor=$C        \
+--linecolor=$D        \
+--separatorcolor=$D   \
+\
+--verifcolor=$T        \
+--wrongcolor=$T        \
+--layoutcolor=$T      \
+--keyhlcolor=$H       \
+--bshlcolor=$H        \
+\
+--blur 5              \

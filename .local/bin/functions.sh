@@ -25,7 +25,8 @@ alert-done() {
 	until [[ ! $(pgrep "$1") ]]; do 
 		sleep 5 
 	done 
-	paplay /usr/share/sounds/Oxygen-Im-New-Mail.ogg
+	paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga
+	# paplay /usr/share/sounds/Oxygen-Im-New-Mail.ogg
 	notify-send -t 10000 "$1" "Job done"
 }
 
@@ -242,6 +243,7 @@ pdoc() {
 		pandoc -f markdown -t beamer "$1" -V theme:metropolis -V lang:sv -V mainfont="Source Sans Pro" -i --pdf-engine=tectonic -o "${1%.*}".pdf
 	else
 		# pandoc $PREAMBLE --filter pandoc-citeproc "$1" -o "${1%.*}".pdf --pdf-engine=xelatex --verbose
+		# pandoc $PREAMBLE --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
 		pandoc $PREAMBLE --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
 	fi
 }

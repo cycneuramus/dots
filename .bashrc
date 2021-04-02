@@ -4,6 +4,7 @@
 
 . /home/antsva/.local/bin/functions.sh
 
+alias ssh="kitty +kitten ssh"
 alias dots='git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 
 dots-sync() {

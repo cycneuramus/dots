@@ -1,5 +1,6 @@
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+export BROWSER=firefox
 export EDITOR=vim
 export BIB=/home/antsva/Nextcloud/Arbeten/Referensbibliotek.bib
 export CSL=/home/antsva/Nextcloud/Arbeten/chicago-note-with-ibid.csl
