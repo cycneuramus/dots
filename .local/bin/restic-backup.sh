@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Lazy workaround for running from ACPI handler while keeping env variables
+. /home/antsva/.profile
+
 . $BIN/functions.sh
 . $BIN/secrets
 
