@@ -10,11 +10,11 @@ i3lock \
 --insidevercolor=$C   \
 --ringvercolor=$D     \
 \
---insidewrongcolor=$D \
+--insidewrongcolor=$C \
 --ringwrongcolor=$W   \
 \
---insidecolor=$D      \
---ringcolor=$C        \
+--insidecolor=$C      \
+--ringcolor=$D        \
 --linecolor=$D        \
 --separatorcolor=$D   \
 \
