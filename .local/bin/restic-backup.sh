@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Lazy workaround for running from ACPI handler while keeping env variables
-. /home/antsva/.profile
+if [[ -z $BIN ]]; then
+	. /home/antsva/.profile
+fi
 
 . $BIN/functions.sh
 . $BIN/secrets
@@ -27,10 +29,11 @@ pacman -Qqem > $aur
 
 commit_msg=$(date +"%Y%m%d_%H%M%S")
 git --git-dir=$HOME/.dots/ --work-tree=$HOME commit -a -m "$commit_msg"
+git --git-dir=$HOME/.dots/ --work-tree=$HOME push 
 
 if [[ ! $(wifi) = "home" ]]; then exit; fi
 
-exec 1>$log 2>&1
+# exec 1>$log 2>&1
 notify-send "Säkerhetskopiering" "Påbörjar synkronisering..."
 
 echo "Påbörjar säkerhetskopiering..."
