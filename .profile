@@ -1,5 +1,5 @@
+export PATH=$PATH:/home/antsva/.local/bin
 export QT_QPA_PLATFORMTHEME=qt5ct
-
 export BROWSER=firefox
 export EDITOR=vim
 export BIB=/home/antsva/Nextcloud/Arbeten/Referensbibliotek.bib
