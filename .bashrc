@@ -1,7 +1,3 @@
-#
-# ~/.bashrc
-#
-
 . /home/antsva/.local/bin/functions.sh
 
 alias ssh="kitty +kitten ssh"
