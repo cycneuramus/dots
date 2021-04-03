@@ -33,6 +33,14 @@ sudo systemctl start NetworkManager
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
+# ACPI events
+if [[ -f /etc/acpi/handler.sh ]]; then
+	sudo systemctl enable acpid.service
+	sudo systemctl start acpid.service
+	sudo rm /etc/acpi/handler.sh
+	sudo ln -s /home/antsva/.local/bin/handler.sh /etc/acpi/handler.sh
+fi
+
 # Disable internal speaker (system beep)
 sudo rmmod pcspkr
 echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
