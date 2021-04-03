@@ -1,7 +1,7 @@
 #!/bin/bash
 
-. functions.sh
-. secrets
+. $BIN/functions.sh
+. $BIN/secrets
 
 export RESTIC_REPOSITORY="$restic_repo"
 export RESTIC_PASSWORD="$restic_pass"
