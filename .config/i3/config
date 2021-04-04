@@ -6,13 +6,20 @@ for_window [class="^.*"] border pixel 2
 # No borders for Albert
 for_window[title="albert"] border none
 
+# Assign programs to specific workspaces
+assign [class="firefox"] number 1
+assign [class="scli"] number 2
+assign [class="Thunderbird"] number 2
+# assign [class="pcmanfm"] number 3
+
+# Program-specific layouts
+for_window [class="scli"] layout tabbed
+for_window [class="Thunderbird"] layout tabbed
+
 # No borders on sole window
 hide_edge_borders smart
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Fira Sans 8
-
+# Colors
 set_from_resource $bg background
 set_from_resource $fg foreground
 set_from_resource $teal1 color14
@@ -25,13 +32,25 @@ set_from_resource $purple color13
 
 # class						border	backgr.	text	indicator	child_border
 client.focused				$blue	$bg		$fg		$blue		$blue
-client.focused_inactive		$bg		$bg		$fg		$blue		$bg
-client.unfocused			$bg		$bg		$fg		$blue		$bg
-client.urgent				$red	$bg		$fg		$blue		$bg
-client.placeholder			$bg		$bg		$fg		$blue		$bg
-client.background			$bg		$bg		$fg		$blue		$bg
+client.focused_inactive		$bg		$bg		$fg		$bg			$bg
+client.unfocused			$bg		$bg		$fg		$bg			$bg
+client.urgent				$red	$bg		$fg		$bg			$bg
+client.placeholder			$bg		$bg		$fg		$bg			$bg
+client.background			$bg		$bg		$fg		$bg			$bg
 
-set $refresh_i3status killall -SIGUSR1 i3status
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Fira Sans 8
+
+# Scratchpads
+exec --no-startup-id "keepassxc"
+for_window [instance="keepassxc"] move scratchpad
+bindsym $mod+Shift+p [instance="keepassxc"] scratchpad show
+
+exec --no-startup-id kitty --name="scratchterm"
+for_window [instance="scratchterm"] move scratchpad
+bindsym $mod+Shift+Return [instance="scratchterm"] scratchpad show
+bindsym $mod+Shift+Control+Return exec --no-startup-id kitty --name="scratchterm"
 
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && canberra-gtk-play -i audio-volume-change -d "changeVolume"
@@ -145,8 +164,11 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Restart bar
 bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
 
+# System controls
 mode "sysctl" {
 		bindsym b exec bash $HOME/.local/bin/functions.sh bt
 		bindsym Return mode "default"
@@ -197,11 +219,13 @@ exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec --no-startup-id feh --bg-fill --randomize .local/share/backgrounds/nord
 exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq
+exec --no-startup-id albert
+exec --no-startup-id $HOME/.local/bin/redshift.sh
+exec --no-startup-id dunst
 exec --no-startup-id nextcloud
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
 exec --no-startup-id mate-power-manager
-exec --no-startup-id albert
-exec --no-startup-id $HOME/.local/bin/autostart.sh
-exec --no-startup-id dunst
+exec gtk-launch scli
+exec thunderbird
