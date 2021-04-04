@@ -505,6 +505,14 @@ vm-start() {
 
 # VPN on/off
 vpn() {
+	
+	# Preserve notifications if running from system service
+	if [[ $(whoami) == "antsva" ]]; then
+		notify="notify-send"
+	else
+		notify="sudo -u antsva DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send"
+	fi
+
 	if [[ $1 = on ]]; then
 
 		# Wait for internet
@@ -514,7 +522,7 @@ vpn() {
 			if (( count > 15 )); then break; fi
 		done
 		if [[ $(internet) == off ]]; then
-			notify-send "VPN" "Interntanslutning saknas, avbryter"
+			$notify "VPN" "Interntanslutning saknas, avbryter"
 			exit
 		fi
 
@@ -524,18 +532,23 @@ vpn() {
 		else
 			vpn=Wireguard
 		fi
-		nmcli con up id $vpn
+		
+		if [[ $(nmcli con up id $vpn) ]]; then
+			$notify "VPN" "Ansluten till $vpn"
+		else
+			$notify "VPN" "Kunde inte ansluta till $vpn"
+		fi
 	
 		# Kill VPN if no internet
 		if [[ $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
 			until [[ $(internet) == on ]]; do
 				sleep 2
 				count=$((count + 1))
-				if (( count > 3 )); then break; fi
+				if (( count > 5 )); then break; fi
 			done
 			if [[ $(internet) == off ]]; then
-				vpn av
-				notify-send "VPN" "Inaktiverades pga. utebliven internetanslutning"
+				vpn off
+				$notify "VPN" "Inaktiverades pga. utebliven internetanslutning"
 			fi
 		fi
 
@@ -546,7 +559,12 @@ vpn() {
 		elif nmcli con show -a | grep -q pivpn; then
 			vpn=pivpn
 		fi
-		nmcli con down id $vpn
+
+		if [[ $(nmcli con down id $vpn) ]]; then
+			$notify "VPN" "Nedkopplad från $vpn"
+		else
+			$notify "VPN" "Kunde inte koppla ned från $vpn"
+		fi
 
 	fi
 }

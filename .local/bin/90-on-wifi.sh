@@ -3,19 +3,28 @@
 # Must be owned by root! (chown root:root)
 
 # DEBUG
-# log=/home/antsva/Skrivbord/nm.log
+# log=/home/antsva/nm-dispatcher.log
 # exec 1>$log 2>&1
 # set -x
 
 . /home/antsva/.local/bin/functions.sh
 	
-# Continue only if triggered by Wi-Fi-connection
-if [[ $2 != "up" || $1 != "wlp1s0" ]]; then exit; fi # || $(internet) = "off" ]]; then exit; fi
+# export DISPLAY=:0 
+# export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus 
+
+interface="$1"
+status="$2"
 
 wifi=$(wifi)
 
-if [[ $wifi != "home" && ! $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then 
-	vpn on
-elif [[ $wifi == "home" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
-	vpn off
+if [[ $interface == "wlp1s0" && $status == "up" ]]; then
+	if [[ $wifi != "home" && ! $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then 
+		vpn on
+	elif [[ $wifi == "home" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
+		vpn off
+	fi
+elif [[ $status == "connectivity-change" || $status == "down" ]]; then
+	if [[ $wifi == "off" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
+		vpn off
+	fi
 fi

@@ -144,15 +144,15 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
 
 mode "sysctl" {
-		bindsym b exec notify-send "test"
+		bindsym b exec bash $HOME/.local/bin/functions.sh bt
 		bindsym Return mode "default"
 }
 
-bindsym $mod+Shift+i mode "sysctl"
+bindsym $mod+Shift+s mode "sysctl"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -194,6 +194,8 @@ exec_always --no-startup-id libinput-gestures-setup start
 exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
 exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
+exec --no-startup-id feh --bg-fill --randomize .local/share/backgrounds/nord
+exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq
 exec --no-startup-id nextcloud
 exec --no-startup-id blueman-applet
@@ -201,6 +203,5 @@ exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
 exec --no-startup-id mate-power-manager
 exec --no-startup-id albert
-exec --no-startup-id feh --bg-fill --randomize .local/share/backgrounds/nord
 exec --no-startup-id $HOME/.local/bin/autostart.sh
 exec --no-startup-id dunst
