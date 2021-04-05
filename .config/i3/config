@@ -224,6 +224,7 @@ exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq
 exec --no-startup-id albert
 exec --no-startup-id $HOME/.local/bin/redshift.sh
+exec --no-startup-id udiskie -a -s
 exec --no-startup-id dunst
 exec --no-startup-id nextcloud
 exec --no-startup-id blueman-applet
