@@ -21,7 +21,7 @@ rclone_args="serve restic --stdio --verbose --stats=10s"
 # restic -r $restic_repo init
 # exit 
 
-# Limit execution to every 24 hours by checking for age of log file
+# Limit execution to once every 24 hours by checking for age of log file
 if [[ -f "$log" && ! $(find "$log" -mmin +1440) ]]; then exit; fi
 
 pacman -Qqen > $pacman
