@@ -19,6 +19,9 @@ for_window [class="Thunderbird"] layout tabbed
 # No borders on sole window
 hide_edge_borders smart
 
+# Let urgent window steal focus
+focus_on_window_activation focus
+
 # Colors
 set_from_resource $bg background
 set_from_resource $fg foreground

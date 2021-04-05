@@ -1,5 +1,7 @@
 #!/bin/bash
 
+if [[ $(pgrep i3lock) ]]; then exit; fi
+
 C='#4c566a'
 D='#3b4252'
 H='#81a1c1'

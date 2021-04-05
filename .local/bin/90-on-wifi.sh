@@ -23,8 +23,8 @@ if [[ $interface == "wlp1s0" && $status == "up" ]]; then
 	elif [[ $wifi == "home" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
 		vpn off
 	fi
-elif [[ $status == "connectivity-change" || $status == "down" ]]; then
-	if [[ $wifi == "off" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
-		vpn off
-	fi
+# elif [[ $status == "connectivity-change" || $status == "down" ]]; then
+# 	if [[ $wifi == "off" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
+# 		vpn off
+# 	fi
 fi
