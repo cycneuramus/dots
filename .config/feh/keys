@@ -1,0 +1,15 @@
+# Unsetting the keys
+zoom_in
+zoom_out
+scroll_right
+scroll_left
+scroll_up
+scroll_down
+
+# Custom key mapping:
+zoom_in C-plus i
+zoom_out C-minus o
+scroll_up k Up
+scroll_down j Down
+scroll_left h Left
+scroll_right l Right
