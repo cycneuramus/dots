@@ -180,13 +180,33 @@ img-komp() {
 }
 
 
-# Change picture dimension to set values
+# Change image dimensions to set values
 img-resize() {
 	if (( $# < 2 )); then
 		echo "Usage: img-resize [file] [WIDTHxHEIGHT]"
 	else
 		convert "$1" -resize "$2"^ -gravity center -crop "$2"+0+0 +repage "${1%.*}_resized.${1#*.}"
 	fi
+}
+
+
+# Standardize maximum resolution for all images in directory
+img-max-res() {
+	target_width="1920"
+	target_height="1080"
+	target_resolution="${target_width}x${target_height}"
+
+	if (( $(ls *.{png,jpg,jpeg} 2>/dev/null | wc -l) > 0 )); then
+		mkdir new_res
+	fi
+
+	for f in *.{png,jpg,jpeg}; do
+		if [[ -f "$f" ]]; then
+			if (( $(identify -ping -format '%w' "$f") > "$target_width" )); then
+				convert "$f" -resize "$target_resolution" new_res/"$f"
+			fi
+		fi
+	done
 }
 
 
