@@ -33,6 +33,12 @@ sudo systemctl start NetworkManager
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
+# Wallpaper switcher
+if [[ -f $HOME/.config/systemd/user/wallpaper.timer ]]; then
+	systemctl --user enable wallpaper.timer
+	systemctl --user start wallpaper.timer
+fi
+
 # ACPI events
 if [[ -f /etc/acpi/handler.sh ]]; then
 	sudo systemctl enable acpid.service
