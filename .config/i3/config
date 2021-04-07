@@ -221,7 +221,7 @@ exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
 exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
-# exec --no-startup-id feh --bg-fill --randomize .local/share/backgrounds/nord
+exec --no-startup-id $HOME/.fehbg &
 exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq
 exec --no-startup-id albert

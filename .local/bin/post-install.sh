@@ -17,9 +17,16 @@ makepkg -si
 cd $HOME
 sudo rm -r yay
 
-# Install packages
-sudo pacman -S --needed - < /home/antsva/.local/cfg/pkg-explicit.pacman
-yay -S --needed - < /home/antsva/.local/cfg/pkg-explicit.aur
+# Install packages from Arch repos
+sudo pacman -S --needed - < /home/antsva/.local/cfg/pkg.pacman
+
+# Prepare rust environment for building certain AUR packages
+if [[ $(which rustup) ]]; then
+	rustup update stable
+fi
+
+# Install AUR packages
+yay -S --needed - < /home/antsva/.local/cfg/pkg.aur
 
 # Litarvan theme for lightdm
 if [[ $(which lightdm) && $(which lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
@@ -65,7 +72,7 @@ sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.
 sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 
 # Force kitty to recognize font in ~/.config/fontconfig/fonts.conf
-fc-cache -r
+# fc-cache -r
 
 # LaTeX
 # sudo ln -s /etc/fonts/conf.avail/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf

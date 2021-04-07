@@ -9,3 +9,4 @@ nextcloud.cfg filter=crypt diff=crypt merge=crypt
 okularrc filter=crypt diff=crypt merge=crypt
 .goldendict/config filter=crypt diff=crypt merge=crypt
 *.keyring filter=crypt diff=crypt merge=crypt
+kdenlive* filter=crypt diff=crypt merge=crypt
