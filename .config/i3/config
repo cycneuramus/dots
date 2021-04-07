@@ -15,6 +15,7 @@ assign [class="Thunderbird"] number 2
 # Program-specific layouts
 for_window [class="scli"] layout tabbed
 for_window [class="Thunderbird"] layout tabbed
+for_window [class="QjackCtl"] floating enable
 
 # No borders on sole window
 hide_edge_borders smart
@@ -216,11 +217,11 @@ bindsym $mod+r mode "resize"
 exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
 exec_always --no-startup-id autotiling
 exec_always --no-startup-id picom
-exec_always --no-startup-id libinput-gestures-setup start
 exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
 exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
+exec_always --no-startup-id libinput-gestures-setup start
 exec --no-startup-id $HOME/.fehbg &
 exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq

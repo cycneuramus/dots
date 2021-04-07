@@ -116,8 +116,14 @@ if [[ $(which avahi-daemon) ]]; then
 	sudo systemctl enable avahi-daemon.service
 	sudo systemctl start avahi-daemon.service
 fi
+if [[ $(which cups-config) ]]; then
+	sudo systemctl enable cups.service
+	sudo systemctl start cups.service
+fi
 if [[ ! $(which nss-mdns) ]]; then
 	echo "Skrivarstöd: paketet 'nss-mdns' fattas."
+else
+	sudo cp $HOME/.local/cfg/nsswitch.conf /etc/
 fi
 
 # Battery life for laptops
@@ -137,3 +143,4 @@ fi
 # https://jackaudio.org/faq/linux_rt_config.html
 sudo sed -i '/End of file/ i @audio          -       rtprio          95' /etc/security/limits.conf
 sudo sed -i '/End of file/ i @audio          -       memlock         unlimited' /etc/security/limits.conf
+sudo usermod -aG audio $USER
