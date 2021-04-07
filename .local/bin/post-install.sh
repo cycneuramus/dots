@@ -5,7 +5,7 @@ if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/
 	exit
 fi 
 
-# Prepare log directory various script outputs
+# Prepare log directory for various script outputs
 mkdir $HOME/.local/log
 
 # AUR helper

@@ -20,7 +20,7 @@
 		Plug 'lilydjwg/colorizer'
 	"	Plug 'ap/vim-css-color'
 	"	Plug 'junegunn/goyo.vim' 
-	"	Plug 'vim-pandoc/vim-markdownfootnotes'
+		Plug 'vim-pandoc/vim-markdownfootnotes'
 	"	Plug 'isobit/vim-caddyfile'
 	"	Plug 'qpkorr/vim-renamer'
 	call plug#end()
@@ -245,12 +245,16 @@
 	vnoremap <c-u> u
 	
 " Insert Markdown footnote
-	nnoremap <leader>f i[^]<left>
-	inoremap <C-r> i[^]<left>
+	nmap <buffer> <Leader>f <Plug>AddVimFootnote
+	nmap <buffer> <Leader>r <Plug>ReturnFromFootnote
+	imap <buffer> <C-f> <Plug>AddVimFootnote
+	imap <buffer> <C-r> <Plug>ReturnFromFootnote
+	" nnoremap <leader>f i[^]<left>
+	" inoremap <C-r> i[^]<left>
 
 " Markdown formatting
-	inoremap <C-k> **<left>
-	inoremap <C-f> ****<left><left>
+	inoremap <C-i> **<left>
+	inoremap <C-b> ****<left><left>
 	
 " Shortcutting split navigation
 	noremap <C-h> <C-w>h

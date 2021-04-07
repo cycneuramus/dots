@@ -278,6 +278,17 @@ pkg-update-check() {
 }
 
 
+# Push file to phone via KDE Connect
+push-file() {
+	device=$(kdeconnect-cli -a | awk '{print $4}')
+	if [[ ! -z $device ]]; then
+		kdeconnect-cli --share "$@" -d "$device"
+	else
+		notify-send -i kdeconnect "Filöverföring" "Ingen aktiv målenhet upptäcktes"
+	fi
+}
+
+
 # Check power source
 pwr() {
 	if [[ $(acpi) == *Charging* ]]; then

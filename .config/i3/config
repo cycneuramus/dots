@@ -175,6 +175,7 @@ bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
 mode "sysctl" {
 		bindsym b exec bash $HOME/.local/bin/functions.sh bt
 		bindsym Return mode "default"
+		bindsym $mod+Shift+s mode "default"
 }
 
 bindsym $mod+Shift+s mode "sysctl"
@@ -219,17 +220,21 @@ exec_always --no-startup-id libinput-gestures-setup start
 exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
 exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
+exec_always --no-startup-id udiskie -a -s
 exec --no-startup-id feh --bg-fill --randomize .local/share/backgrounds/nord
 exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq
 exec --no-startup-id albert
 exec --no-startup-id $HOME/.local/bin/redshift.sh
-exec --no-startup-id udiskie -a -s
 exec --no-startup-id dunst
+exec --no-startup-id /usr/lib/kdeconnectd
+exec --no-startup-id kdeconnect-indicator
 exec --no-startup-id nextcloud
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
-exec --no-startup-id mate-power-manager
+exec --no-startup-id cbatticon -c 10 -u 30 -n -c $BIN/low-battery.sh
+# exec --no-startup-id mate-power-manager
 exec gtk-launch scli
 exec thunderbird
+exec firefox
