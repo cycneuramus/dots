@@ -1,7 +1,8 @@
 set $mod Mod4
 
 # Disable title bar and specify border size
-for_window [class="^.*"] border pixel 2
+new_window pixel 1
+default_floating_border none
 
 # No borders for Albert
 for_window[title="albert"] border none
@@ -25,6 +26,7 @@ focus_on_window_activation focus
 
 # Colors
 set_from_resource $bg background
+set_from_resource $mg color8
 set_from_resource $fg foreground
 set_from_resource $teal1 color14
 set_from_resource $teal2 color6
@@ -35,7 +37,7 @@ set_from_resource $green color2
 set_from_resource $purple color13
 
 # class						border	backgr.	text	indicator	child_border
-client.focused				$blue	$bg		$fg		$blue		$blue
+client.focused				$mg		$mg		$fg		$blue		$blue
 client.focused_inactive		$bg		$bg		$fg		$bg			$bg
 client.unfocused			$bg		$bg		$fg		$bg			$bg
 client.urgent				$red	$bg		$fg		$bg			$bg
@@ -167,7 +169,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # Restart bar
 bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
@@ -222,7 +224,7 @@ exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
 exec_always --no-startup-id libinput-gestures-setup start
-exec --no-startup-id $HOME/.fehbg &
+exec --no-startup-id $HOME/.fehbg
 exec --no-startup-id enact --pos right --watch &
 exec --no-startup-id copyq
 exec --no-startup-id albert

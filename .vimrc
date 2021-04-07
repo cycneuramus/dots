@@ -18,9 +18,9 @@
 		Plug '907th/vim-auto-save'
 		Plug 'justinmk/vim-sneak'
 		Plug 'lilydjwg/colorizer'
+		Plug 'vim-pandoc/vim-markdownfootnotes'
 	"	Plug 'ap/vim-css-color'
 	"	Plug 'junegunn/goyo.vim' 
-		Plug 'vim-pandoc/vim-markdownfootnotes'
 	"	Plug 'isobit/vim-caddyfile'
 	"	Plug 'qpkorr/vim-renamer'
 	call plug#end()
@@ -173,7 +173,7 @@
 	set splitbelow splitright
 
 " Shorter wait for keysequence completion
- 	set timeoutlen=200
+ 	" set timeoutlen=200
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -192,8 +192,8 @@
 
 " Correct indentation behaviour for .yaml files
 	augroup yaml_fix
-    autocmd!
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
+		autocmd!
+		autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
 	augroup END
 
 " Spell checking
@@ -226,16 +226,14 @@
 	nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 " Render .md to .pdf
-	nnoremap <leader>c :!source ~/.local/bin/functions.sh; pdoc "%"<CR><CR>
+	nnoremap <leaSee map-overview for the various forms of "map" and their relationships withder>c :!source ~/.local/bin/functions.sh; pdoc "%"<CR><CR>
 " Open corresponding .pdf
-	nnoremap <leader>p :!if [[ -f "%:r.pdf" ]]; then okular "%:r.pdf" & disown; fi<CR><CR>
+	nnoremap <leader>p :!if [[ -f "%:r.pdf" ]]; then xdg-open "%:r.pdf" & disown; fi<CR><CR>
 
 " Search 
 	noremap - /
-	" noremap <leader>s /
 " Search and replace
 	noremap _ :%s//g<Left><Left>
-	" noremap <leader>S :%s//g<Left><Left>
 
 " More intuitive redo binding
 	nnoremap U <c-r>
@@ -253,15 +251,9 @@
 	" inoremap <C-r> i[^]<left>
 
 " Markdown formatting
-	inoremap <C-i> **<left>
-	inoremap <C-b> ****<left><left>
-	
-" Shortcutting split navigation
-	noremap <C-h> <C-w>h
-	noremap <C-j> <C-w>j
-	noremap <C-k> <C-w>k
-	noremap <C-l> <C-w>l
+	imap <C-k> **<left>
+	imap <C-b> ****<left><left>
 	
 " LaTeX helpers
-	nnoremap <leader>tg i\textgreek{}<left>
-	nnoremap <leader>tl i\textlatin{}<left>
+	" nnoremap <leader>tg i\textgreek{}<left>
+	" nnoremap <leader>tl i\textlatin{}<left>
