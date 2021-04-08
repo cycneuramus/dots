@@ -59,8 +59,8 @@ bindsym $mod+Shift+Return [instance="scratchterm"] scratchpad show
 bindsym $mod+Shift+Control+Return exec --no-startup-id kitty --name="scratchterm"
 
 # Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && canberra-gtk-play -i audio-volume-change -d "changeVolume"
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && canberra-gtk-play -i audio-volume-change -d "changeVolume"
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.local/bin/volume.sh up
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.local/bin/volume.sh down
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle 
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
 
