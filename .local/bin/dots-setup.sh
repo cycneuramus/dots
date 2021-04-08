@@ -61,7 +61,6 @@ elif [[ $1 == "bootstrap" ]]; then
 	yes | rm -r dots-tmp/
 	yes | rm -r transcrypt/
 
-
 else
 	echo "Usage: dots.sh [init]/[bootstrap branch]"
 fi

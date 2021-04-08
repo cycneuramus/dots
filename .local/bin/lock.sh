@@ -9,10 +9,14 @@ T='#eceff4'
 W='#Bf616a'
 
 i3lock -C -i $BIN/lock.png 	\
---insidevercolor=$C   		\
---ringvercolor=$D     		\
+--veriftext=""				\
+--wrongtext=""				\
+--locktext=""				\
 							\
---insidewrongcolor=$C 		\
+--insidevercolor=$D   		\
+--ringvercolor=$C    		\
+							\
+--insidewrongcolor=$D 		\
 --ringwrongcolor=$W   		\
 							\
 --insidecolor=$C      		\

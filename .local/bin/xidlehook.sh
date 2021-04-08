@@ -6,8 +6,6 @@
 killall -q xidlehook
 while pgrep -u $UID -x xidlehook >/dev/null; do sleep 1; done
 
-  	# '$HOME/.local/bin/screensaver.sh' 
-
 xidlehook \
   --not-when-audio \
   --timer 300 \

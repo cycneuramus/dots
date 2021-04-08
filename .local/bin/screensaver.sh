@@ -2,7 +2,7 @@
 
 . $BIN/functions.sh
 
-if [[ $(pgrep -f "audacity|zoom|ffmpeg|vlc") || $(lid) == "closed" ]]; then exit; fi
+if [[ $(pgrep -f "audacity|zoom|ffmpeg|mpv") || $(lid) == "closed" ]]; then exit; fi
 
 # if (( $idletime > $targettime )); then
 # 	Start screensaver on external monitor if found 
