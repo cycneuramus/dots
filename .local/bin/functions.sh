@@ -667,9 +667,9 @@ yta() {
 }
 
 
-# Stream YouTube video via VLC
+# Stream YouTube video 
 yts() {
-	youtube-dl -o - "$1" | vlc -
+	youtube-dl -o - "$1" | mpv -
 }
 
 

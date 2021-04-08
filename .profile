@@ -9,6 +9,7 @@ export PREAMBLE=/home/antsva/Nextcloud/Arbeten/Artikelmall.yaml
 
 export BROWSER=firefox
 export EDITOR=vim
+export PAGER=less
 
 export LESS=-R
 export LESSOPEN="|~/.config/lessfilter %s"
