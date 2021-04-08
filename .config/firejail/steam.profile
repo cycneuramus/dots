@@ -8,21 +8,21 @@ include globals.local
 
 private ${HOME}/.firejail/steam 
 
-noblacklist ${HOME}/.killingfloor
-noblacklist ${HOME}/.local/share/3909/PapersPlease
-noblacklist ${HOME}/.local/share/aspyr-media
-noblacklist ${HOME}/.local/share/cdprojektred
-noblacklist ${HOME}/.local/share/FasterThanLight
-noblacklist ${HOME}/.local/share/feral-interactive
-noblacklist ${HOME}/.local/share/IntoTheBreach
-noblacklist ${HOME}/.local/share/Paradox Interactive
+# noblacklist ${HOME}/.killingfloor
+# noblacklist ${HOME}/.local/share/3909/PapersPlease
+# noblacklist ${HOME}/.local/share/aspyr-media
+# noblacklist ${HOME}/.local/share/cdprojektred
+# noblacklist ${HOME}/.local/share/FasterThanLight
+# noblacklist ${HOME}/.local/share/feral-interactive
+# noblacklist ${HOME}/.local/share/IntoTheBreach
+# noblacklist ${HOME}/.local/share/Paradox Interactive
 noblacklist ${HOME}/.local/share/Steam
-noblacklist ${HOME}/.local/share/SuperHexagon
-noblacklist ${HOME}/.local/share/Terraria
-noblacklist ${HOME}/.local/share/vpltd
-noblacklist ${HOME}/.local/share/vulkan
-noblacklist ${HOME}/.mbwarband
-noblacklist ${HOME}/.paradoxinteractive
+# noblacklist ${HOME}/.local/share/SuperHexagon
+# noblacklist ${HOME}/.local/share/Terraria
+# noblacklist ${HOME}/.local/share/vpltd
+# noblacklist ${HOME}/.local/share/vulkan
+# noblacklist ${HOME}/.mbwarband
+# noblacklist ${HOME}/.paradoxinteractive
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
@@ -43,44 +43,44 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-mkdir ${HOME}/.config/unity3d
-mkdir ${HOME}/.killingfloor
-mkdir ${HOME}/.local/share/3909/PapersPlease
-mkdir ${HOME}/.local/share/aspyr-media
-mkdir ${HOME}/.local/share/cdprojektred
-mkdir ${HOME}/.local/share/FasterThanLight
-mkdir ${HOME}/.local/share/feral-interactive
-mkdir ${HOME}/.local/share/IntoTheBreach
-mkdir ${HOME}/.local/share/Paradox Interactive
+# mkdir ${HOME}/.config/unity3d
+# mkdir ${HOME}/.killingfloor
+# mkdir ${HOME}/.local/share/3909/PapersPlease
+# mkdir ${HOME}/.local/share/aspyr-media
+# mkdir ${HOME}/.local/share/cdprojektred
+# mkdir ${HOME}/.local/share/FasterThanLight
+# mkdir ${HOME}/.local/share/feral-interactive
+# mkdir ${HOME}/.local/share/IntoTheBreach
+# mkdir ${HOME}/.local/share/Paradox Interactive
 mkdir ${HOME}/.local/share/Steam
-mkdir ${HOME}/.local/share/SuperHexagon
-mkdir ${HOME}/.local/share/Terraria
-mkdir ${HOME}/.local/share/vpltd
-mkdir ${HOME}/.local/share/vulkan
-mkdir ${HOME}/.mbwarband
-mkdir ${HOME}/.paradoxinteractive
+# mkdir ${HOME}/.local/share/SuperHexagon
+# mkdir ${HOME}/.local/share/Terraria
+# mkdir ${HOME}/.local/share/vpltd
+# mkdir ${HOME}/.local/share/vulkan
+# mkdir ${HOME}/.mbwarband
+# mkdir ${HOME}/.paradoxinteractive
 mkdir ${HOME}/.steam
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
-whitelist ${HOME}/.config/unity3d
-whitelist ${HOME}/.killingfloor
-whitelist ${HOME}/.local/share/3909/PapersPlease
-whitelist ${HOME}/.local/share/aspyr-media
-whitelist ${HOME}/.local/share/cdprojektred
-whitelist ${HOME}/.local/share/FasterThanLight
-whitelist ${HOME}/.local/share/feral-interactive
-whitelist ${HOME}/.local/share/IntoTheBreach
-whitelist ${HOME}/.local/share/Paradox Interactive
+# whitelist ${HOME}/.config/unity3d
+# whitelist ${HOME}/.killingfloor
+# whitelist ${HOME}/.local/share/3909/PapersPlease
+# whitelist ${HOME}/.local/share/aspyr-media
+# whitelist ${HOME}/.local/share/cdprojektred
+# whitelist ${HOME}/.local/share/FasterThanLight
+# whitelist ${HOME}/.local/share/feral-interactive
+# whitelist ${HOME}/.local/share/IntoTheBreach
+# whitelist ${HOME}/.local/share/Paradox Interactive
 whitelist ${HOME}/.local/share/Steam
-whitelist ${HOME}/.local/share/SuperHexagon
-whitelist ${HOME}/.local/share/Terraria
-whitelist ${HOME}/.local/share/vpltd
-whitelist ${HOME}/.local/share/vulkan
-whitelist ${HOME}/.mbwarband
-whitelist ${HOME}/.paradoxinteractive
+# whitelist ${HOME}/.local/share/SuperHexagon
+# whitelist ${HOME}/.local/share/Terraria
+# whitelist ${HOME}/.local/share/vpltd
+# whitelist ${HOME}/.local/share/vulkan
+# whitelist ${HOME}/.mbwarband
+# whitelist ${HOME}/.paradoxinteractive
 whitelist ${HOME}/.steam
-whitelist ${HOME}/.steampath
-whitelist ${HOME}/.steampid
+# whitelist ${HOME}/.steampath
+# whitelist ${HOME}/.steampid
 include whitelist-common.inc
 include whitelist-var-common.inc
 

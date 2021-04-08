@@ -2,14 +2,16 @@
 /home/antsva/.local/share/baloo
 /home/antsva/.local/share/klipper
 /home/antsva/.local/share/Trash
-/home/antsva/.local/share/Steam
-# /home/antsva/.local/share/plasma-vault
 /home/antsva/.local/share/RecentDocuments
+/home/antsva/.local/share/Steam
+/home/antsva/.firejail
 /home/antsva/.Trash
 /home/antsva/.protonvpn-cli
 /home/antsva/.pvpn-cli
 /home/antsva/.borgbak
 /home/antsva/.cargo
+/home/antsva/.rustup
+/home/antsva/.steam
 /home/antsva/.config/Nextcloud/logs
 */.cache
 */.Cache

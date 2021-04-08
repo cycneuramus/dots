@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Terraforming Mars
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/800270
+# Icon=steam_icon_800270
+Icon=steam
+Terminal=false
+Type=Application
+Categories=Game;
