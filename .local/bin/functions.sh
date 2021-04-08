@@ -111,20 +111,6 @@ cpu-gov() {
 }
 
 
-# Mount encrypted file system
-crypt-mount() {
-	gocryptfs -i 30m $HOME/.crypt $HOME/Publikt
-	xdg-open $HOME/Publikt &
-	exit
-}
-
-
-# Unmount encrypted file system
-crypt-umount() {
-	fusermount -u $HOME/Publikt
-}
-
-
 # Convert e-book to .pdf
 ebook-pdf() {
 	ebook-convert "$1" "${1%.*}.pdf"
@@ -267,6 +253,63 @@ loc() {
 	lon=$(echo "$ip_info" | grep longitude | grep -Eo '[0-9.]+')
 	
 	echo $lat,$lon
+}
+
+
+# Mount file systems
+mnt() {
+	select mount in crypt homeserver kodi vps raspi; do
+
+		mountpoint="/home/antsva/.mnt/$mount"
+		if [[ ! -d $mountpoint ]]; then
+			mkdir -p $mountpoint
+		fi
+
+		case "$mount" in
+			crypt)
+				gocryptfs -i 30m $HOME/.crypt $mountpoint
+				;;
+			homeserver)
+				sshfs antsva@192.168.1.94:/home/antsva $mountpoint -C
+				;;
+			kodi)
+				sshfs root@192.168.1.23:/storage $mountpoint -C
+				;;
+			vps)
+				. secrets
+				sshfs antsva@$vps_ip:/home/antsva $mountpoint -C -p 4422
+				;;
+			raspi)
+				sshfs pi@192.168.1.192:/home/pi $mountpoint -C
+				;;
+			"")
+				echo "Monteringsmål $mount hittades inte"
+				;;
+		esac
+
+		break
+	done
+
+	xdg-open $mountpoint &
+	exit
+}
+
+
+# Unmount file systems
+umnt() {
+	for dir in $(ls $HOME/.mnt); do
+		
+		if [[ $dir == "vault" ]]; then
+			if [[ $(mount | grep $dir) ]]; then
+				fusermount -u $HOME/.mnt/$dir
+			fi
+		else
+			if [[ $(mount | grep $dir) ]]; then
+				umount $HOME/.mnt/$dir
+			fi
+		fi
+
+	done
 }
 
 
