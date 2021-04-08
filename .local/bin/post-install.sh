@@ -8,6 +8,12 @@ fi
 # Prepare log directory for various script outputs
 mkdir $HOME/.local/log
 
+# Prepare pacman config
+if [[ -f /home/antsva/.local/cfg/pacman.conf ]]; then
+	sudo rm /etc/pacman.conf
+	sudo ln -s /home/antsva/.local/cfg/pacman.conf /etc/pacman.conf
+fi
+
 # AUR helper
 cd $HOME
 sudo pacman -S git base-devel --noconfirm
@@ -81,7 +87,8 @@ sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libi
 # Sandboxing
 if [[ $(which firejail) ]]; then
 	if [[ $(which steam) ]]; then
-		sudo ln -s /usr/bin/firejail /usr/local/bin/steam-native
+		mkdir -p $HOME/.firejail/steam
+		sudo ln -s /usr/bin/firejail /usr/local/bin/steam-runtime
 		sudo ln -s /usr/bin/firejail /usr/local/bin/steam
 	fi
 
@@ -122,7 +129,7 @@ if [[ $(which cups-config) ]]; then
 fi
 if [[ $(which nss-mdns) ]]; then
 	sudo rm /etc/nsswitch.conf
-	sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/
+	sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 fi
 
 # Battery life for laptops

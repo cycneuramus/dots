@@ -6,7 +6,7 @@ include steam.local
 # Persistent global definitions
 include globals.local
 
-# private ${HOME}/.firejail/steam 
+private ${HOME}/.firejail/steam 
 
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.local/share/3909/PapersPlease

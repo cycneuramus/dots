@@ -111,6 +111,20 @@ cpu-gov() {
 }
 
 
+# Mount encrypted file system
+crypt-mount() {
+	gocryptfs -i 30m $HOME/.crypt $HOME/Publikt
+	xdg-open $HOME/Publikt &
+	exit
+}
+
+
+# Unmount encrypted file system
+crypt-umount() {
+	fusermount -u $HOME/Publikt
+}
+
+
 # Convert e-book to .pdf
 ebook-pdf() {
 	ebook-convert "$1" "${1%.*}.pdf"
