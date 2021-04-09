@@ -1,7 +1,7 @@
 #!/bin/bash
 
-. functions.sh
-. secrets 
+. functions.sh 
+. secrets > /dev/null 2>&1
 
 if [[ $(internet) == "off" ]]; then exit; fi
 
@@ -16,7 +16,7 @@ newline=$'\n'
 
 # Definierar funktion för att skicka meddelandet genom pipe och därmed få med radbrytningar
 signal_send() {
-    $signal_cli -u "$signal_from" send "$signal_to" # Till kontakt
+	$signal_cli -u "$signal_from" send "$signal_to" # Till kontakt
     # $signal_cli -u "$signal_from" send -g "$signal_to" # Till grupp
 }
 
