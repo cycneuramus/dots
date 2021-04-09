@@ -1,5 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
+if [[ $1 == *.mp4 ]]; then exit; fi
+
 . $HOME/bin/secrets
 
 set -x
