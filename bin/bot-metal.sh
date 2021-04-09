@@ -28,6 +28,9 @@ while read artist; do
 	log="$log_dir"/"$artist".log
 
 	case "$artist" in
+		"Arch Echo")
+			artist_id="6290096"
+			;;
 		"Ayreon")
 			artist_id="263989"
 			;;
@@ -72,12 +75,12 @@ while read artist; do
 			;;
 		esac
 
-	release_json=$(curl "https://api.discogs.com/artists/"$artist_id"/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "FooBarApp/3.0" | jq -r '.releases[0]')
+	release_json=$(curl -s "https://api.discogs.com/artists/"$artist_id"/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "FooBarApp/3.0" | jq -r '.releases[0]')
 	release_title_year="$(echo "$release_json" | jq '.title') ($(echo "$release_json" | jq '.year'))"
-	
-	msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot"
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
+		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot"
+
 		push "$msg_newrelease" # Ifall signal-cli inte fungerar
 		echo -e "$msg_newrelease" | signal_send
 	fi
