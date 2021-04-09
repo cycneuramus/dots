@@ -34,6 +34,9 @@ while read line; do
 	release_json=$(curl -s "https://api.discogs.com/artists/"$artist_id"/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "FooBarApp/3.0" | jq -r '.releases[0]')
 	release_title_year="$(echo "$release_json" | jq '.title') ($(echo "$release_json" | jq '.year'))"
 
+# Bail out to next artist on API error
+if [[ "$release_title_year" == *null* ]]; then continue; fi 
+
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
 		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot"
 

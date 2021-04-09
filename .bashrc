@@ -2,7 +2,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-. $HOME/bin/funktioner.sh
+. $HOME/bin/functions.sh
 
 alias dots="git --git-dir=$HOME/.dots/ --work-tree=$HOME"
 
