@@ -127,7 +127,7 @@
     "ui.liveplay_background": 0.8,
     "ui.liveplay_brightness": 1,
     "ui.mp_s_h": 1,
-    "ui.racktuner": 0,
+    "ui.racktuner": 1,
     "ui.tuner_reference_pitch": 440,
     "univibe.s_h": 1,
     "univibe_mono.s_h": 1,

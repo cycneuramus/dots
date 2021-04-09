@@ -225,7 +225,7 @@ exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
 exec_always --no-startup-id libinput-gestures-setup restart
 exec --no-startup-id $HOME/.fehbg
-exec --no-startup-id enact --pos right --watch &
+exec --no-startup-id enact --pos left --watch
 exec --no-startup-id copyq
 exec --no-startup-id albert
 exec --no-startup-id $HOME/.local/bin/redshift.sh

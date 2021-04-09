@@ -32,6 +32,7 @@ application/x-shellscript=vim.desktop;
 audio/aac=mpv.desktop;
 audio/mp4=mpv.desktop;
 audio/mpeg=mpv.desktop;
+audio/ogg=mpv.desktop;
 audio/x-opus+ogg=mpv.desktop;
 audio/x-vorbis+ogg=mpv.desktop;
 audio/x-wav=mpv.desktop;
