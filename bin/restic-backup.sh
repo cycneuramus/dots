@@ -5,8 +5,10 @@ if (( $EUID != 0 )); then
     exit
 fi
 
-. funktioner.sh
+. functions.sh
 . secrets
+
+trap 'push "$(basename $0) stötte på fel"' err
 
 export B2_ACCOUNT_ID=$b2_account_id 
 export B2_ACCOUNT_KEY=$b2_account_key

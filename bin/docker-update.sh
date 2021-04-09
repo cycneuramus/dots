@@ -1,6 +1,7 @@
 #!/bin/bash
 
-. funktioner.sh
+. functions.sh
+trap 'push "$(basename $0) stötte på fel"' err
 
 last_dir=$(pwd)
 cd $HOME/docker
