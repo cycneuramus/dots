@@ -9,8 +9,10 @@ if (( $EUID != 0 )); then
     exit
 fi
 
-. funktioner.sh
+. functions.sh
 . secrets
+
+trap 'push "$(basename $0) stötte på fel"' err
 
 # export BORG_REPO=ssh://antsva@localhost//mnt/extern/backup/x230/borgbak
 export BORG_REPO=/mnt/extern/backup/x230/borgbak

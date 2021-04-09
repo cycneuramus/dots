@@ -5,7 +5,8 @@ if (( $EUID != 0 )); then
     exit
 fi
 
-. funktioner.sh
+. functions.sh
+trap 'push "$(basename $0) stötte på fel"' err
 
 echo 0 > /sys/class/backlight/intel_backlight/brightness
 

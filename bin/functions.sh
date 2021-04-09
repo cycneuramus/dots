@@ -31,9 +31,9 @@ dots-sync() {
 internet() { 
     # if wget -T 5 -q --spider http://kernel.org; then
 	if ping -q -w1 -c1 kernel.org &>/dev/null; then
-        echo "på"
+        echo "on"
     else
-        echo "av"
+        echo "off"
     fi
 }
 
@@ -55,4 +55,3 @@ temp() {
         sed 's/...$/°C/' /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp1_input
 	# /sys/class/hwmon/hwmon2/temp1_input
 }
-

@@ -1,8 +1,10 @@
 #!/bin/bash
 
-. funktioner.sh
+. functions.sh
 
-if [[ $(internet) != "på" ]]; then exit; fi
+if [[ $(internet) == "off" ]]; then exit; fi
+
+trap 'push "$(basename $0) stötte på fel"' err
 
 log=/home/antsva/log/signal-cli-update.log
 latest_release=$(curl --silent "https://api.github.com/repos/AsamK/signal-cli/releases/latest" | jq -r .tag_name)

@@ -3,7 +3,8 @@
 # Kontrollera uppdateringar och avisera på telefon
 # https://www.a-netz.de/blog/2012/12/check-for-updates-in-raspbian/
 
-. funktioner.sh
+. functions.sh
+trap 'push "$(basename $0) stötte på fel"' err
 
 # Uppdatera paketlistor och läs utdata
 sudo apt-get update 2>&1 # > /dev/null

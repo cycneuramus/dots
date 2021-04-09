@@ -1,11 +1,13 @@
 #!/bin/bash
 
-. funktioner.sh
+. functions.sh
 
 if (( $EUID != 0 )); then
     echo "Var vänlig kör som root"
     exit
 fi
+
+trap 'push "$(basename $0) stötte på fel"' err
 
 # if (( $(hdparm -I /dev/disk/by-uuid/63c7ab15-be2c-44a5-a515-8d2889e5071f | grep "Advanced power management level:" | grep -Eo '[0-9]*') != 120 )); then
 #     hdparm -B 120 -S 120 /dev/disk/by-uuid/63c7ab15-be2c-44a5-a515-8d2889e5071f

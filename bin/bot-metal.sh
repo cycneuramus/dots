@@ -1,9 +1,11 @@
 #!/bin/bash
 
-. funktioner.sh
+. functions.sh
 . secrets 
 
-if [[ $(internet) != "på" ]]; then exit; fi
+if [[ $(internet) == "off" ]]; then exit; fi
+
+trap 'push "$(basename $0) stötte på fel"' err
 
 log_dir="/home/antsva/log/bot-metal"
 signal_cli="./signal-cli/bin/signal-cli"
@@ -36,7 +38,7 @@ while read line; do
 		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot"
 
 		push "$msg_newrelease" # Ifall signal-cli inte fungerar
-		# echo -e "$msg_newrelease" | signal_send
+		echo -e "$msg_newrelease" | signal_send
 	fi
 
 	echo "$release_title_year" > "$log"

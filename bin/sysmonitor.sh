@@ -2,7 +2,8 @@
 
 # Körs regelbundet via CRON och aviserar vid hög belastning från en kontroll till nästa.
 
-. funktioner.sh
+. functions.sh
+trap 'push "$(basename $0) stötte på fel"' err
 
 lock=/tmp/sysmonitor_triggered.tmp
 cpu=$(cpu | sed 's/[^0-9]//g')
