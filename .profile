@@ -9,11 +9,11 @@ export PREAMBLE=/home/antsva/Nextcloud/Arbeten/Artikelmall.yaml
 
 export BROWSER=firefox
 export EDITOR=vim
-export PAGER=less
 
+export PAGER=less
 export LESS=-R
 export LESSOPEN="|~/.config/lessfilter %s"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_STYLE_OVERRIDE=kvantum

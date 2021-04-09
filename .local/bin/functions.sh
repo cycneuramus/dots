@@ -258,7 +258,7 @@ loc() {
 
 # Mount file systems
 mnt() {
-	select mount in crypt homeserver kodi vps raspi; do
+	select mount in crypt homeserver kodi vps raspi restic; do
 
 		mountpoint="/home/antsva/.mnt/$mount"
 		if [[ ! -d $mountpoint ]]; then
@@ -282,6 +282,11 @@ mnt() {
 			raspi)
 				sshfs pi@192.168.1.192:/home/pi $mountpoint -C
 				;;
+			restic)
+				. secrets
+				export RESTIC_PASSWORD="$restic_pass"
+				restic -r $restic_repo mount $mountpoint &
+				;;
 			"")
 				echo "Monteringsmål $mount hittades inte"
 				;;
@@ -299,14 +304,8 @@ mnt() {
 umnt() {
 	for dir in $(ls $HOME/.mnt); do
 		
-		if [[ $dir == "vault" ]]; then
-			if [[ $(mount | grep $dir) ]]; then
-				fusermount -u $HOME/.mnt/$dir
-			fi
-		else
-			if [[ $(mount | grep $dir) ]]; then
-				umount $HOME/.mnt/$dir
-			fi
+		if [[ $(mount | grep $dir) ]]; then
+			umount $HOME/.mnt/$dir
 		fi
 
 	done
