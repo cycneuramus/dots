@@ -10,6 +10,9 @@ export PREAMBLE=/home/antsva/Nextcloud/Arbeten/Artikelmall.yaml
 export BROWSER=firefox
 export EDITOR=vim
 
+export FZF_DEFAULT_COMMAND="fd --type file --hidden --color=always --exclude '.git' --exclude '.firejail' --exclude '.cache'"
+export FZF_DEFAULT_OPTS="--layout=reverse --ansi --preview 'bat --color=always {}'"
+
 export PAGER=less
 export LESS=-R
 export LESSOPEN="|~/.config/lessfilter %s"
