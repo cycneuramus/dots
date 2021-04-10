@@ -10,7 +10,7 @@ xidlehook \
   --not-when-audio \
   --timer 300 \
   	'$HOME/.local/bin/screensaver.sh' \
-	'if wmctrl -l | grep unimatrix; then wmctrl -lp | awk "/unimatrix/{print \$3}" | xargs kill; fi' \
+	'if [[ $(wmctrl -l | grep unimatrix) ]]; then wmctrl -lp | awk "/unimatrix/{print \$3}" | xargs kill; fi' \
   --timer 300 \
   'if [[ $(acpi) == *Discharging* ]]; then wmctrl -lp | awk "/unimatrix/{print \$3}" | xargs kill && sleep 1 && bash $HOME/.local/bin/lock.sh && systemctl suspend; fi' \
 	''

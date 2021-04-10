@@ -1,0 +1,9 @@
+[Unit]
+Description=Empty trash of files that have been deleted more than 30 days
+
+[Timer]
+OnCalendar=monthly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

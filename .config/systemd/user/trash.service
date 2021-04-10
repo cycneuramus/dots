@@ -1,0 +1,8 @@
+[Unit]
+Description=Empty trash of files that have been deleted more than 30 days
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/trash-empty 30
+ExecStart=/usr/bin/notify-send -i emptytrash "Papperskorgen" "Tömd på filer äldre än 30 dagar"
