@@ -28,7 +28,7 @@ MAILTO=""
 */10 * * * *	sysmonitor.sh > /dev/null 2>&1
 */15 * * * *	nextcloud-cron.sh > /dev/null 2>&1
 */30 * * * *	duckdns.sh > /dev/null 2>&1
-0 1 * * *		bot-symphony-x.sh > /dev/null 2>&1
+0 8 * * *		bot-metal.sh > /home/antsva/log/bot-metal.log 2>&1
 0 2 * * 6		dots-cron.sh > /home/antsva/log/dots-cron.log 2>&1
 0 3 * * 7		photoprism-cron.sh > /dev/null 2>&1
 0 4 * * 6		docker-update.sh > /home/antsva/log/docker-update.log 2>&1

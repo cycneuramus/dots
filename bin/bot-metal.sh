@@ -7,17 +7,28 @@ if [[ $(internet) == "off" ]]; then exit; fi
 
 trap 'push "$(basename $0) stötte på fel"' err
 
-log_dir="/home/antsva/log/bot-metal"
-signal_cli="./signal-cli/bin/signal-cli"
-signal_from="$phone_number"
-# signal_to="$(signal-cli listGroups | awk '/Autistic/{print $2}')"
-signal_to="$phone_number"
 newline=$'\n'
+log_dir="/home/antsva/log/bot-metal"
+
+signal_cli="./signal-cli/bin/signal-cli"
+$signal_cli receive > /dev/null 2>&1
+
+signal_from="$phone_number"
+signal_group="$($signal_cli listGroups | awk '/Autistic/{print $2}')"
+
+if [[ -n $signal_group ]]; then
+	signal_to="$signal_group"
+else
+	signal_to="$phone_number"
+fi
 
 # Definierar funktion för att skicka meddelandet genom pipe och därmed få med radbrytningar
 signal_send() {
-	$signal_cli -u "$signal_from" send "$signal_to" # Till kontakt
-    # $signal_cli -u "$signal_from" send -g "$signal_to" # Till grupp
+	if [[ $signal_to == $phone_number ]]; then
+		$signal_cli -u "$signal_from" send "$signal_to" # Till kontakt
+	else
+		$signal_cli -u "$signal_from" send -g "$signal_to" # Till grupp
+	fi
 }
 
 if [[ ! -d "$log_dir" ]]; then
