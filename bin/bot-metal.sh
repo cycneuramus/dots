@@ -46,7 +46,7 @@ while read line; do
 	release_title_year="$(echo "$release_json" | jq '.title') ($(echo "$release_json" | jq '.year'))"
 
 	# Bail out to next artist on API error
-	if [[ "$release_title_year" == *null* ]]; then continue; fi 
+	if [[ -z "$release_title_year" || "$release_title_year" == *null* ]]; then continue; fi 
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
 		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot (https://git.io/JOkwF)"
