@@ -63,7 +63,6 @@ Star One=291519
 Symphony X=291495
 The Rippingtons=555275
 Thomas Bergersen=782590
-Toto=68693
 Twilight Force=3861827
 Ulver=92973
 Vince DiCola=99328
@@ -77,7 +76,7 @@ echo "$artists" | while read line; do
 
 	log="$log_dir"/"$artist".log
 
-	release_json=$(curl -s "https://api.discogs.com/artists/"$artist_id"/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "FooBarApp/3.0" | jq -r '.releases[0]')
+	release_json=$(curl -s "https://api.discogs.com/artists/$artist_id/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "Tryadnu" -H "Authorization: Discogs key=$discogs_key, secret=$discogs_secret" | jq -r '.releases[0]')
 	release_title_year="$(echo "$release_json" | jq '.title') ($(echo "$release_json" | jq '.year'))"
 
 	# Bail out to next artist on API error
