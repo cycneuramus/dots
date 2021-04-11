@@ -36,23 +36,38 @@ if [[ ! -d "$log_dir" ]]; then
 fi
 
 read -d '' artists << EOF || true
+Adagio=1122446
 Allen Lande=1751194
 Arch Echo=6290096
 Ayreon=263989
+Beast In Black=6051971
+Blind Guardian=262577
 Devin Townsend=251249
 Devin Townsend Band=1441645
 DGM=1940603
+Dirty Loops=3707700
 Dream Theater=260935
+Freedom Call=423373
+Frost*=722062
 Haken=2481019
 Leprous=1927912
 Liquid Tension Experiment=94846
 Meshuggah=252273
 Michael Romeo=333536
+Myrath=2060004
 Opeth=245797
 Pain of Salvation=388262
 Plini=3511496
+Running Wild=271521
+Star One=291519
 Symphony X=291495
+The Rippingtons=555275
 Thomas Bergersen=782590
+Toto=68693
+Twilight Force=3861827
+Ulver=92973
+Vince DiCola=99328
+Wilderun=3824271
 EOF
 
 echo "$artists" | while read line; do
