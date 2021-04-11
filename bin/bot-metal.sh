@@ -10,7 +10,7 @@ trap 'push "$(basename $0) stötte på fel"' err
 newline=$'\n'
 log_dir="/home/antsva/log/bot-metal"
 
-signal_cli="./signal-cli/bin/signal-cli"
+signal_cli="$HOME/bin/signal-cli/bin/signal-cli"
 $signal_cli receive > /dev/null 2>&1
 
 signal_from="$phone_number"
@@ -49,7 +49,7 @@ while read line; do
 	if [[ "$release_title_year" == *null* ]]; then continue; fi 
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
-		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot"
+		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot (https://git.io/JOkwF)"
 
 		push "$msg_newrelease" # Ifall signal-cli inte fungerar
 		echo -e "$msg_newrelease" | signal_send
