@@ -22,12 +22,12 @@ else
 	signal_to="$phone_number"
 fi
 
-# Definierar funktion för att skicka meddelandet genom pipe och därmed få med radbrytningar
+# Function to send message through pipe, preserving line breaks
 signal_send() {
 	if [[ $signal_to == $phone_number ]]; then
-		$signal_cli -u "$signal_from" send "$signal_to" # Till kontakt
+		$signal_cli -u "$signal_from" send "$signal_to" # To contact
 	else
-		$signal_cli -u "$signal_from" send -g "$signal_to" # Till grupp
+		$signal_cli -u "$signal_from" send -g "$signal_to" # To group
 	fi
 }
 
@@ -51,7 +51,7 @@ while read line; do
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
 		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot (https://git.io/JOkwF)"
 
-		push "$msg_newrelease" # Ifall signal-cli inte fungerar
+		push "$msg_newrelease" # In case signal-cli fails
 		echo -e "$msg_newrelease" | signal_send
 	fi
 
