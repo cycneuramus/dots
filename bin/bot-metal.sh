@@ -1,4 +1,4 @@
-#!/bin/bash
+but#!/bin/bash
 
 . functions.sh 
 . secrets > /dev/null 2>&1
