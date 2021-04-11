@@ -35,7 +35,25 @@ if [[ ! -d "$log_dir" ]]; then
 	mkdir -p "$log_dir"
 fi
 
-while read line; do
+read -d '' artists << EOF || true
+Arch Echo=6290096
+Ayreon=263989
+Devin Townsend=251249
+Devin Townsend Band=1441645
+DGM=1940603
+Dream Theater=260935
+Haken=2481019
+Leprous=1927912
+Liquid Tension Experiment=94846
+Michael Romeo=333536
+Opeth=245797
+Pain of Salvation=388262
+Plini=3511496
+Symphony X=291495
+Thomas Bergersen=782590
+EOF
+
+echo "$artists" | while read line; do
 
 	artist=$(echo "$line" | cut -d= -f1)
 	artist_id=$(echo "$line" | cut -d= -f2)
@@ -57,4 +75,4 @@ while read line; do
 
 	echo "$release_title_year" > "$log"
 
-done < $HOME/bin/artists
+done
