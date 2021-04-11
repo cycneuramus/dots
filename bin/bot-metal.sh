@@ -36,6 +36,7 @@ if [[ ! -d "$log_dir" ]]; then
 fi
 
 read -d '' artists << EOF || true
+Allen Lande=1751194
 Arch Echo=6290096
 Ayreon=263989
 Devin Townsend=251249
@@ -45,6 +46,7 @@ Dream Theater=260935
 Haken=2481019
 Leprous=1927912
 Liquid Tension Experiment=94846
+Meshuggah=252273
 Michael Romeo=333536
 Opeth=245797
 Pain of Salvation=388262
