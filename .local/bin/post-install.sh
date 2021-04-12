@@ -1,12 +1,16 @@
 #!/bin/bash
 
+set -e 
+
 if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
 	echo "Source folders missing"
 	exit
 fi 
 
 # Prepare log directory for various script outputs
-mkdir $HOME/.local/log
+if [[ ! -d $HOME/.local/log ]]; then
+	mkdir $HOME/.local/log
+fi
 
 # Prepare pacman config
 if [[ -f /home/antsva/.local/cfg/pacman.conf ]]; then
@@ -16,6 +20,7 @@ fi
 
 # AUR helper
 cd $HOME
+sudo pacman -Syu
 sudo pacman -S git base-devel --noconfirm
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -33,6 +38,7 @@ fi
 
 # Install AUR packages
 yay -S --needed - < /home/antsva/.local/cfg/pkg.aur
+sudo archlinux-java fix
 
 # Litarvan theme for lightdm
 if [[ $(which lightdm) && $(which lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
@@ -76,6 +82,8 @@ sudo usermod -aG video $USER
 # Allow passwordless commands (e.g. sudo rfkill block bluetooth)
 sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
 sudo ln -s /home/antsvawhat does /.local/cfg/bluetooth /etc/sudoers.d/bluetooth
+sudo chmod root:root /etc/sudoers.d/rfkill
+sudo chmod root:root /etc/sudoers.d/bluetooth
 
 # Network automations
 sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh && sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
@@ -93,7 +101,9 @@ sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libi
 # Sandboxing
 if [[ $(which firejail) ]]; then
 	if [[ $(which steam) ]]; then
-		mkdir -p $HOME/.firejail/steam
+		if [[ ! -d $HOME/.firejail/steam ]]; then
+			mkdir -p $HOME/.firejail/steam
+		fi
 		sudo ln -s /usr/bin/firejail /usr/local/bin/steam-runtime
 		sudo ln -s /usr/bin/firejail /usr/local/bin/steam
 	fi

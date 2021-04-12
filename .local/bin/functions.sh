@@ -16,7 +16,7 @@ a-in() {
 
 # Record to file via Jack
 a-rec() {
-	cd $HOME/Skrivbord && jack_capture -f ogg
+	cd $HOME/Musik && jack_capture -f ogg
 }
 
 
@@ -480,7 +480,7 @@ vid-bright () {
 
 # Rip DVD to .mp4
 vid-dvdrip() {
-	cat VTS_0*_*VOB | ffmpeg -i - -c:v libx264 -crf 25 $HOME/Skrivbord/rip.mp4
+	cat VTS_0*_*VOB | ffmpeg -i - -c:v libx264 -crf 25 $HOME/Video/rip.mp4
 }
 
 
@@ -585,7 +585,7 @@ vm-create() {
 		fi
 
 		disk="$(basename "$1" .iso).qcow2"
-		qemu-img create -f qcow2 $HOME/.vm/"$disk" 20G
+		qemu-img create -f qcow2 $HOME/.vm/"$disk" 40G
 		qemu-system-x86_64 -cdrom "$1" -boot order=d -drive file=$HOME/.vm/"$disk",format=qcow2,if=virtio,aio=native,cache.direct=on -nic user,model=virtio -enable-kvm -m 8G -smp cores=$(nproc) -cpu host &
 		exit
 	fi
