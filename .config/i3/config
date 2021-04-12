@@ -176,7 +176,7 @@ bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
 
 # System controls
 mode "sysctl" {
-		bindsym b exec bash $HOME/.local/bin/functions.sh bt
+		bindsym b exec bash $HOME/.local/bin/functions.sh bt; mode "default"
 		bindsym Return mode "default"
 		bindsym $mod+Shift+s mode "default"
 }

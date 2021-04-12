@@ -52,6 +52,12 @@ if [[ -f $HOME/.config/systemd/user/wallpaper.timer ]]; then
 	systemctl --user start wallpaper.timer
 fi
 
+# Trash auto-emptying
+if [[ -f $HOME/.config/systemd/user/trash.timer ]]; then
+	systemctl --user enable trash.timer
+	systemctl --user start trash.timer
+fi
+
 # ACPI events
 if [[ $(which acpid) ]]; then
 	sudo systemctl enable acpid.service

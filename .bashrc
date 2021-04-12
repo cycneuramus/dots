@@ -1,7 +1,8 @@
 . /home/antsva/.local/bin/functions.sh
 
-alias ssh="kitty +kitten ssh"
+# alias ssh="kitty +kitten ssh"
 alias dots='git --git-dir=$HOME/.dots/ --work-tree=$HOME'
+alias fd='fd --hidden'
 
 dots-sync() {
 	commit_msg=$(date +"%Y%m%d-%H%M%S")

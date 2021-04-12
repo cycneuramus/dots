@@ -4,7 +4,10 @@
 
 until [[ $(internet) == "on" ]]; do
 	sleep 5
-	count=$(($count + 1))
+	(( count++ ))
 	if (( $count > 10 )); then break; fi
 done
-rs on
+
+if [[ $(internet) == "on" ]]; then 
+	rs on
+fi

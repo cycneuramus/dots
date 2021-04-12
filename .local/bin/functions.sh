@@ -580,6 +580,10 @@ vm-create() {
 	if [[ $1 != *.iso ]]; then 
 		echo "You need to pass an .iso image as argument"
 	else
+		if [[ ! -d $HOME/.vm ]]; then
+			mkdir $HOME/.vm
+		fi
+
 		disk="$(basename "$1" .iso).qcow2"
 		qemu-img create -f qcow2 $HOME/.vm/"$disk" 20G
 		qemu-system-x86_64 -cdrom "$1" -boot order=d -drive file=$HOME/.vm/"$disk",format=qcow2,if=virtio,aio=native,cache.direct=on -nic user,model=virtio -enable-kvm -m 8G -smp cores=$(nproc) -cpu host &
@@ -601,9 +605,9 @@ vpn() {
 	
 	# Preserve notifications if running from system service
 	if [[ $(whoami) == "antsva" ]]; then
-		notify="notify-send"
+		notify="notify-send -i network-vpn"
 	else
-		notify="sudo -u antsva DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send"
+		notify="sudo -u antsva DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send -i network-vpn"
 	fi
 
 	if [[ $1 = on ]]; then
@@ -611,7 +615,7 @@ vpn() {
 		# Wait for internet
 		until [[ $(internet) == on ]]; do
 			sleep 2
-			count=$((count + 1))
+			(( count++ ))
 			if (( count > 15 )); then break; fi
 		done
 		if [[ $(internet) == off ]]; then
@@ -636,7 +640,7 @@ vpn() {
 		if [[ $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
 			until [[ $(internet) == on ]]; do
 				sleep 2
-				count=$((count + 1))
+				(( count++ ))
 				if (( count > 5 )); then break; fi
 			done
 			if [[ $(internet) == off ]]; then
