@@ -1,1 +1,0 @@
---term 'i3-sensible-terminal -e %s'
