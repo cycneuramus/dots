@@ -3,6 +3,10 @@
 set -e 
 
 initial-checks() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
 		echo "Source folders missing"
 		exit
@@ -18,12 +22,20 @@ initial-checks() {
 
 # Prepare log directory for various script outputs
 log-dir() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	if [[ ! -d $HOME/.local/log ]]; then
 		mkdir $HOME/.local/log
 	fi
 }
 
 pkg-install-pacman() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	if [[ -f /home/antsva/.local/cfg/pacman.conf ]]; then
 		sudo rm /etc/pacman.conf
 		sudo ln -s /home/antsva/.local/cfg/pacman.conf /etc/pacman.conf
@@ -44,6 +56,10 @@ pkg-install-pacman() {
 }
 
 pkg-install-aur() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	# Prepare rust environment for building certain AUR packages
 	if [[ $(which rustup) ]]; then
 		rustup update stable
@@ -57,6 +73,10 @@ pkg-install-aur() {
 }
 
 lightdm-theme() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	if [[ $(which lightdm) && $(which lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
 		sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
 		sudo sed -i "s/webkit_theme.*/webkit_theme = litarvan/" /etc/lightdm/lightdm-webkit2-greeter.conf
@@ -64,6 +84,10 @@ lightdm-theme() {
 }
 
 acpi-handler() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	if [[ $(which acpid) ]]; then
 		sudo systemctl enable acpid.service
 		sudo systemctl start acpid.service
@@ -73,12 +97,20 @@ acpi-handler() {
 }
 
 disable-system-beep() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	sudo modprobe -r pcspkr
 	sudo rmmod pcspkr
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 }
 
 symlinks() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	# Allow passwordless commands (e.g. sudo rfkill block bluetooth)
 	sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
 	sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
@@ -93,6 +125,10 @@ symlinks() {
 }
 
 sandboxing() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	if [[ $(which firejail) ]]; then
 		if [[ $(which steam) ]]; then
 			if [[ ! -d $HOME/.firejail/steam ]]; then
@@ -116,6 +152,10 @@ sandboxing() {
 }
 
 system-services() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	# Networking
 	sudo systemctl enable NetworkManager
 	sudo systemctl start NetworkManager
@@ -172,6 +212,10 @@ system-services() {
 }
 
 user-services() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	# Wallpaper switcher
 	if [[ -f $HOME/.config/systemd/user/wallpaper.timer ]]; then
 		systemctl --user enable wallpaper.timer
@@ -187,6 +231,10 @@ user-services() {
 
 
 jack-setup() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
 	# https://jackaudio.org/faq/linux_rt_config.html
 	sudo usermod -aG audio $USER
 	sudo sed -i '/End of file/ i @audio          -       rtprio          95' /etc/security/limits.conf
