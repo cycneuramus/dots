@@ -122,6 +122,12 @@ symlinks() {
 
 	# Touchpad settings
 	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
+
+	# TLP
+	if [[ $(which tlp) ]]; then
+		sudo rm /etc/tlp.conf 
+		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
+	fi
 }
 
 sandboxing() {
