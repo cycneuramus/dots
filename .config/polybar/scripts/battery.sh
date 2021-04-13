@@ -36,36 +36,45 @@ battery_max=$(("$battery_max_0 + $battery_max_1"))
 battery_percent=$(("$battery_level * 100"))
 battery_percent=$(("$battery_percent / $battery_max"))
 
-if [ "$ac" -eq 1 ]; then
-    icon=""
+teal="%{F#88C0D0}"
+green="%{F#A3BE8C}"
+yellow="%{F#EBCB8B}"
+orange="%{F#D08770}"
+red="%{F#BF616A}"
 
-    if [ "$battery_percent" -gt 97 ]; then
+if [ "$ac" -eq 1 ]; then
+    icon="${teal}"
+
+    if [ "$battery_percent" -ge 97 ]; then
         echo "$icon"
     else
-        echo "$icon %{T1}$battery_percent %"
+        echo "$icon %{F-}%{T1}$battery_percent %"
     fi
 else
-    if [ "$battery_percent" -gt 90 ]; then
+    if [ "$battery_percent" -ge 90 ]; then
         icon=""
-    elif [ "$battery_percent" -gt 80 ]; then
+    elif [ "$battery_percent" -ge 80 ]; then
         icon=""
-    elif [ "$battery_percent" -gt 70 ]; then
+    elif [ "$battery_percent" -ge 70 ]; then
 		icon=""
-    elif [ "$battery_percent" -gt 60 ]; then
+    elif [ "$battery_percent" -ge 60 ]; then
 		icon=""
-    elif [ "$battery_percent" -gt 50 ]; then
+    elif [ "$battery_percent" -ge 50 ]; then
 		icon=""
-    elif [ "$battery_percent" -gt 40 ]; then
-		icon=""
-    elif [ "$battery_percent" -gt 30 ]; then
-		icon=""
-    elif [ "$battery_percent" -gt 20 ]; then
-		icon=""
-    elif [ "$battery_percent" -gt 10 ]; then
-        icon=""
+    elif [ "$battery_percent" -ge 40 ]; then
+        icon=""
+    elif [ "$battery_percent" -ge 30 ]; then
+		icon="${yellow}"
+    elif [ "$battery_percent" -ge 20 ]; then
+		icon="${red}"
+    elif [ "$battery_percent" -ge 10 ]; then
+        icon="${red}"
     else
-        icon="%{F#BF616A}%{F-}"
+        icon="${red}"
     fi
 
-    echo "$icon %{T1}$battery_percent %"
+	if [ "$battery_percent" -eq 20 ]; then
+		$HOME/.config/polybar/scripts/low-battery.sh
+	fi
+    echo "$icon %{F-}%{T1}$battery_percent %"
 fi
