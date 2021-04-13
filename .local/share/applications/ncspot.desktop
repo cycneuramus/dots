@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Spotify
+Name=ncspot
 Comment=Terminalklient för Spotify
 Icon=Spotify
 # Exec=spt
