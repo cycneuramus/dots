@@ -651,9 +651,9 @@ vpn() {
 
 	elif [[ $1 == off ]]; then
 
-		if nmcli con show -a | grep -q Wireguard; then
+		if [[ $(nmcli con show -a | grep -q Wireguard) ]]; then
 			vpn=Wireguard
-		elif nmcli con show -a | grep -q pivpn; then
+		elif [[ $(nmcli con show -a | grep -q pivpn) ]]; then
 			vpn=pivpn
 		fi
 

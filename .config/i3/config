@@ -241,4 +241,3 @@ exec --no-startup-id mate-power-manager
 exec gtk-launch scli
 exec thunderbird
 exec firefox
-# exec_always --no-startup-id /home/antsva/.config/i3/scripts/autoname_workspaces.py &
