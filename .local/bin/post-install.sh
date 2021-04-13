@@ -117,7 +117,7 @@ symlinks() {
 	sudo chmod root:root /etc/sudoers.d/rfkill
 	sudo chmod root:root /etc/sudoers.d/bluetooth
 
-	user # Network automations
+	# Network automations
 	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh && sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
 
 	# Touchpad settings
