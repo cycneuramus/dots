@@ -2,6 +2,22 @@
 
 set -e 
 
+main() {
+	initial-checks
+	log-dir
+	pkg-install-pacman
+	pkg-install-aur
+	grub-theme
+	lightdm-theme
+	acpi-handler
+	disable-system-beep
+	symlinks
+	sandboxing
+	system-services
+	user-services
+	jack-setup
+}
+
 initial-checks() {
 	echo ""
 	echo $FUNCNAME
@@ -69,6 +85,17 @@ pkg-install-aur() {
 
 	if [[ $(which signal-cli) ]]; then
 		sudo archlinux-java fix
+	fi
+}
+
+grub-theme() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+	
+	if [[ -f /etc/default/grub && $(which grub-mkconfig) ]]; then
+		sudo sed -i "s/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=hidden/" /etc/default/grub
+		sudo grub-mkconfig -o /boot/grub/grub.cfg
 	fi
 }
 
@@ -247,19 +274,5 @@ jack-setup() {
 	sudo sed -i '/End of file/ i @audio          -       memlock         unlimited' /etc/security/limits.conf
 }
 
-main() {
-	initial-checks
-	log-dir
-	pkg-install-pacman
-	pkg-install-aur
-	lightdm-theme
-	acpi-handler
-	disable-system-beep
-	symlinks
-	sandboxing
-	system-services
-	user-services
-	jack-setup
-}
 
 main

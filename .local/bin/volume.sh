@@ -21,4 +21,4 @@ fi
 canberra-gtk-play -i audio-volume-change -d "changeVolume"
 
 msg_id=991050
-dunstify -t 1500 -i "$icon" -r "$msg_id" "Ljudvolym" "${current}%"
+dunstify -u low -t 1500 -i "$icon" -r "$msg_id" "Ljudvolym" "${current}%"

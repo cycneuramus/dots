@@ -81,7 +81,7 @@
     # for longer than idle_threshold seconds.
     # Set to 0 to disable.
     # Transient notifications ignore this setting.
-    idle_threshold = 120
+    idle_threshold = 300
 
     ### Text ###
 
@@ -338,6 +338,14 @@
 # to "".
 # NOTE: It might be helpful to run dunst -print in a terminal in order
 # to find fitting options for rules.
+
+[brightness-ignore]
+    summary = "*Ljusstyrka*"
+    history_ignore = yes
+
+[volume-ignore]
+    summary = "*Ljudvolym*"
+    history_ignore = yes
 
 # Disable the transient hint so that idle_threshold cannot be bypassed from the
 # client

@@ -19,4 +19,4 @@ elif (( $current >= 75 )); then
 fi
 
 msg_id=991049
-dunstify -t 1500 -i "$icon" -r "$msg_id" "Ljusstyrka" "${current}%"
+dunstify -u low -t 1500 -i "$icon" -r "$msg_id" "Ljusstyrka" "${current}%"
