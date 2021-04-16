@@ -30,9 +30,9 @@ services:
     environment:
       # Adapted from ./config/config.yml
       INVIDIOUS_CONFIG: |
-        channel_threads: 1
+        channel_threads: 4
         check_tables: true
-        feed_threads: 1
+        feed_threads: 4
         db:
           user: $invidious_db_user
           password: $invidious_db_password
