@@ -24,6 +24,7 @@ x-scheme-handler/mailto=thunderbird.desktop;userapp-Thunderbird-R7DF10.desktop;
 application/epub+zip=org.kde.okular.desktop;
 application/json=vim.desktop;
 application/octet-stream=mpv.desktop;
+audio/mpegapplication/octet-stream=mpv.desktop;
 application/pdf=okularApplication_pdf.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
 application/x-musedata=mscore.desktop;

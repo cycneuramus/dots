@@ -216,19 +216,19 @@ bindsym $mod+r mode "resize"
 #		  status_command i3status
 # }
 
-exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
 exec_always --no-startup-id autotiling
 exec_always --no-startup-id picom
-exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
-exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
 exec_always --no-startup-id libinput-gestures-setup restart
+exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
+exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
+exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
+exec --no-startup-id $HOME/.local/bin/redshift.sh
 exec --no-startup-id $HOME/.fehbg
 exec --no-startup-id enact --pos left --watch
 exec --no-startup-id copyq
 exec --no-startup-id albert
-exec --no-startup-id $HOME/.local/bin/redshift.sh
 exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id kdeconnect-indicator
