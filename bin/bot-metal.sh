@@ -11,10 +11,10 @@ newline=$'\n'
 log_dir="$HOME/log/bot-metal"
 
 signal_cli="$HOME/bin/signal-cli/bin/signal-cli"
-$signal_cli receive > /dev/null 2>&1
 
 signal_from="$phone_number"
-signal_group="$($signal_cli listGroups | awk '/Autistic/{print $2}')"
+# $signal_cli receive > /dev/null 2>&1
+# signal_group="$($signal_cli listGroups | awk '/Autistic/{print $2}')"
 
 if [[ -n $signal_group ]]; then
 	signal_to="$signal_group"
@@ -82,8 +82,8 @@ echo "$artists" | while read line; do
 	release_json=$(curl -s "$url" 					\
 		--user-agent "$user_agent" 					\
 		-H "$auth" 									\
-		| jq '.releases[]' 							\
-		| jq "select(.artist|test(\"$artist\"))" 	\
+		| jq ".releases[] 							\
+		| select(.artist|test(\"$artist\"))" 		\
 		| jq -s 'sort_by(.year) | last')
 
 	release_title_year="$(echo "$release_json" 		\
@@ -101,7 +101,7 @@ echo "$artists" | while read line; do
 			/Antons hårdrocksbot ( https://git.io/JOkwF )"
 
 		push "$msg_newrelease" # In case signal-cli fails
-		echo -e "$msg_newrelease" | signal_send
+		# echo -e "$msg_newrelease" | signal_send
 
 	fi
 
