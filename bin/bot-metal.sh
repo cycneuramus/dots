@@ -69,6 +69,9 @@ Vince DiCola=99328
 Wilderun=3824271
 EOF
 
+user_agent="Tryadnu"
+auth="Authorization: Discogs key=$discogs_key, secret=$discogs_secret"
+
 echo "$artists" | while read line; do
 
 	artist=$(echo "$line" | cut -d= -f1)
@@ -76,8 +79,6 @@ echo "$artists" | while read line; do
 	log="$log_dir"/"$artist".log
 
 	url="https://api.discogs.com/artists/$artist_id/releases?sort=year&sort_order=desc&page=1"
-	user_agent="Tryadnu"
-	auth="Authorization: Discogs key=$discogs_key, secret=$discogs_secret"
 
 	release_json=$(curl -s "$url" 					\
 		--user-agent "$user_agent" 					\
@@ -91,14 +92,16 @@ echo "$artists" | while read line; do
 		| jq '.year'))"
 
 	# Bail out to next artist on API error
-	if [[ -z "$release_title_year" || "$release_title_year" == *null* ]]; then continue; fi 
+	if [[ -z "$release_title_year" || "$release_title_year" == *null* ]]; then
+		continue
+	fi 
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
 
 		msg_newrelease="Nytt släpp av $artist: 			\
 			$release_title_year.						\
 			${newline}${newline}						\
-			/Antons hårdrocksbot ( https://git.io/JOkwF )"
+			/Hårdrocksboten ( https://git.io/JOkwF )"
 
 		push "$msg_newrelease" # In case signal-cli fails
 		echo -e "$msg_newrelease" | signal_send
