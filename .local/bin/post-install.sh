@@ -138,19 +138,16 @@ deploy-config-files() {
 	echo $FUNCNAME
 	echo ""
 
-	# Allow passwordless commands (e.g. sudo rfkill block bluetooth)
 	sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
 	sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
 	sudo chmod root:root /etc/sudoers.d/rfkill
 	sudo chmod root:root /etc/sudoers.d/bluetooth
 
-	# Network automations
-	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh && sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
+	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
+	sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
 
-	# Touchpad settings
 	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 
-	# TLP
 	if [[ $(which tlp) ]]; then
 		sudo rm /etc/tlp.conf 
 		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
@@ -189,13 +186,11 @@ system-services() {
 	echo $FUNCNAME
 	echo ""
 
-	# Networking
 	sudo systemctl enable NetworkManager
 	sudo systemctl start NetworkManager
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
 
-	# ssh
 	if [[ $(which sshd) ]]; then
 		sudo systemctl enable sshd
 		sudo systemctl start sshd
@@ -215,7 +210,6 @@ system-services() {
 		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
 
-	# Touchpad gestures
 	if [[ $(which libinput-gestures) ]]; then
 		sudo gpasswd -a $USER input
 	elif [[ $(which gebaar) ]]; then
@@ -223,7 +217,6 @@ system-services() {
 		sudo usermod -a -G input $USER
 	fi
 
-	# Battery life for laptops
 	if [[ $(which auto-cpufreq) ]]; then
 		sudo systemctl enable auto-cpufreq
 		sudo systemctl start auto-cpufreq
@@ -233,7 +226,6 @@ system-services() {
 		sudo systemctl start tlp.service
 	fi
 
-	# Automatic screen brightness
 	if [[ $(which clight) ]]; then
 		sudo systemctl enable clightd.service
 		sudo systemctl start clightd.service
