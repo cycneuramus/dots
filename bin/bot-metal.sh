@@ -8,7 +8,7 @@ if [[ $(internet) == "off" ]]; then exit; fi
 trap 'push "$(basename $0) stötte på fel"' err
 
 newline=$'\n'
-log_dir="/home/antsva/log/bot-metal"
+log_dir="$HOME/log/bot-metal"
 
 signal_cli="$HOME/bin/signal-cli/bin/signal-cli"
 $signal_cli receive > /dev/null 2>&1
@@ -98,7 +98,7 @@ echo "$artists" | while read line; do
 		msg_newrelease="Nytt släpp av $artist: 			\
 			$release_title_year.						\
 			${newline}${newline}						\
-			/Antons hårdrocksbot (https://git.io/JOkwF)"
+			/Antons hårdrocksbot ( https://git.io/JOkwF )"
 
 		push "$msg_newrelease" # In case signal-cli fails
 		echo -e "$msg_newrelease" | signal_send
