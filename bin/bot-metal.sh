@@ -37,13 +37,13 @@ fi
 
 read -d '' artists << EOF || true
 Adagio=1122446
-Allen Lande=1751194
+Allen - Lande=1751194
 Arch Echo=6290096
 Ayreon=263989
 Beast In Black=6051971
 Blind Guardian=262577
 Devin Townsend=251249
-Devin Townsend Band=1441645
+Devin Townsend Project=1441645
 DGM=1940603
 Dirty Loops=3707700
 Dream Theater=260935
@@ -56,7 +56,7 @@ Meshuggah=252273
 Michael Romeo=333536
 Myrath=2060004
 Opeth=245797
-Pain of Salvation=388262
+Pain Of Salvation=388262
 Plini=3511496
 Running Wild=271521
 Star One=291519
@@ -73,20 +73,36 @@ echo "$artists" | while read line; do
 
 	artist=$(echo "$line" | cut -d= -f1)
 	artist_id=$(echo "$line" | cut -d= -f2)
-
 	log="$log_dir"/"$artist".log
 
-	release_json=$(curl -s "https://api.discogs.com/artists/$artist_id/releases?sort=year&sort_order=desc&page=1&per_page=1" --user-agent "Tryadnu" -H "Authorization: Discogs key=$discogs_key, secret=$discogs_secret" | jq -r '.releases[0]')
-	release_title_year="$(echo "$release_json" | jq '.title') ($(echo "$release_json" | jq '.year'))"
+	url="https://api.discogs.com/artists/$artist_id/releases?sort=year&sort_order=desc&page=1"
+	user_agent="Tryadnu"
+	auth="Authorization: Discogs key=$discogs_key, secret=$discogs_secret"
+
+	release_json=$(curl -s "$url" 					\
+		--user-agent "$user_agent" 					\
+		-H "$auth" 									\
+		| jq '.releases[]' 							\
+		| jq "select(.artist|test(\"$artist\"))" 	\
+		| jq -s 'sort_by(.year) | last')
+
+	release_title_year="$(echo "$release_json" 		\
+		| jq '.title') ($(echo "$release_json" 		\
+		| jq '.year'))"
 
 	# Bail out to next artist on API error
 	if [[ -z "$release_title_year" || "$release_title_year" == *null* ]]; then continue; fi 
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
-		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}/Antons hårdrocksbot (https://git.io/JOkwF)"
+
+		msg_newrelease="Nytt släpp av $artist: 			\
+			$release_title_year.						\
+			${newline}${newline}						\
+			/Antons hårdrocksbot (https://git.io/JOkwF)"
 
 		push "$msg_newrelease" # In case signal-cli fails
 		echo -e "$msg_newrelease" | signal_send
+
 	fi
 
 	echo "$release_title_year" > "$log"
