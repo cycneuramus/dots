@@ -64,6 +64,24 @@ av-scan() {
 
 # Toggle bluetooth
 bt() { 
+	fix() {
+		sudo modprobe -r btusb
+		sleep 0.5
+		sudo systemctl stop bluetooth.service
+		sleep 0.5
+		sudo modprobe btusb
+		sleep 0.5
+		sudo systemctl start bluetooth.service
+		sleep 0.5
+		bt
+		sleep 0.5
+		bt
+	}
+
+	if [[ $1 == "fix" ]]; then
+		fix
+	fi
+
 	if [[ $(bluetooth) == *off* ]]; then
 		sudo rfkill unblock bluetooth
 		sudo bluetooth on 
@@ -77,29 +95,6 @@ bt() {
 		bluetoothctl power off
 		sudo rfkill block bluetooth
 	fi
-}
-
-
-# Workaround for bluetooth bug
-bt-fix() {
-	sudo modprobe -r btusb
-	sleep 0.5
-	sudo systemctl stop bluetooth.service
-	sleep 0.5
-	sudo modprobe btusb
-	sleep 0.5
-	sudo systemctl start bluetooth.service
-	sleep 0.5
-	bt
-	sleep 0.5
-	bt
-
-	# sudo modprobe -r btusb
-	# sleep 1
-	# sudo modprobe btusb
-	# bt
-	# sleep 1
-	# bt
 }
 
 

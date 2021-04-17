@@ -226,7 +226,7 @@
 	nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 " Render .md to .pdf
-	nnoremap <leaSee map-overview for the various forms of "map" and their relationships withder>c :!source ~/.local/bin/functions.sh; pdoc "%"<CR><CR>
+	nnoremap <leader>c :!source ~/.local/bin/functions.sh; pdoc "%"<CR><CR>
 " Open corresponding .pdf
 	nnoremap <leader>p :!if [[ -f "%:r.pdf" ]]; then xdg-open "%:r.pdf" & disown; fi<CR><CR>
 
