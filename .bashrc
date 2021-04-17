@@ -3,6 +3,7 @@
 # alias ssh="kitty +kitten ssh"
 alias dots='git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 alias fd='fd --hidden'
+alias ncdu='ncdu --color dark'
 
 dots-sync() {
 	commit_msg=$(date +"%Y%m%d-%H%M%S")
