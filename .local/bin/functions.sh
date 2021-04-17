@@ -91,6 +91,8 @@ bt-fix() {
 	sudo systemctl start bluetooth.service
 	sleep 0.5
 	bt
+	sleep 0.5
+	bt
 
 	# sudo modprobe -r btusb
 	# sleep 1
@@ -655,9 +657,9 @@ vpn() {
 
 	elif [[ $1 == off ]]; then
 
-		if [[ $(nmcli con show -a | grep -q Wireguard) ]]; then
+		if [[ $(nmcli con show -a | grep Wireguard) ]]; then
 			vpn=Wireguard
-		elif [[ $(nmcli con show -a | grep -q pivpn) ]]; then
+		elif [[ $(nmcli con show -a | grep pivpn) ]]; then
 			vpn=pivpn
 		fi
 

@@ -11,7 +11,7 @@ main() {
 	lightdm-theme
 	acpi-handler
 	disable-system-beep
-	symlinks
+	deploy-config-files
 	sandboxing
 	system-services
 	user-services
@@ -133,7 +133,7 @@ disable-system-beep() {
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 }
 
-symlinks() {
+deploy-config-files() {
 	echo ""
 	echo $FUNCNAME
 	echo ""
@@ -241,7 +241,6 @@ system-services() {
 
 	# To change backlight with xbacklight (via acpilight package)
 	sudo usermod -aG video $USER
-
 }
 
 user-services() {
@@ -273,6 +272,5 @@ jack-setup() {
 	sudo sed -i '/End of file/ i @audio          -       rtprio          95' /etc/security/limits.conf
 	sudo sed -i '/End of file/ i @audio          -       memlock         unlimited' /etc/security/limits.conf
 }
-
 
 main
