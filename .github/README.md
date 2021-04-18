@@ -10,4 +10,6 @@ rm dots-setup.sh
 .local/bin/post-install.sh
 ```
 
+---
+
 N.B. Some files are encrypted, there are hard-coded paths, and nothing is tested for general compatibility outside of my environment; do not expect a working configuration. 
