@@ -26,7 +26,6 @@ fakeroot
 fd
 feh
 file
-filelight
 findutils
 firefox
 firefox-i18n-sv-se
@@ -88,6 +87,7 @@ mesa
 mpv
 muparser
 musescore
+ncdu
 network-manager-applet
 networkmanager
 networkmanager-openvpn
@@ -107,6 +107,7 @@ perl-image-exiftool
 phonon-qt5-gstreamer
 picom
 pkgconf
+pkgfile
 pulseaudio
 pulseaudio-alsa
 pulseaudio-bluetooth

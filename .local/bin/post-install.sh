@@ -95,6 +95,7 @@ grub-theme() {
 	
 	if [[ -f /etc/default/grub && $(which grub-mkconfig) ]]; then
 		sudo sed -i "s/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=hidden/" /etc/default/grub
+		sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/" /etc/default/grub
 		sudo grub-mkconfig -o /boot/grub/grub.cfg
 	fi
 }
