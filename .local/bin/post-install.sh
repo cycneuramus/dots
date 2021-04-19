@@ -52,7 +52,7 @@ pkg-install-pacman() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ -f /home/antsva/.local/cfg/pacman.conf ]]; then
+	if [[ -f $HOME/.local/cfg/pacman.conf ]]; then
 		sudo rm /etc/pacman.conf
 		sudo ln -s /home/antsva/.local/cfg/pacman.conf /etc/pacman.conf
 	fi
@@ -68,7 +68,7 @@ pkg-install-pacman() {
 	cd $HOME
 	sudo rm -r yay
 
-	sudo pacman -S --needed - < /home/antsva/.local/cfg/pkg.pacman
+	sudo pacman -S --needed - < $HOME/.local/cfg/pkg.pacman
 }
 
 pkg-install-aur() {
@@ -81,7 +81,7 @@ pkg-install-aur() {
 		rustup update stable
 	fi
 
-	yay -S --needed - < /home/antsva/.local/cfg/pkg.aur
+	yay -S --needed - < $HOME/.local/cfg/pkg.aur
 
 	if [[ $(which signal-cli) ]]; then
 		sudo archlinux-java fix
@@ -245,6 +245,9 @@ user-services() {
 	if [[ -f $HOME/.config/systemd/user/wallpaper.timer ]]; then
 		systemctl --user enable wallpaper.timer
 		systemctl --user start wallpaper.timer
+		
+		# Set initial background
+		systemctl --user start wallpaper.service
 	fi
 
 	# Trash auto-emptying

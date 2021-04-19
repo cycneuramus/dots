@@ -31,7 +31,7 @@ commit_msg=$(date +"%Y%m%d_%H%M%S")
 git --git-dir=$HOME/.dots/ --work-tree=$HOME commit -a -m "$commit_msg"
 git --git-dir=$HOME/.dots/ --work-tree=$HOME push 
 
-if [[ ! $(wifi) = "home" ]]; then exit; fi
+if [[ $(wifi) != "home" ]]; then exit; fi
 
 exec 1>$log 2>&1
 notify-send "Säkerhetskopiering" "Påbörjar synkronisering..."

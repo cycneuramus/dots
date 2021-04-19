@@ -326,7 +326,6 @@ pdoc() {
 		pandoc -f markdown -t beamer "$1" -V theme:metropolis -V lang:sv -V mainfont="Source Sans Pro" -i --pdf-engine=tectonic -o "${1%.*}".pdf
 	else
 		# pandoc $PREAMBLE --filter pandoc-citeproc "$1" -o "${1%.*}".pdf --pdf-engine=xelatex --verbose
-		# pandoc $PREAMBLE --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
 		pandoc $PREAMBLE --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
 	fi
 }
@@ -339,7 +338,7 @@ pdf-img() {
 
 # Run OCR on .pdf
 pdf-ocr() {
-	# För engelskspråkig text med dubbelsidig layout
+	# English with double page layout
 	pdfsandwich -lang eng "$1"
 }
 
@@ -367,7 +366,7 @@ push-file() {
 	if [[ ! -z $device ]]; then
 		kdeconnect-cli --share "$@" -d "$device"
 	else
-		notify-send -i kdeconnect "Filöverföring" "Ingen aktiv målenhet upptäcktes"
+		notify-send -i kdeconnect "Filöverföring" "Ingen aktiv målenhet hittades"
 	fi
 }
 
@@ -458,7 +457,7 @@ sys-clean() {
 }
 
 
-# Check if system is prevented from sleeping
+# Check if system is prevented from sleeping (for use on KDE PLasma)
 system-sleep-inhibited() {
 	qdbus org.freedesktop.PowerManagement /org/freedesktop/PowerManagement org.freedesktop.PowerManagement.Inhibit.HasInhibit
 }
@@ -528,8 +527,6 @@ vid-stab() {
 	ffmpeg -i "$1" -vf vidstabdetect=stepsize=4:mincontrast=0:result=transforms.trf -f null -	 
 	ffmpeg -i "$1" -vf vidstabtransform=smoothing=30:interpol=bicubic:input="transforms.trf",unsharp -acodec copy -vcodec libx265 "${1%.*}_stab.${1#*.}"
 
-	# ffmpeg -i "$1" -vf vidstabdetect -f null -
-	# ffmpeg -i "$1" -vf vidstabtransform=zoom=5:smoothing=10:input="transforms.trf" -acodec copy -vcodec libx265 "${1%.*}_stab.${1#*.}"
 	rm transforms.trf
 }
 
