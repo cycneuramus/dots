@@ -69,7 +69,7 @@ Vince DiCola=99328
 Wilderun=3824271
 EOF
 
-user_agent="Tryadnu"
+user_agent="$discogs_user_agent"
 auth="Authorization: Discogs key=$discogs_key, secret=$discogs_secret"
 
 echo "$artists" | while read line; do

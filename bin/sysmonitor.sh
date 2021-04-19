@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Körs regelbundet via CRON och aviserar vid hög belastning från en kontroll till nästa.
+# Designed to run as a cron job every 10 minutes
 
 . functions.sh
 trap 'push "$(basename $0) stötte på fel"' err
