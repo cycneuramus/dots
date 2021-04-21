@@ -19,7 +19,7 @@ export LESSOPEN="|~/.config/lessfilter %s"
 # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export QT_QPA_PLATFORMTHEME=qt5ct
-export QT_STYLE_OVERRIDE=kvantum
+# export QT_STYLE_OVERRIDE=kvantum
 export ALBERT_ICONTHEME=Papirus-Dark
 
 export MOZ_USE_XINPUT2=1

@@ -177,6 +177,16 @@ find-replace() {
 }
 
 
+# Crop gif animation
+gif-crop() {
+	echo "Template:"
+	echo "convert input.gif -coalesce -repage 0x0 -crop WxH+X+Y +repage output.gif"
+	echo ""
+	echo "So, for example:"
+	echo "convert \"$1\" -coalesce -repage 0x0 -crop 480x270+150+0 +repage \"${1%.*}_crop.${1#*.}\""
+}
+
+
 # Compress jpeg
 img-komp() {
 	if (( $# < 2 )); then
