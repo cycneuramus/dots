@@ -11,8 +11,8 @@ main() {
 	lightdm-theme
 	acpi-handler
 	disable-system-beep
-	config-files
 	sandboxing
+	system-configs
 	system-services
 	user-services
 	jack-setup
@@ -138,27 +138,6 @@ disable-system-beep() {
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 }
 
-config-files() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
-	sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
-	sudo chown root:root /etc/sudoers.d/rfkill
-	sudo chown root:root /etc/sudoers.d/bluetooth
-
-	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
-	sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
-
-	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
-
-	if [[ $(which tlp) ]]; then
-		sudo rm /etc/tlp.conf 
-		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
-	fi
-}
-
 sandboxing() {
 	echo ""
 	echo $FUNCNAME
@@ -183,6 +162,27 @@ sandboxing() {
 
 		# Fix .desktop files
 		firecfg --fix
+	fi
+}
+
+system-configs() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
+	sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
+	sudo chown root:root /etc/sudoers.d/rfkill
+	sudo chown root:root /etc/sudoers.d/bluetooth
+
+	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
+	sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
+
+	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
+
+	if [[ $(which tlp) ]]; then
+		sudo rm /etc/tlp.conf 
+		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
 	fi
 }
 
