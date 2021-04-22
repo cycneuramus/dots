@@ -53,6 +53,7 @@ Haken=2481019
 Leprous=1927912
 Liquid Tension Experiment=94846
 Meshuggah=252273
+Metallica=18839
 Michael Romeo=333536
 Myrath=2060004
 Opeth=245797
