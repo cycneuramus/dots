@@ -11,7 +11,7 @@ main() {
 	lightdm-theme
 	acpi-handler
 	disable-system-beep
-	deploy-config-files
+	config-files
 	sandboxing
 	system-services
 	user-services
@@ -60,13 +60,15 @@ pkg-install-pacman() {
 	sudo pacman -Syu
 
 	# AUR helper
-	cd $HOME
-	sudo pacman -S git base-devel --noconfirm
-	git clone https://aur.archlinux.org/yay.git
-	cd yay
-	makepkg -si
-	cd $HOME
-	sudo rm -r yay
+	if [[ ! $(which yay) ]]; then
+		cd $HOME
+		sudo pacman -S git base-devel --needed --noconfirm
+		git clone https://aur.archlinux.org/yay.git
+		cd yay
+		makepkg -si
+		cd $HOME
+		sudo rm -r yay
+	fi
 
 	sudo pacman -S --needed - < $HOME/.local/cfg/pkg.pacman
 }
@@ -129,20 +131,22 @@ disable-system-beep() {
 	echo $FUNCNAME
 	echo ""
 
-	sudo modprobe -r pcspkr
-	sudo rmmod pcspkr
+	if [[ $(lsmod | grep pcspkr) ]]; then
+		sudo modprobe -r pcspkr
+		sudo rmmod pcspkr
+	fi
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 }
 
-deploy-config-files() {
+config-files() {
 	echo ""
 	echo $FUNCNAME
 	echo ""
 
 	sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
 	sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
-	sudo chmod root:root /etc/sudoers.d/rfkill
-	sudo chmod root:root /etc/sudoers.d/bluetooth
+	sudo chown root:root /etc/sudoers.d/rfkill
+	sudo chown root:root /etc/sudoers.d/bluetooth
 
 	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
 	sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
@@ -206,7 +210,7 @@ system-services() {
 		sudo systemctl enable cups.service
 		sudo systemctl start cups.service
 	fi
-	if [[ $(which nss-mdns) ]]; then
+	if [[ $(ls /usr/lib/libnss_mdns*) ]]; then
 		sudo rm /etc/nsswitch.conf
 		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
