@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Designed to run as a cron job every 10 minutes
+# Designed to run as cron job every 10 minutes
 
 . functions.sh
 trap 'push "$(basename $0) stötte på fel"' err
@@ -20,5 +20,9 @@ if (( $cpu > 30 || $temp > 60 )); then
     fi
 
 else
-    if [[ -f $lock ]]; then rm $lock; fi
+
+    if [[ -f $lock ]]; then 
+		rm $lock
+	fi
+
 fi
