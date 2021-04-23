@@ -10,7 +10,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Stockholm
-      - SERVERURL=amabilis.duckdns.org #optional
+      - SERVERURL=$domain #optional
       - SERVERPORT=51280 #optional
       - PEERS=$peer1,$peer2,$peer3 #optional
       - PEERDNS=94.140.14.14,94.140.15.15 #optional
