@@ -100,10 +100,9 @@ echo "$artists" | while read line; do
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
 
-		msg_newrelease="Nytt släpp av $artist: 			\
-			$release_title_year.						\
-			${newline}${newline}						\
-			/Hårdrocksboten ( https://git.io/JOkwF )"
+		random_emoji=$(shuf -n 1 $HOME/bin/emoji)
+
+		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}${random_emoji}${newline}${newline}/Hårdrocksboten ( https://git.io/JOkwF )"
 
 		push "$msg_newrelease" # In case signal-cli fails
 		echo -e "$msg_newrelease" | signal_send
