@@ -102,7 +102,7 @@ echo "$artists" | while read line; do
 
 		random_emoji=$(shuf -n 1 $HOME/bin/emoji)
 
-		msg_newrelease="Nytt släpp av $artist: $release_title_year"
+		msg_newrelease="Nytt släpp av $artist: $release_title_year."
 		msg_newrelease+="${newline}${newline}"
 		msg_newrelease+="$random_emoji"
 		msg_newrelease+="${newline}${newline}"
