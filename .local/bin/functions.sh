@@ -74,8 +74,6 @@ bt() {
 		sudo systemctl start bluetooth.service
 		sleep 0.5
 		bt
-		sleep 0.5
-		bt
 	}
 
 	if [[ $1 == "fix" ]]; then

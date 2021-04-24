@@ -180,10 +180,13 @@ system-configs() {
 
 	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 
-	if [[ $(which tlp) ]]; then
+	if [[ $(which tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
 		sudo rm /etc/tlp.conf 
 		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
 	fi
+
+	# To change backlight with xbacklight (via acpilight package)
+	sudo usermod -aG video $USER
 }
 
 system-services() {
@@ -235,9 +238,6 @@ system-services() {
 		sudo systemctl enable clightd.service
 		sudo systemctl start clightd.service
 	fi
-
-	# To change backlight with xbacklight (via acpilight package)
-	sudo usermod -aG video $USER
 }
 
 user-services() {

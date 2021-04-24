@@ -107,12 +107,12 @@ pavucontrol
 perl-image-exiftool
 phonon-qt5-gstreamer
 picom
+pipewire
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
 pkgconf
 pkgfile
-pulseaudio
-pulseaudio-alsa
-pulseaudio-bluetooth
-pulseaudio-jack
 python-html2text
 python-pillow
 qemu
