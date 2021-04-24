@@ -102,7 +102,11 @@ echo "$artists" | while read line; do
 
 		random_emoji=$(shuf -n 1 $HOME/bin/emoji)
 
-		msg_newrelease="Nytt släpp av $artist: $release_title_year.${newline}${newline}${random_emoji}${newline}${newline}/Hårdrocksboten ( https://git.io/JOkwF )"
+		msg_newrelease="Nytt släpp av $artist: $release_title_year"
+		msg_newrelease+="${newline}${newline}"
+		msg_newrelease+="$random_emoji"
+		msg_newrelease+="${newline}${newline}"
+		msg_newrelease+="/Hårdrocksboten ( https://git.io/JOkwF )"
 
 		push "$msg_newrelease" # In case signal-cli fails
 		echo -e "$msg_newrelease" | signal_send
