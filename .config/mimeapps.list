@@ -47,6 +47,7 @@ text/html=firefox.desktop;
 text/markdown=vim.desktop;
 text/plain=vim.desktop;
 text/x-log=vim.desktop;
+text/x-script.python=vim.desktop;
 text/x-shellscript=vim.desktop;
 video/mp4=mpv.desktop;
 video/webm=mpv.desktop;

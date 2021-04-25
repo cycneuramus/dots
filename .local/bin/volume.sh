@@ -23,6 +23,7 @@ elif (( $current_volume >= 75 )); then
 fi
 
 # canberra-gtk-play -i audio-volume-change -d "changeVolume"
+pw-play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 
 msg_id=991050
 dunstify -u low -t 1500 -i "$icon" -r "$msg_id" "Ljudvolym" "${current_volume}%"
