@@ -19,13 +19,13 @@ def get_signal_recipient():
     for line in signal_groups.splitlines():
         cols = line.split()
         if "Autistic" in line:
-            signal_group = cols[1]
+            signal_group_id = cols[1]
             break
 
-    if not signal_group:
-        signal_recipient = secrets.phone_number
+    if signal_group_id:
+        signal_recipient = signal_group_id
     else:
-        signal_recipient = signal_group
+        signal_recipient = secrets.phone_number
     
     return signal_recipient
 
