@@ -10,7 +10,7 @@ import subprocess
 
 home = os.getenv("HOME")
 signal_cli = home + "/bin/signal-cli/bin/signal-cli"
-signal_from = secrets.phone_number
+
 
 def get_signal_recipient():
     # safe mode (send to self)
@@ -38,9 +38,11 @@ def get_signal_recipient():
         
     return signal_recipient, recipient_type
 
+
 def signal_send(msg):
     signal_recipient, recipient_type = get_signal_recipient()
-    
+    signal_from = secrets.phone_number
+
     if recipient_type == "contact":
         cmd = [signal_cli, "-u", signal_from, "send", "-m", msg, signal_recipient]
     elif recipient_type == "group":
@@ -48,10 +50,12 @@ def signal_send(msg):
 
     subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
+
 def get_random_emoji():
     emojis_file = home + "/bin/emojis"
     random_emoji = random.choice(open(emojis_file).readlines()).strip()
     return random_emoji
+
 
 def get_spotify_token():
     client_id = secrets.client_id
@@ -70,6 +74,7 @@ def get_spotify_token():
 
     return token
 
+
 def get_latest_album(artist_id):
     base_url = "https://api.spotify.com/v1/"
     url = base_url + "artists/" + artist_id + "/albums"
@@ -81,7 +86,7 @@ def get_latest_album(artist_id):
 
     request = requests.get(url,
              headers=auth_header,
-             params={"include_groups": "album", "limit": 1, "locale": "SE"})
+             params={"include_groups": "album", "limit": 1, "market": "SE"})
     request_data = request.json()
 
     for album in request_data["items"]:
@@ -94,7 +99,13 @@ def get_latest_album(artist_id):
 
     return album_title, album_year, album_link
 
-def iterate_artists():
+
+def check_new_albums():
+    log_dir = home + "/log/bot-metal/"
+
+    if not os.path.isdir(log_dir):
+        os.makedirs(log_dir)
+
     artists = {
         "Adagio": "5QJvZ6s15Hgpjq7UKktjaZ",
         "Allen Lande": "2hxa4ytcni5FUIK8IR27tX",
@@ -131,11 +142,6 @@ def iterate_artists():
         "Wilderun": "0wQmcChWogcmsCThY2SKES"
     }
 
-    log_dir = home + "/log/bot-metal/"
-
-    if not os.path.isdir(log_dir):
-        os.makedirs(log_dir)
-
     for artist, artist_id in artists.items():
         album_title, album_year, album_link = get_latest_album(artist_id)
 
@@ -152,9 +158,7 @@ def iterate_artists():
                         "\n\n"
                         f"{album_link}"
                         "\n\n"
-                        f"{random_emoji}"
-                        "\n\n"
-                        "/Hårdrocksboten ( https://git.io/JOFIa )")
+                        f"{random_emoji}")
 
                 functions.push(msg) # in case signal-cli fails
                 signal_send(msg)
@@ -162,10 +166,12 @@ def iterate_artists():
         with open(log, "w") as f:
             f.write(latest_album)
         
+
 def main():
     if not functions.internet():
         exit()
-    iterate_artists()
+    check_new_albums()
+
 
 if __name__ == "__main__":
     try:
