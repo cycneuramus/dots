@@ -8,8 +8,11 @@ import requests
 import secrets
 import subprocess
 
-home = os.getenv("HOME")
-signal_cli = home + "/bin/signal-cli/bin/signal-cli"
+home_dir = os.getenv("HOME")
+bin_dir = os.path.join(home_dir, "bin")
+log_dir = os.path.join(home_dir, "log")
+
+signal_cli = os.path.join(bin_dir, "signal-cli/bin/signal-cli")
 
 
 def get_signal_recipient():
@@ -24,7 +27,7 @@ def get_signal_recipient():
 
     for line in signal_groups.splitlines():
         cols = line.split()
-        if "Autistic" in line:
+        if secrets.signal_target_group in line:
             signal_group_id = cols[1]
             break
 
@@ -51,14 +54,14 @@ def signal_send(msg):
 
 
 def get_random_emoji():
-    emojis_file = home + "/bin/emojis"
+    emojis_file = os.path.join(bin_dir, "emojis")
     random_emoji = random.choice(open(emojis_file).readlines()).strip()
     return random_emoji
 
 
 def get_spotify_token():
-    client_id = secrets.client_id
-    client_secret = secrets.client_secret
+    client_id = secrets.spotify_client_id
+    client_secret = secrets.spotify_client_secret
 
     auth_url = "https://accounts.spotify.com/api/token"
 
@@ -97,10 +100,9 @@ def get_latest_album(artist_id):
 
 
 def check_new_albums():
-    log_dir = home + "/log/bot-metal/"
-
-    if not os.path.isdir(log_dir):
-        os.makedirs(log_dir)
+    artist_log_dir = os.path.join(log_dir, "bot-metal")
+    if not os.path.isdir(artist_log_dir):
+        os.makedirs(artist_log_dir)
 
     artists = {
         "Adagio": "5QJvZ6s15Hgpjq7UKktjaZ",
@@ -143,9 +145,9 @@ def check_new_albums():
 
         album_title = '"' + album_title + '"'
         album_year = datetime.datetime.strptime(album_date, '%Y-%m-%d').strftime('%Y')
-
         latest_album = album_title + " (" + album_year + ")"
-        log = log_dir + artist + ".log"
+
+        log = os.path.join(artist_log_dir, artist + ".log")
 
         if os.path.isfile(log):
             with open(log, "r") as f:
@@ -153,11 +155,11 @@ def check_new_albums():
 
             if latest_album != latest_log:
                 random_emoji = get_random_emoji()
-                msg = (f"Nytt släpp av {artist}: {latest_album}"
+                msg = ( f"Nytt släpp av {artist}: {latest_album}"
                         "\n\n"
                         f"{album_link}"
                         "\n\n"
-                        f"{random_emoji}")
+                        f"{random_emoji}" )
 
                 functions.push(msg) # in case signal-cli fails
                 signal_send(msg)
@@ -174,6 +176,11 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except:
+    except Exception as err:
         script = os.path.basename(__file__)
-        functions.push(script + " stötte på fel")
+        err = str(err)
+
+        msg = ( f"{script} stötte på fel:"
+                "\n\n"
+                f"{err}" )
+        functions.push(msg)
