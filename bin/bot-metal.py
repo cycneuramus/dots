@@ -99,6 +99,7 @@ def get_latest_album(artist_id):
     
     return album_title, album_date, album_link, album_id
 
+
 def get_power_analysis(album_id):
     url = api_base_url + "albums/" + album_id + "/tracks"
 
@@ -148,6 +149,7 @@ def get_power_analysis(album_id):
                 f" \"{power_track}\" ha störst powerpotential.")
 
     return analysis
+
 
 def check_new_albums():
     artist_log_dir = os.path.join(log_dir, "bot-metal")
