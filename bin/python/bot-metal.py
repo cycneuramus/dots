@@ -1,3 +1,4 @@
+import datetime
 import functions
 import os
 import requests
@@ -21,9 +22,9 @@ def get_auth_header():
     auth_url = "https://accounts.spotify.com/api/token"
 
     auth_response = requests.post(auth_url, {
-        "grant_type": "client_credentials",
-        "client_id": client_id,
-        "client_secret": client_secret,
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
     })
 
     auth_response_data = auth_response.json()
@@ -37,19 +38,22 @@ def get_auth_header():
 
 def get_latest_album(artist_id, auth_header):
     base_url = "https://api.spotify.com/v1/"
+    url = base_url + "artists/" + artist_id + "/albums"
 
-    # get latest album
-    request = requests.get(base_url + "artists/" + artist_id + "/albums",
-                     headers=auth_header,
-                     params={"include_groups": "album", "limit": 1, "locale": "SE"})
+    request = requests.get(url,
+             headers=auth_header,
+             params={"include_groups": "album", "limit": 1, "locale": "SE"})
     request_data = request.json()
 
     for album in request_data["items"]:
         album_title = album["name"]
         album_date = album["release_date"]
         album_link = album["external_urls"]["spotify"]
+    
+    album_title = '"' + album_title + '"'
+    album_year = datetime.datetime.strptime(album_date, '%Y-%m-%d').strftime('%Y')
 
-    return album_title
+    return album_title, album_year, album_link
 
 def iterate_artists():
     artists = {
@@ -95,10 +99,10 @@ def iterate_artists():
 
     auth_header = get_auth_header()
 
-    for artist in artists:
-        artist_id = artists[artist]
-        latest_album = get_latest_album(artist_id, auth_header)
+    for artist, artist_id in artists.items():
+        album_title, album_year, album_link = get_latest_album(artist_id, auth_header)
 
+        latest_album = album_title + "(" + album_year + ")"
         log = log_dir + artist + ".log"
 
         if os.path.isfile(log):
@@ -106,7 +110,11 @@ def iterate_artists():
                 latest_log = f.read()
 
             if latest_album != latest_log:
-                msg = "Nytt släpp av " + artist + ": " + latest_album
+                msg = ( f"Nytt släpp av {artist}: {latest_album}\n\n"
+                        f"{album_link}\n\n"
+                        f"{random_emoji}\n\n"
+                        "/Hårdrocksboten ()")
+
                 functions.push(msg)
 
         with open(log, "w") as f:
@@ -121,4 +129,5 @@ try:
     main()
 except:
     script = os.path.basename(__file__)
-    functions.push(script + " stötte på fel")
+    functions.push(script + " stötte"Adagio": "5QJvZ6s15Hgpjq7UKktjaZ",
+ 57         "Allen – Lande": "2hxa4ytcni5FUIK8IR27tX", på fel")
