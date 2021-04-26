@@ -53,7 +53,7 @@ def get_random_emoji():
     random_emoji = random.choice(open(emojis_file).readlines()).strip()
     return random_emoji
 
-def get_auth_header():
+def get_spotify_token():
     client_id = secrets.client_id
     client_secret = secrets.client_secret
 
@@ -66,17 +66,18 @@ def get_auth_header():
     })
 
     auth_response_data = auth_response.json()
-    access_token = auth_response_data["access_token"]
+    token = auth_response_data["access_token"]
 
+    return token
+
+def get_latest_album(artist_id):
+    base_url = "https://api.spotify.com/v1/"
+    url = base_url + "artists/" + artist_id + "/albums"
+
+    access_token = get_spotify_token()
     auth_header = {
         "Authorization": "Bearer {token}".format(token=access_token)
     }
-
-    return auth_header
-
-def get_latest_album(artist_id, auth_header):
-    base_url = "https://api.spotify.com/v1/"
-    url = base_url + "artists/" + artist_id + "/albums"
 
     request = requests.get(url,
              headers=auth_header,
@@ -135,10 +136,8 @@ def iterate_artists():
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir)
 
-    auth_header = get_auth_header()
-
     for artist, artist_id in artists.items():
-        album_title, album_year, album_link = get_latest_album(artist_id, auth_header)
+        album_title, album_year, album_link = get_latest_album(artist_id)
 
         latest_album = album_title + " (" + album_year + ")"
         log = log_dir + artist + ".log"
