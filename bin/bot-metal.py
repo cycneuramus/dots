@@ -6,11 +6,18 @@ import os
 import random
 import requests
 import secrets
+import subprocess
 
 home = os.getenv("HOME")
 signal_cli = home + "/bin/signal-cli/bin/signal-cli"
+signal_from = secrets.phone_number
 
 def get_signal_recipient():
+    # safe mode (send to self)
+    signal_recipient = secrets.phone_number
+    recipient_type = "contact"
+    return signal_recipient, recipient_type
+    
     cmd = [signal_cli, "listGroups"]
     result = subprocess.run(cmd, capture_output=True, text=True)
 
@@ -23,15 +30,23 @@ def get_signal_recipient():
             break
 
     if signal_group_id:
-        signal_recipient = signal_group_id
+        signal_recipient = signal_group_id 
+        recipient_type = "group"
     else:
         signal_recipient = secrets.phone_number
-    
-    return signal_recipient
+        recipient_type = "contact"
+        
+    return signal_recipient, recipient_type
 
-# def signal_send(msg):
-    # signal_recipient = get_signal_recipient()
-    # osv.
+def signal_send(msg):
+    signal_recipient, recipient_type = get_signal_recipient()
+    
+    if recipient_type == "contact":
+        cmd = [signal_cli, "-u", signal_from, "send", "-m", msg, signal_recipient]
+    elif recipient_type == "group":
+        cmd = [signal_cli, "-u", signal_from, "send", "-m", msg, "-g", signal_recipient]
+
+    subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
 def get_random_emoji():
     emojis_file = home + "/bin/emojis"
@@ -140,10 +155,10 @@ def iterate_artists():
                         "\n\n"
                         f"{random_emoji}"
                         "\n\n"
-                        "/Hårdrocksboten ( https://git.io/JOdFH )")
+                        "/Hårdrocksboten ( https://git.io/JOFIa )")
 
                 functions.push(msg) # in case signal-cli fails
-                # signal_send(msg)
+                signal_send(msg)
 
         with open(log, "w") as f:
             f.write(latest_album)
