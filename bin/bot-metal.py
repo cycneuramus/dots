@@ -99,7 +99,7 @@ def get_latest_album(artist_id):
     
     return album_title, album_date, album_link, album_id
 
-def get_max_power_track(album_id):
+def power_track_analysis(album_id):
     url = api_base_url + "albums/" + album_id + "/tracks"
 
     access_token = get_spotify_token()
@@ -111,7 +111,7 @@ def get_max_power_track(album_id):
             headers=auth_header)
     request_data = request.json()
 
-    track_dict = {}
+    track_analysis = {}
     for track in request_data["items"]:
         track_id = track["id"]
         track_name = track["name"]
@@ -122,24 +122,26 @@ def get_max_power_track(album_id):
 
         track_energy = request_data["energy"]
         track_valence = request_data["valence"]
-        track_mode = request_data["mode"]
+        # track_mode = request_data["mode"]
 
-        if track_mode == "0":
-            track_mode = "minor"
-        else:
-            track_mode = "major"
+        # if track_mode == "0":
+        #     track_mode = "minor"
+        # else:
+        #     track_mode = "major"
 
-        if track_mode == "major":
-            track_dict.update({track_name: [track_energy, track_valence]})
+        # if track_mode == "major":
+        #     track_analysis.update({track_name: [track_energy, track_valence]})
+        track_analysis.update({track_name: [track_energy, track_valence]})
 
     # https://reddit.com/r/learnprogramming/comments/37iaj4/python_getting_the_maximum_value_from_dictionary/
-    power_track = max(track_dict, key=lambda k: sum(track_dict.get(k)))
+    power_track = max(track_analysis, key=lambda k: sum(track_analysis.get(k)))
 
-    power_track_energy = round(track_dict[power_track][0] * 100)
-    power_track_valence = round(track_dict[power_track][1] * 100)
+    power_track_energy = round(track_analysis[power_track][0] * 100)
+    power_track_valence = round(track_analysis[power_track][1] * 100)
 
-    analysis = (f"Baserat på gladhet ({power_track_valence}%) och energi ({power_track_energy}%)"
-                f" verkar låten \"{power_track}\" ha störst powerpotential.")
+    analysis = (f"Baserat på gladhet ({power_track_valence}%)"
+                f" och energi ({power_track_energy}%) verkar låten"
+                f" \"{power_track}\" ha störst powerpotential.")
 
     return analysis
 
@@ -199,9 +201,9 @@ def check_new_albums():
 
             if latest_album != latest_log:
                 random_emoji = get_random_emoji()
-                power_analysis = get_max_power_track(album_id)
+                power_analysis = power_track_analysis(album_id)
 
-                msg = ( f"Nytt släpp av {artist}: {latest_album}"
+                msg = ( f"Nytt släpp av {artist}: {latest_album}."
                         "\n\n"
                         f"{album_link}"
                         "\n\n"
