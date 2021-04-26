@@ -13,8 +13,8 @@ log_dir="$HOME/log/bot-metal"
 signal_cli="$HOME/bin/signal-cli/bin/signal-cli"
 
 signal_from="$phone_number"
-$signal_cli receive > /dev/null 2>&1
-signal_group="$($signal_cli listGroups | awk '/Autistic/{print $2}')"
+# $signal_cli receive > /dev/null 2>&1
+# signal_group="$($signal_cli listGroups | awk '/Autistic/{print $2}')"
 
 if [[ -n $signal_group ]]; then
 	signal_to="$signal_group"

@@ -20,7 +20,6 @@ def get_signal_recipient():
     
     cmd = [signal_cli, "listGroups"]
     result = subprocess.run(cmd, capture_output=True, text=True)
-
     signal_groups = result.stdout
 
     for line in signal_groups.splitlines():
@@ -94,10 +93,7 @@ def get_latest_album(artist_id):
         album_date = album["release_date"]
         album_link = album["external_urls"]["spotify"]
     
-    album_title = '"' + album_title + '"'
-    album_year = datetime.datetime.strptime(album_date, '%Y-%m-%d').strftime('%Y')
-
-    return album_title, album_year, album_link
+    return album_title, album_date, album_link
 
 
 def check_new_albums():
@@ -143,7 +139,10 @@ def check_new_albums():
     }
 
     for artist, artist_id in artists.items():
-        album_title, album_year, album_link = get_latest_album(artist_id)
+        album_title, album_date, album_link = get_latest_album(artist_id)
+
+        album_title = '"' + album_title + '"'
+        album_year = datetime.datetime.strptime(album_date, '%Y-%m-%d').strftime('%Y')
 
         latest_album = album_title + " (" + album_year + ")"
         log = log_dir + artist + ".log"
@@ -168,9 +167,8 @@ def check_new_albums():
         
 
 def main():
-    if not functions.internet():
-        exit()
-    check_new_albums()
+    if functions.internet():
+        check_new_albums()
 
 
 if __name__ == "__main__":
