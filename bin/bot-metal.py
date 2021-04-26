@@ -81,7 +81,7 @@ def get_latest_album(artist_id, auth_header):
 def iterate_artists():
     artists = {
         "Adagio": "5QJvZ6s15Hgpjq7UKktjaZ",
-        "Allen – Lande": "2hxa4ytcni5FUIK8IR27tX",
+        "Allen Lande": "2hxa4ytcni5FUIK8IR27tX",
         "Arch Echo": "4ilweWzFHh6vrr7OOuDcUh",
         "Ayreon": "2RSApl0SXcVT8Yiy4UaPSt",
         "Beast In Black": "0rEuaTPLMhlViNCJrg3NEH",
