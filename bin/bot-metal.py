@@ -12,6 +12,7 @@ home_dir = os.getenv("HOME")
 bin_dir = os.path.join(home_dir, "bin")
 log_dir = os.path.join(home_dir, "log")
 
+api_base_url = "https://api.spotify.com/v1/"
 signal_cli = os.path.join(bin_dir, "signal-cli/bin/signal-cli")
 
 
@@ -78,8 +79,7 @@ def get_spotify_token():
 
 
 def get_latest_album(artist_id):
-    base_url = "https://api.spotify.com/v1/"
-    url = base_url + "artists/" + artist_id + "/albums"
+    url = api_base_url + "artists/" + artist_id + "/albums"
 
     access_token = get_spotify_token()
     auth_header = {
@@ -95,9 +95,53 @@ def get_latest_album(artist_id):
         album_title = album["name"]
         album_date = album["release_date"]
         album_link = album["external_urls"]["spotify"]
+        album_id = album["id"]
     
-    return album_title, album_date, album_link
+    return album_title, album_date, album_link, album_id
 
+def get_max_power_track(album_id):
+    url = api_base_url + "albums/" + album_id + "/tracks"
+
+    access_token = get_spotify_token()
+    auth_header = {
+        "Authorization": "Bearer {token}".format(token=access_token)
+    }
+
+    request = requests.get(url,
+            headers=auth_header)
+    request_data = request.json()
+
+    track_dict = {}
+    for track in request_data["items"]:
+        track_id = track["id"]
+        track_name = track["name"]
+
+        request = requests.get(api_base_url + "audio-features/" + track_id,
+                headers=auth_header)
+        request_data = request.json()
+
+        track_energy = request_data["energy"]
+        track_valence = request_data["valence"]
+        track_mode = request_data["mode"]
+
+        if track_mode == "0":
+            track_mode = "minor"
+        else:
+            track_mode = "major"
+
+        if track_mode == "major":
+            track_dict.update({track_name: [track_energy, track_valence]})
+
+    # https://reddit.com/r/learnprogramming/comments/37iaj4/python_getting_the_maximum_value_from_dictionary/
+    power_track = max(track_dict, key=lambda k: sum(track_dict.get(k)))
+
+    power_track_energy = round(track_dict[power_track][0] * 100)
+    power_track_valence = round(track_dict[power_track][1] * 100)
+
+    analysis = (f"Baserat på gladhet ({power_track_valence}%) och energi ({power_track_energy}%)"
+                f" verkar låten \"{power_track}\" ha störst powerpotential.")
+
+    return analysis
 
 def check_new_albums():
     artist_log_dir = os.path.join(log_dir, "bot-metal")
@@ -141,7 +185,7 @@ def check_new_albums():
     }
 
     for artist, artist_id in artists.items():
-        album_title, album_date, album_link = get_latest_album(artist_id)
+        album_title, album_date, album_link, album_id = get_latest_album(artist_id)
 
         album_title = '"' + album_title + '"'
         album_year = datetime.datetime.strptime(album_date, '%Y-%m-%d').strftime('%Y')
@@ -155,9 +199,13 @@ def check_new_albums():
 
             if latest_album != latest_log:
                 random_emoji = get_random_emoji()
+                power_analysis = get_max_power_track(album_id)
+
                 msg = ( f"Nytt släpp av {artist}: {latest_album}"
                         "\n\n"
                         f"{album_link}"
+                        "\n\n"
+                        f"{power_analysis}"
                         "\n\n"
                         f"{random_emoji}" )
 
