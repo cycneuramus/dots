@@ -100,7 +100,7 @@ echo "$artists" | while read line; do
 
 	if [[ -f "$log" && "$release_title_year" != $(cat "$log") ]]; then
 
-		random_emoji=$(shuf -n 1 $HOME/bin/emoji)
+		random_emoji=$(shuf -n 1 $HOME/bin/emojis)
 
 		msg_newrelease="Nytt släpp av $artist: $release_title_year."
 		msg_newrelease+="${newline}${newline}"

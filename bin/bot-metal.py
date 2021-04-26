@@ -1,19 +1,42 @@
+#!/usr/bin/env python3
+
 import datetime
 import functions
 import os
+import random
 import requests
 import secrets
 
-home = os.getenv('HOME')
+home = os.getenv("HOME")
 signal_cli = home + "/bin/signal-cli/bin/signal-cli"
 
-# def get_signal_group:
-    # signal_cli receive
-    # signal_cli listGroups | awk '/Autistic/{print $2}'
+def get_signal_recipient():
+    cmd = [signal_cli, "listGroups"]
+    result = subprocess.run(cmd, capture_output=True, text=True)
 
-# def signal_send:
-    # signal_sender = secrets.phone_number
+    signal_groups = result.stdout
+
+    for line in signal_groups.splitlines():
+        cols = line.split()
+        if "Autistic" in line:
+            signal_group = cols[1]
+            break
+
+    if not signal_group:
+        signal_recipient = secrets.phone_number
+    else:
+        signal_recipient = signal_group
+    
+    return signal_recipient
+
+# def signal_send(msg):
+    # signal_recipient = get_signal_recipient()
     # osv.
+
+def get_random_emoji():
+    emojis_file = home + "/bin/emojis"
+    random_emoji = random.choice(open(emojis_file).readlines()).strip()
+    return random_emoji
 
 def get_auth_header():
     client_id = secrets.client_id
@@ -102,7 +125,7 @@ def iterate_artists():
     for artist, artist_id in artists.items():
         album_title, album_year, album_link = get_latest_album(artist_id, auth_header)
 
-        latest_album = album_title + "(" + album_year + ")"
+        latest_album = album_title + " (" + album_year + ")"
         log = log_dir + artist + ".log"
 
         if os.path.isfile(log):
@@ -110,24 +133,29 @@ def iterate_artists():
                 latest_log = f.read()
 
             if latest_album != latest_log:
-                msg = ( f"Nytt släpp av {artist}: {latest_album}\n\n"
-                        f"{album_link}\n\n"
-                        f"{random_emoji}\n\n"
-                        "/Hårdrocksboten ()")
+                random_emoji = get_random_emoji()
+                msg = (f"Nytt släpp av {artist}: {latest_album}"
+                        "\n\n"
+                        f"{album_link}"
+                        "\n\n"
+                        f"{random_emoji}"
+                        "\n\n"
+                        "/Hårdrocksboten ( https://git.io/JOdFH )")
 
-                functions.push(msg)
+                functions.push(msg) # in case signal-cli fails
+                # signal_send(msg)
 
         with open(log, "w") as f:
             f.write(latest_album)
         
 def main():
     if not functions.internet():
-        exit
+        exit()
     iterate_artists()
 
-try:
-    main()
-except:
-    script = os.path.basename(__file__)
-    functions.push(script + " stötte"Adagio": "5QJvZ6s15Hgpjq7UKktjaZ",
- 57         "Allen – Lande": "2hxa4ytcni5FUIK8IR27tX", på fel")
+if __name__ == "__main__":
+    try:
+        main()
+    except:
+        script = os.path.basename(__file__)
+        functions.push(script + " stötte på fel")
