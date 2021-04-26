@@ -42,13 +42,13 @@ def get_signal_recipient():
 
 
 def signal_send(msg):
+    signal_sender = secrets.phone_number
     signal_recipient, recipient_type = get_signal_recipient()
-    signal_from = secrets.phone_number
 
     if recipient_type == "contact":
-        cmd = [signal_cli, "-u", signal_from, "send", "-m", msg, signal_recipient]
+        cmd = [signal_cli, "-u", signal_sender, "send", "-m", msg, signal_recipient]
     elif recipient_type == "group":
-        cmd = [signal_cli, "-u", signal_from, "send", "-m", msg, "-g", signal_recipient]
+        cmd = [signal_cli, "-u", signal_sender, "send", "-m", msg, "-g", signal_recipient]
 
     subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
