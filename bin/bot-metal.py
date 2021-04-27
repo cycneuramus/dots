@@ -22,6 +22,7 @@ def get_signal_recipient():
     recipient_type = "contact"
     return recipient, recipient_type
     
+    # else try sending to group
     cmd = [signal_cli, "listGroups"]
     result = subprocess.run(cmd, capture_output=True, text=True)
     signal_groups = result.stdout
