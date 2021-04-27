@@ -124,7 +124,7 @@ def get_power_analysis(album_id):
              params={"ids": track_id_list})
     audio_features_data = audio_features_request.json()
 
-    # create dict in the format track_name: [track_energy, track_valence]
+    # create dict in the form of track_name: [track_energy, track_valence]
     tracks_analysis = {}
     for track in audio_features_data["audio_features"]:
         track_energy = track["energy"]
@@ -209,8 +209,8 @@ def check_new_albums():
                 latest_log = f.read()
 
             if latest_album != latest_log:
-                random_emoji = get_random_emoji()
                 power_analysis = get_power_analysis(album_id)
+                random_emoji = get_random_emoji()
 
                 new_album = ( f"Nytt släpp av {artist}: {latest_album}."
                         "\n\n"
@@ -251,4 +251,6 @@ if __name__ == "__main__":
         msg = ( f"{script} stötte på fel:"
                 "\n\n"
                 f"{err}" )
+
+        print(err)
         functions.push(msg)
