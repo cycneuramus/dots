@@ -13,55 +13,8 @@ home_dir = os.getenv("HOME")
 bin_dir = os.path.join(home_dir, "bin")
 log_dir = os.path.join(home_dir, "log")
 
-signal_cli = os.path.join(bin_dir, "signal-cli/bin/signal-cli")
 api_base_url = "https://api.spotify.com/v1/"
-
-
-def get_signal_recipient():
-    # private mode (send to self)
-    recipient = secrets.phone_number
-    return recipient
-    
-    # oversharing mode (send to group with self as fallback)
-    cmd = [signal_cli, "listGroups"]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    signal_groups = result.stdout
-
-    for line in signal_groups.splitlines():
-        cols = line.split()
-        if secrets.signal_target_group in line:
-            group_id = cols[1]
-            break
-
-    if group_id:
-        recipient = group_id 
-    else:
-        recipient = secrets.phone_number
-        
-    return recipient
-
-
-def signal_send(msg, recipient):
-    sender = secrets.phone_number
-    phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
-
-    if phone_num_regex.match(recipient):
-        recipient_type = "contact"
-    else:
-        recipient_type = "group"
-
-    if recipient_type == "contact":
-        cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
-    elif recipient_type == "group":
-        cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
-
-    subprocess.run(cmd, stdout=subprocess.DEVNULL)
-
-
-def get_random_emoji():
-    emojis_file = os.path.join(bin_dir, "emojis")
-    random_emoji = random.choice(open(emojis_file).readlines()).strip()
-    return random_emoji
+signal_cli = os.path.join(bin_dir, "signal-cli/bin/signal-cli")
 
 
 def get_api_auth_header():
@@ -147,10 +100,57 @@ def get_power_analysis(album_id):
     power_track_valence = round(tracks_analysis[power_track_name][1] * 100)
 
     power_analysis = (f"Baserat på energi ({power_track_energy}%) och"
-            f" positivitet ({power_track_valence}%) verkar låten"
-            f" \"{power_track_name}\" ha störst powerpotential.")
+                    f" positivitet ({power_track_valence}%) verkar låten"
+                    f" \"{power_track_name}\" ha störst powerpotential.")
 
     return power_analysis
+
+
+def get_random_emoji():
+    emojis_file = os.path.join(bin_dir, "emojis")
+    random_emoji = random.choice(open(emojis_file).readlines()).strip()
+    return random_emoji
+
+
+def get_signal_recipient():
+    # private mode (send to self)
+    recipient = secrets.phone_number
+    return recipient
+    
+    # oversharing mode (send to group with self as fallback)
+    cmd = [signal_cli, "listGroups"]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    signal_groups = result.stdout
+
+    for line in signal_groups.splitlines():
+        cols = line.split()
+        if secrets.signal_target_group in line:
+            group_id = cols[1]
+            break
+
+    if group_id:
+        recipient = group_id 
+    else:
+        recipient = secrets.phone_number
+        
+    return recipient
+
+
+def signal_send(msg, recipient):
+    sender = secrets.phone_number
+    phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
+
+    if phone_num_regex.match(recipient):
+        recipient_type = "contact"
+    else:
+        recipient_type = "group"
+
+    if recipient_type == "contact":
+        cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
+    elif recipient_type == "group":
+        cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
+
+    subprocess.run(cmd, stdout=subprocess.devnull)
 
 
 def check_new_albums():
@@ -212,13 +212,13 @@ def check_new_albums():
                 power_analysis = get_power_analysis(album_id)
                 random_emoji = get_random_emoji()
 
-                new_album = ( f"Nytt släpp av {artist}: {latest_album}."
-                        "\n\n"
-                        f"{album_link}"
-                        "\n\n"
-                        f"{power_analysis}"
-                        "\n\n"
-                        f"{random_emoji}" )
+                new_album = (f"Nytt släpp av {artist}: {latest_album}."
+                            "\n\n"
+                            f"{album_link}"
+                            "\n\n"
+                            f"{power_analysis}"
+                            "\n\n"
+                            f"{random_emoji}")
 
                 new_albums.append(new_album)
 
@@ -248,9 +248,9 @@ if __name__ == "__main__":
         script = os.path.basename(__file__)
         err = str(err)
 
-        msg = ( f"{script} stötte på fel:"
+        msg = (f"{script} stötte på fel:"
                 "\n\n"
-                f"{err}" )
+                f"{err}")
 
         print(err)
         functions.push(msg)
