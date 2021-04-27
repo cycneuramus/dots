@@ -65,25 +65,25 @@ av-scan() {
 # Toggle bluetooth
 bt() { 
 	fix() {
-		sudo modprobe -r btusb
+		. secrets 
+		echo $pass | sudo -S modprobe -r btusb
 		sleep 0.5
-		sudo systemctl stop bluetooth.service
+		echo $pass | sudo -S systemctl stop bluetooth.service
 		sleep 0.5
-		sudo modprobe btusb
+		echo $pass | sudo -S modprobe btusb
 		sleep 0.5
-		sudo systemctl start bluetooth.service
-		sleep 0.5
-		bt
+		echo $pass | sudo -S systemctl start bluetooth.service
 	}
 
 	if [[ $1 == "fix" ]]; then
 		fix
-	fi
-
-	if [[ $(bluetooth) == *off* ]]; then
+	elif [[ $(bluetooth) == *off* ]]; then
 		sudo rfkill unblock bluetooth
 		sudo bluetooth on 
-		bluetoothctl power on 
+		if [[ $(bluetoothctl power on) == *Error* ]]; then
+			fix
+			bluetoothctl power on
+		fi
 
 		devices_paired=$(bluetoothctl paired-devices | grep Device | cut -d ' ' -f 2)
 		echo "$devices_paired" | while read -r line; do
@@ -727,7 +727,7 @@ yta() {
 
 # Stream YouTube video 
 yts() {
-	youtube-dl -o - "$1" | mpv -
+	youtube-dl -o - "$1" | mpv --force-seekable=yes -
 }
 
 
