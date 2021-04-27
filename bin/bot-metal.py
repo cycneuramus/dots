@@ -4,6 +4,7 @@ import datetime
 import functions
 import os
 import random
+import re
 import requests
 import secrets
 import subprocess
@@ -17,12 +18,11 @@ api_base_url = "https://api.spotify.com/v1/"
 
 
 def get_signal_recipient():
-    # safe mode (send to self)
+    # private mode (send to self)
     recipient = secrets.phone_number
-    recipient_type = "contact"
-    return recipient, recipient_type
+    return recipient
     
-    # else try sending to group
+    # oversharing mode (send to group with self as fallback)
     cmd = [signal_cli, "listGroups"]
     result = subprocess.run(cmd, capture_output=True, text=True)
     signal_groups = result.stdout
@@ -35,17 +35,20 @@ def get_signal_recipient():
 
     if group_id:
         recipient = group_id 
-        recipient_type = "group"
     else:
         recipient = secrets.phone_number
-        recipient_type = "contact"
         
-    return recipient, recipient_type
+    return recipient
 
 
-def signal_send(msg):
+def signal_send(msg, recipient):
     sender = secrets.phone_number
-    recipient, recipient_type = get_signal_recipient()
+    phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
+
+    if phone_num_regex.match(recipient):
+        recipient_type = "contact"
+    else:
+        recipient_type = "group"
 
     if recipient_type == "contact":
         cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
@@ -144,8 +147,8 @@ def get_power_analysis(album_id):
     power_track_valence = round(tracks_analysis[power_track_name][1] * 100)
 
     power_analysis = (f"Baserat på energi ({power_track_energy}%) och"
-                f" positivitet ({power_track_valence}%) verkar låten"
-                f" \"{power_track_name}\" ha störst powerpotential.")
+            f" positivitet ({power_track_valence}%) verkar låten"
+            f" \"{power_track_name}\" ha störst powerpotential.")
 
     return power_analysis
 
@@ -191,6 +194,7 @@ def check_new_albums():
         "Wilderun": "0wQmcChWogcmsCThY2SKES"
     }
 
+    new_albums = []
     for artist, artist_id in artists.items():
         album_title, album_date, album_link, album_id = get_latest_album(artist_id)
 
@@ -208,7 +212,7 @@ def check_new_albums():
                 random_emoji = get_random_emoji()
                 power_analysis = get_power_analysis(album_id)
 
-                msg = ( f"Nytt släpp av {artist}: {latest_album}."
+                new_album = ( f"Nytt släpp av {artist}: {latest_album}."
                         "\n\n"
                         f"{album_link}"
                         "\n\n"
@@ -216,16 +220,25 @@ def check_new_albums():
                         "\n\n"
                         f"{random_emoji}" )
 
-                functions.push(msg) # in case signal-cli fails
-                signal_send(msg)
+                new_albums.append(new_album)
 
         with open(log, "w") as f:
             f.write(latest_album)
         
+    return new_albums
+
 
 def main():
-    if functions.internet():
-        check_new_albums()
+    if not functions.internet():
+        exit()
+
+    new_albums = check_new_albums()
+    if new_albums:
+        signal_recipient = get_signal_recipient()
+
+        for new_album in new_albums:
+            signal_send(new_album, signal_recipient)
+            functions.push(new_album) # in case signal-cli fails
 
 
 if __name__ == "__main__":
