@@ -18,9 +18,9 @@ api_base_url = "https://api.spotify.com/v1/"
 
 def get_signal_recipient():
     # safe mode (send to self)
-    signal_recipient = secrets.phone_number
+    recipient = secrets.phone_number
     recipient_type = "contact"
-    return signal_recipient, recipient_type
+    return recipient, recipient_type
     
     cmd = [signal_cli, "listGroups"]
     result = subprocess.run(cmd, capture_output=True, text=True)
@@ -29,27 +29,27 @@ def get_signal_recipient():
     for line in signal_groups.splitlines():
         cols = line.split()
         if secrets.signal_target_group in line:
-            signal_group_id = cols[1]
+            group_id = cols[1]
             break
 
-    if signal_group_id:
-        signal_recipient = signal_group_id 
+    if group_id:
+        recipient = group_id 
         recipient_type = "group"
     else:
-        signal_recipient = secrets.phone_number
+        recipient = secrets.phone_number
         recipient_type = "contact"
         
-    return signal_recipient, recipient_type
+    return recipient, recipient_type
 
 
 def signal_send(msg):
-    signal_sender = secrets.phone_number
-    signal_recipient, recipient_type = get_signal_recipient()
+    sender = secrets.phone_number
+    recipient, recipient_type = get_signal_recipient()
 
     if recipient_type == "contact":
-        cmd = [signal_cli, "-u", signal_sender, "send", "-m", msg, signal_recipient]
+        cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
     elif recipient_type == "group":
-        cmd = [signal_cli, "-u", signal_sender, "send", "-m", msg, "-g", signal_recipient]
+        cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
 
     subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
@@ -60,31 +60,31 @@ def get_random_emoji():
     return random_emoji
 
 
-def get_spotify_token():
+def get_api_auth_header():
     client_id = secrets.spotify_client_id
     client_secret = secrets.spotify_client_secret
 
     auth_url = "https://accounts.spotify.com/api/token"
 
-    auth_response = requests.post(auth_url, {
+    response = requests.post(auth_url, {
             "grant_type": "client_credentials",
             "client_id": client_id,
             "client_secret": client_secret,
     })
 
-    auth_response_data = auth_response.json()
-    token = auth_response_data["access_token"]
+    response_data = response.json()
+    token = response_data["access_token"]
 
-    return token
+    auth_header = {
+        "Authorization": "Bearer {token}".format(token=token)
+    }
+
+    return auth_header
 
 
 def get_latest_album(artist_id):
     url = api_base_url + "artists/" + artist_id + "/albums"
-
-    access_token = get_spotify_token()
-    auth_header = {
-        "Authorization": "Bearer {token}".format(token=access_token)
-    }
+    auth_header = get_api_auth_header()
 
     request = requests.get(url,
              headers=auth_header,
@@ -102,19 +102,15 @@ def get_latest_album(artist_id):
 
 def get_power_analysis(album_id):
     url = api_base_url + "albums/" + album_id + "/tracks"
+    auth_header = get_api_auth_header()
 
-    access_token = get_spotify_token()
-    auth_header = {
-        "Authorization": "Bearer {token}".format(token=access_token)
-    }
-
-    album_request = requests.get(url,
+    album_tracks_request = requests.get(url,
             headers=auth_header)
-    album_data = album_request.json()
+    album_tracks_data = album_tracks_request.json()
 
-    # get comma-separated list of track IDs
+    # get comma-separated list of track IDs for API request
     track_id_list = []
-    for track in album_data["items"]:
+    for track in album_tracks_data["items"]:
         track_id = track["id"]
         track_id_list.append(track_id)
     track_id_list = ",".join(track_id_list)
@@ -124,31 +120,32 @@ def get_power_analysis(album_id):
              params={"ids": track_id_list})
     audio_features_data = audio_features_request.json()
 
-    track_analysis = {}
+    tracks_analysis = {}
     for track in audio_features_data["audio_features"]:
         track_energy = track["energy"]
         track_valence = track["valence"]
 
-        # get track name from previous album request by matching its ID
+        # get track name from previous album request by matching track ID
         track_id = track["id"]
-        for value in album_data["items"]:
+        for value in album_tracks_data["items"]:
             if value["id"] == track_id:
                 track_name = value["name"]
                 break
 
-        track_analysis.update({track_name: [track_energy, track_valence]})
+        tracks_analysis.update({track_name: [track_energy, track_valence]})
             
-    # https://reddit.com/r/learnprogramming/comments/37iaj4/python_getting_the_maximum_value_from_dictionary/
-    power_track = max(track_analysis, key=lambda k: sum(track_analysis.get(k)))
+    # https://redd.it/37iaj4
+    # get track with highest combined sum of energy and valence from dict
+    power_track_name = max(tracks_analysis, key=lambda k: sum(tracks_analysis.get(k)))
 
-    power_track_energy = round(track_analysis[power_track][0] * 100)
-    power_track_valence = round(track_analysis[power_track][1] * 100)
+    power_track_energy = round(tracks_analysis[power_track_name][0] * 100)
+    power_track_valence = round(tracks_analysis[power_track_name][1] * 100)
 
-    analysis = (f"Baserat på energi ({power_track_energy}%) och"
+    power_analysis = (f"Baserat på energi ({power_track_energy}%) och"
                 f" positivitet ({power_track_valence}%) verkar låten"
-                f" \"{power_track}\" ha störst powerpotential.")
+                f" \"{power_track_name}\" ha störst powerpotential.")
 
-    return analysis
+    return power_analysis
 
 
 def check_new_albums():
