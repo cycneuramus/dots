@@ -106,78 +106,6 @@ def get_power_analysis(album_id):
     return power_analysis
 
 
-def get_random_emojis():
-    emojis_file = os.path.join(bin_dir, "emojis")
-
-    with open("emojis_file") as f:
-        emojis_list = random.sample(f.readlines(),3)
-    emojis_str = " ".join(emojis_list).replace("\n", "")
-
-    return emojis_str
-
-
-def get_signal_recipient():
-    # private mode (send to self)
-    recipient = secrets.phone_number
-    return recipient
-    
-    # oversharing mode (send to group with self as fallback)
-    cmd = [signal_cli, "listGroups"]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    signal_groups = result.stdout
-
-    for line in signal_groups.splitlines():
-        cols = line.split()
-        if secrets.signal_target_group in line:
-            group_id = cols[1]
-            break
-
-    if group_id:
-        recipient = group_id 
-    else:
-        recipient = secrets.phone_number
-        
-    return recipient
-
-
-def craft_new_album_msg(new_album):
-
-    artist = new_album["artist"]
-    latest_album = new_album["latest_album"]
-    album_id = new_album["album_id"]
-    album_link = new_album["album_link"]
-
-    power_analysis = get_power_analysis(album_id)
-    random_emojis = get_random_emojis()
-
-    new_album_msg = (f"Nytt släpp av {artist}: {latest_album}."
-                    "\n\n"
-                    f"{album_link}"
-                    "\n\n"
-                    f"{power_analysis}"
-                    "\n\n"
-                    f"{random_emojis}")
-    
-    return new_album_msg
-
-
-def signal_send(msg, recipient):
-    sender = secrets.phone_number
-    phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
-
-    if phone_num_regex.match(recipient):
-        recipient_type = "contact"
-    else:
-        recipient_type = "group"
-
-    if recipient_type == "contact":
-        cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
-    elif recipient_type == "group":
-        cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
-    
-    subprocess.run(cmd, stdout=subprocess.DEVNULL)
-
-
 def check_new_albums():
     artist_log_dir = os.path.join(log_dir, "bot-metal")
     if not os.path.isdir(artist_log_dir):
@@ -241,6 +169,79 @@ def check_new_albums():
             f.write(latest_album)
         
     return new_albums
+
+
+def get_random_emojis():
+    emojis_file = os.path.join(bin_dir, "emojis")
+
+    with open("emojis_file") as f:
+        emojis_list = random.sample(f.readlines(),3)
+    emojis_str = " ".join(emojis_list).replace("\n", "")
+
+    return emojis_str
+
+
+def craft_new_album_msg(new_album):
+
+    artist = new_album["artist"]
+    latest_album = new_album["latest_album"]
+    album_id = new_album["album_id"]
+    album_link = new_album["album_link"]
+
+    power_analysis = get_power_analysis(album_id)
+    random_emojis = get_random_emojis()
+
+    new_album_msg = (f"Nytt släpp av {artist}: {latest_album}."
+                    "\n\n"
+                    f"{album_link}"
+                    "\n\n"
+                    f"{power_analysis}"
+                    "\n\n"
+                    f"{random_emojis}")
+    
+    return new_album_msg
+
+
+def get_signal_recipient():
+    # private mode (send to self)
+    recipient = secrets.phone_number
+    return recipient
+    
+    # oversharing mode (send to group with self as fallback)
+    cmd = [signal_cli, "listGroups"]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    signal_groups = result.stdout
+
+    for line in signal_groups.splitlines():
+        cols = line.split()
+        if secrets.signal_target_group in line:
+            group_id = cols[1]
+            break
+
+    if group_id:
+        recipient = group_id 
+    else:
+        recipient = secrets.phone_number
+        
+    return recipient
+
+
+def signal_send(msg, recipient):
+    sender = secrets.phone_number
+    phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
+
+    if phone_num_regex.match(recipient):
+        recipient_type = "contact"
+    else:
+        recipient_type = "group"
+
+    if recipient_type == "contact":
+        cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
+    elif recipient_type == "group":
+        cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
+    
+    subprocess.run(cmd, stdout=subprocess.DEVNULL)
+
 
 
 def main():
