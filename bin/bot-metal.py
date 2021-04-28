@@ -159,7 +159,7 @@ def check_new_albums() -> list:
         album_link = latest_album["link"]
         album_id = latest_album["id"]
 
-        latest_album = album_title + " (" + album_year + ")"
+        latest_album_summary = album_title + " (" + album_year + ")"
 
         log = os.path.join(artist_log_dir, artist + ".log")
 
@@ -167,12 +167,12 @@ def check_new_albums() -> list:
             with open(log, "r") as f:
                 latest_log = f.read()
 
-            if latest_album != latest_log:
-                new_albums.append({"artist": artist, "latest_album": latest_album, 
+            if latest_album_summary != latest_log:
+                new_albums.append({"artist": artist, "latest_album": latest_album_summary, 
                     "album_id": album_id, "album_link": album_link})
 
         with open(log, "w") as f:
-            f.write(latest_album)
+            f.write(latest_album_summary)
         
     return new_albums
 
