@@ -42,7 +42,8 @@ def get_latest_album(artist_id: str) -> dict:
     request = requests.get(url,
                            headers=auth_header,
                            params={"include_groups": "album",
-                                   "limit": 1, "market": "SE"})
+                                   "limit": 1,
+                                   "market": "SE"})
     request_data = request.json()
 
     for album in request_data["items"]:
@@ -51,8 +52,10 @@ def get_latest_album(artist_id: str) -> dict:
         link = album["external_urls"]["spotify"]
         id_ = album["id"]
 
-    latest_album = {"title": title, "date": date,
-                    "link": link, "id": id_}
+    latest_album = {"title": title,
+                    "date": date,
+                    "link": link,
+                    "id": id_}
 
     return latest_album
 
@@ -94,7 +97,8 @@ def get_power_analysis(album_id: str) -> str:
 
     # https://redd.it/37iaj4
     # get track with highest combined sum of energy and valence from dict
-    power_track_name = max(tracks_analysis, key=lambda k:
+    power_track_name = max(tracks_analysis,
+                           key=lambda k:
                            sum(tracks_analysis.get(k)))
 
     power_track_energy = round(tracks_analysis[power_track_name][0] * 100)
