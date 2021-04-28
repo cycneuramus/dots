@@ -106,10 +106,14 @@ def get_power_analysis(album_id):
     return power_analysis
 
 
-def get_random_emoji():
+def get_random_emojis():
     emojis_file = os.path.join(bin_dir, "emojis")
-    random_emoji = random.choice(open(emojis_file).readlines()).strip()
-    return random_emoji
+
+    with open("emojis_file") as f:
+        emojis_list = random.sample(f.readlines(),3)
+    emojis_str = " ".join(emojis_list).replace("\n", "")
+
+    return emojis_str
 
 
 def get_signal_recipient():
@@ -136,6 +140,27 @@ def get_signal_recipient():
     return recipient
 
 
+def craft_new_album_msg(new_album):
+
+    artist = new_album["artist"]
+    latest_album = new_album["latest_album"]
+    album_id = new_album["album_id"]
+    album_link = new_album["album_link"]
+
+    power_analysis = get_power_analysis(album_id)
+    random_emojis = get_random_emojis()
+
+    new_album_msg = (f"Nytt släpp av {artist}: {latest_album}."
+                    "\n\n"
+                    f"{album_link}"
+                    "\n\n"
+                    f"{power_analysis}"
+                    "\n\n"
+                    f"{random_emojis}")
+    
+    return new_album_msg
+
+
 def signal_send(msg, recipient):
     sender = secrets.phone_number
     phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
@@ -149,8 +174,8 @@ def signal_send(msg, recipient):
         cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
     elif recipient_type == "group":
         cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
-
-    subprocess.run(cmd, stdout=subprocess.devnull)
+    
+    subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
 
 def check_new_albums():
@@ -209,18 +234,8 @@ def check_new_albums():
                 latest_log = f.read()
 
             if latest_album != latest_log:
-                power_analysis = get_power_analysis(album_id)
-                random_emoji = get_random_emoji()
-
-                new_album = (f"Nytt släpp av {artist}: {latest_album}."
-                            "\n\n"
-                            f"{album_link}"
-                            "\n\n"
-                            f"{power_analysis}"
-                            "\n\n"
-                            f"{random_emoji}")
-
-                new_albums.append(new_album)
+                new_albums.append({"artist": artist, "latest_album": latest_album, 
+                    "album_id": album_id, "album_link": album_link})
 
         with open(log, "w") as f:
             f.write(latest_album)
@@ -233,12 +248,14 @@ def main():
         exit()
 
     new_albums = check_new_albums()
+
     if new_albums:
         signal_recipient = get_signal_recipient()
 
         for new_album in new_albums:
-            signal_send(new_album, signal_recipient)
-            functions.push(new_album) # in case signal-cli fails
+            msg = craft_new_album_msg(new_album)
+            signal_send(msg, signal_recipient)
+            functions.push(msg) # in case signal-cli fails
 
 
 if __name__ == "__main__":
