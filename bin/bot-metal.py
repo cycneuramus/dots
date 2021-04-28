@@ -17,7 +17,7 @@ api_base_url = "https://api.spotify.com/v1/"
 signal_cli = os.path.join(bin_dir, "signal-cli/bin/signal-cli")
 
 
-def get_api_auth_header():
+def get_api_auth_header() -> dict:
     client_id = secrets.spotify_client_id
     client_secret = secrets.spotify_client_secret
 
@@ -33,13 +33,13 @@ def get_api_auth_header():
     token = response_data["access_token"]
 
     auth_header = {
-        "Authorization": "Bearer {token}".format(token=token)
+        "Authorization": "Bearer " + token
     }
 
     return auth_header
 
 
-def get_latest_album(artist_id):
+def get_latest_album(artist_id: str) -> dict:
     url = api_base_url + "artists/" + artist_id + "/albums"
     auth_header = get_api_auth_header()
 
@@ -49,15 +49,18 @@ def get_latest_album(artist_id):
     request_data = request.json()
 
     for album in request_data["items"]:
-        album_title = album["name"]
-        album_date = album["release_date"]
-        album_link = album["external_urls"]["spotify"]
-        album_id = album["id"]
+        title = album["name"]
+        date = album["release_date"]
+        link = album["external_urls"]["spotify"]
+        id = album["id"]
     
-    return album_title, album_date, album_link, album_id
+    latest_album = {"title": title, "date": date, 
+            "link": link, "id": id}
+
+    return latest_album
 
 
-def get_power_analysis(album_id):
+def get_power_analysis(album_id: str) -> str:
     url = api_base_url + "albums/" + album_id + "/tracks"
     auth_header = get_api_auth_header()
 
@@ -106,7 +109,7 @@ def get_power_analysis(album_id):
     return power_analysis
 
 
-def check_new_albums():
+def check_new_albums() -> list:
     artist_log_dir = os.path.join(log_dir, "bot-metal")
     if not os.path.isdir(artist_log_dir):
         os.makedirs(artist_log_dir)
@@ -149,10 +152,13 @@ def check_new_albums():
 
     new_albums = []
     for artist, artist_id in artists.items():
-        album_title, album_date, album_link, album_id = get_latest_album(artist_id)
+        latest_album = get_latest_album(artist_id)
 
-        album_title = '"' + album_title + '"'
-        album_year = datetime.datetime.strptime(album_date, '%Y-%m-%d').strftime('%Y')
+        album_title = '"' + latest_album["title"] + '"'
+        album_year = datetime.datetime.strptime(latest_album["date"], '%Y-%m-%d').strftime('%Y')
+        album_link = latest_album["link"]
+        album_id = latest_album["id"]
+
         latest_album = album_title + " (" + album_year + ")"
 
         log = os.path.join(artist_log_dir, artist + ".log")
@@ -171,7 +177,7 @@ def check_new_albums():
     return new_albums
 
 
-def get_random_emojis():
+def get_random_emojis() -> str:
     emojis_file = os.path.join(bin_dir, "emojis")
 
     with open(emojis_file) as f:
@@ -181,7 +187,7 @@ def get_random_emojis():
     return emojis_str
 
 
-def craft_new_album_msg(new_album):
+def craft_signal_msg(new_album: dict) -> str:
 
     artist = new_album["artist"]
     latest_album = new_album["latest_album"]
@@ -202,7 +208,7 @@ def craft_new_album_msg(new_album):
     return new_album_msg
 
 
-def get_signal_recipient():
+def get_signal_recipient() -> str:
     # private mode (send to self)
     recipient = secrets.phone_number
     return recipient
@@ -226,7 +232,7 @@ def get_signal_recipient():
     return recipient
 
 
-def signal_send(msg, recipient):
+def signal_send(msg: str, recipient: str):
     sender = secrets.phone_number
     phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
 
@@ -254,8 +260,9 @@ def main():
         signal_recipient = get_signal_recipient()
 
         for new_album in new_albums:
-            msg = craft_new_album_msg(new_album)
+            msg = craft_signal_msg(new_album)
             signal_send(msg, signal_recipient)
+
             functions.push(msg) # in case signal-cli fails
 
 
