@@ -188,7 +188,6 @@ def get_random_emojis() -> str:
 
 
 def craft_signal_msg(new_album: dict) -> str:
-
     artist = new_album["artist"]
     latest_album = new_album["latest_album"]
     album_id = new_album["album_id"]
