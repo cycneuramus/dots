@@ -174,7 +174,7 @@ def check_new_albums():
 def get_random_emojis():
     emojis_file = os.path.join(bin_dir, "emojis")
 
-    with open("emojis_file") as f:
+    with open(emojis_file) as f:
         emojis_list = random.sample(f.readlines(),3)
     emojis_str = " ".join(emojis_list).replace("\n", "")
 
