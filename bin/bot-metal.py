@@ -25,8 +25,7 @@ def get_api_auth_header() -> dict:
 
     response = requests.post(auth_url, {"grant_type": "client_credentials",
                                         "client_id": client_id,
-                                        "client_secret": client_secret,
-                                        })
+                                        "client_secret": client_secret})
 
     response_data = response.json()
     token = response_data["access_token"]
@@ -43,8 +42,7 @@ def get_latest_album(artist_id: str) -> dict:
     request = requests.get(url,
                            headers=auth_header,
                            params={"include_groups": "album",
-                                   "limit": 1, "market": "SE"
-                                   })
+                                   "limit": 1, "market": "SE"})
     request_data = request.json()
 
     for album in request_data["items"]:
