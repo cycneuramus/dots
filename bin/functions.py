@@ -1,5 +1,6 @@
 import requests
-import secrets
+import mysecrets
+
 
 def internet():
     try:
@@ -7,11 +8,12 @@ def internet():
         return True
     except:
         return False
-    
+
+
 def push(msg):
     requests.post(
-            url=secrets.gotify_url,
-            headers={"X-Gotify-Key": secrets.gotify_token},
+            url=mysecrets.gotify_url,
+            headers={"X-Gotify-Key": mysecrets.gotify_token},
             data={
                 "message": msg,
                 "priority": 1}

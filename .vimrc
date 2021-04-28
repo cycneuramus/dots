@@ -20,6 +20,7 @@
 	"	Plug 'ap/vim-css-color'
 	"	Plug 'junegunn/goyo.vim' 
 	"	Plug 'vim-pandoc/vim-markdownfootnotes'
+		Plug 'dense-analysis/ale'
 		Plug 'Vimjas/vim-python-pep8-indent'
 		Plug 'isobit/vim-caddyfile'
 	"	Plug 'qpkorr/vim-renamer'

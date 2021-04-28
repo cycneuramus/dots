@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 
 import datetime
-import functions
 import os
 import random
 import re
-import requests
-import secrets
 import subprocess
+
+import requests
+
+import functions
+import mysecrets
 
 home_dir = os.getenv("HOME")
 bin_dir = os.path.join(home_dir, "bin")
@@ -18,8 +20,8 @@ signal_cli = os.path.join(bin_dir, "signal-cli/bin/signal-cli")
 
 
 def get_api_auth_header() -> dict:
-    client_id = secrets.spotify_client_id
-    client_secret = secrets.spotify_client_secret
+    client_id = mysecrets.spotify_client_id
+    client_secret = mysecrets.spotify_client_secret
 
     auth_url = "https://accounts.spotify.com/api/token"
 
@@ -71,8 +73,7 @@ def get_power_analysis(album_id: str) -> str:
     # get comma-separated list of track IDs for API request
     track_id_list = []
     for track in album_tracks_data["items"]:
-        track_id = track["id"]
-        track_id_list.append(track_id)
+        track_id_list.append(track["id"])
     track_id_list = ",".join(track_id_list)
 
     audio_features_request = requests.get(api_base_url + "audio-features/",
@@ -83,17 +84,15 @@ def get_power_analysis(album_id: str) -> str:
     # create dict in the form of track_name: [track_energy, track_valence]
     tracks_analysis = {}
     for track in audio_features_data["audio_features"]:
-        track_energy = track["energy"]
-        track_valence = track["valence"]
 
         # get track name from previous album request by matching track ID
-        track_id = track["id"]
         for value in album_tracks_data["items"]:
-            if value["id"] == track_id:
+            if value["id"] == track["id"]:
                 track_name = value["name"]
                 break
 
-        tracks_analysis.update({track_name: [track_energy, track_valence]})
+        tracks_analysis.update({track_name: [track["energy"],
+                                             track["valence"]]})
 
     # https://redd.it/37iaj4
     # get track with highest combined sum of energy and valence from dict
@@ -166,7 +165,6 @@ def check_new_albums() -> list:
         latest_album_summary = album_title + " (" + album_year + ")"
 
         log = os.path.join(artist_log_dir, artist + ".log")
-
         if os.path.isfile(log):
             with open(log, "r") as f:
                 latest_log = f.read()
@@ -188,7 +186,7 @@ def get_random_emojis() -> str:
 
     with open(emojis_file) as f:
         emojis_list = random.sample(f.readlines(), 3)
-    emojis_str = " ".join(emojis_list).replace("\n", "")
+    emojis_str = "  ".join(emojis_list).replace("\n", "")
 
     return emojis_str
 
@@ -215,7 +213,7 @@ def craft_signal_msg(new_album: dict) -> str:
 
 def get_signal_recipient() -> str:
     # private mode (send to self)
-    recipient = secrets.phone_number
+    recipient = mysecrets.phone_number
     return recipient
 
     # oversharing mode (send to group with self as fallback)
@@ -225,20 +223,20 @@ def get_signal_recipient() -> str:
 
     for line in signal_groups.splitlines():
         cols = line.split()
-        if secrets.signal_target_group in line:
+        if mysecrets.signal_target_group in line:
             group_id = cols[1]
             break
 
     if group_id:
         recipient = group_id
     else:
-        recipient = secrets.phone_number
+        recipient = mysecrets.phone_number
 
     return recipient
 
 
 def signal_send(msg: str, recipient: str):
-    sender = secrets.phone_number
+    sender = mysecrets.phone_number
     phone_num_regex = re.compile("^\\+[1-9][0-9]{6,14}$")
 
     if phone_num_regex.match(recipient):
@@ -264,10 +262,10 @@ def main():
         signal_recipient = get_signal_recipient()
 
         for new_album in new_albums:
-            msg = craft_signal_msg(new_album)
-            signal_send(msg, signal_recipient)
+            signal_msg = craft_signal_msg(new_album)
+            signal_send(signal_msg, signal_recipient)
 
-            functions.push(msg)  # in case signal-cli fails
+            functions.push(signal_msg)  # in case signal-cli fails
 
 
 if __name__ == "__main__":
@@ -277,9 +275,9 @@ if __name__ == "__main__":
         script = os.path.basename(__file__)
         err = str(err)
 
-        msg = (f"{script} stötte på fel:"
-               "\n\n"
-               f"{err}")
+        err_msg = (f"{script} stötte på fel:"
+                   "\n\n"
+                   f"{err}")
 
         print(err)
-        functions.push(msg)
+        functions.push(err_msg)
