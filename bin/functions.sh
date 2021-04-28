@@ -37,6 +37,10 @@ internet() {
     fi
 }
 
+pylint() {
+	pylama "$1" -f pylint
+}
+
 signal-file() {
 	. secrets
 	$HOME/bin/signal-cli/bin/signal-cli -u $phone_number send -m "Från $(hostname)" $phone_number -a "$1"

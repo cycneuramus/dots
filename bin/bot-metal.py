@@ -23,18 +23,15 @@ def get_api_auth_header() -> dict:
 
     auth_url = "https://accounts.spotify.com/api/token"
 
-    response = requests.post(auth_url, {
-            "grant_type": "client_credentials",
-            "client_id": client_id,
-            "client_secret": client_secret,
-    })
+    response = requests.post(auth_url, {"grant_type": "client_credentials",
+                                        "client_id": client_id,
+                                        "client_secret": client_secret,
+                                        })
 
     response_data = response.json()
     token = response_data["access_token"]
 
-    auth_header = {
-        "Authorization": "Bearer " + token
-    }
+    auth_header = {"Authorization": "Bearer " + token}
 
     return auth_header
 
@@ -44,18 +41,20 @@ def get_latest_album(artist_id: str) -> dict:
     auth_header = get_api_auth_header()
 
     request = requests.get(url,
-             headers=auth_header,
-             params={"include_groups": "album", "limit": 1, "market": "SE"})
+                           headers=auth_header,
+                           params={"include_groups": "album",
+                                   "limit": 1, "market": "SE"
+                                   })
     request_data = request.json()
 
     for album in request_data["items"]:
         title = album["name"]
         date = album["release_date"]
         link = album["external_urls"]["spotify"]
-        id = album["id"]
-    
-    latest_album = {"title": title, "date": date, 
-            "link": link, "id": id}
+        id_ = album["id"]
+
+    latest_album = {"title": title, "date": date,
+                    "link": link, "id": id_}
 
     return latest_album
 
@@ -65,7 +64,7 @@ def get_power_analysis(album_id: str) -> str:
     auth_header = get_api_auth_header()
 
     album_tracks_request = requests.get(url,
-            headers=auth_header)
+                                        headers=auth_header)
     album_tracks_data = album_tracks_request.json()
 
     # get comma-separated list of track IDs for API request
@@ -76,8 +75,8 @@ def get_power_analysis(album_id: str) -> str:
     track_id_list = ",".join(track_id_list)
 
     audio_features_request = requests.get(api_base_url + "audio-features/",
-             headers=auth_header,
-             params={"ids": track_id_list})
+                                          headers=auth_header,
+                                          params={"ids": track_id_list})
     audio_features_data = audio_features_request.json()
 
     # create dict in the form of track_name: [track_energy, track_valence]
@@ -94,17 +93,18 @@ def get_power_analysis(album_id: str) -> str:
                 break
 
         tracks_analysis.update({track_name: [track_energy, track_valence]})
-            
+
     # https://redd.it/37iaj4
     # get track with highest combined sum of energy and valence from dict
-    power_track_name = max(tracks_analysis, key=lambda k: sum(tracks_analysis.get(k)))
+    power_track_name = max(tracks_analysis, key=lambda k:
+                           sum(tracks_analysis.get(k)))
 
     power_track_energy = round(tracks_analysis[power_track_name][0] * 100)
     power_track_valence = round(tracks_analysis[power_track_name][1] * 100)
 
     power_analysis = (f"Baserat på energi ({power_track_energy}%) och"
-                    f" positivitet ({power_track_valence}%) verkar låten"
-                    f" \"{power_track_name}\" ha störst powerpotential.")
+                      f" positivitet ({power_track_valence}%) verkar låten"
+                      f" \"{power_track_name}\" ha störst powerpotential.")
 
     return power_analysis
 
@@ -129,6 +129,7 @@ def check_new_albums() -> list:
         "Freedom Call": "55RDuy7cQW2Dqrcz3Jjl6F",
         "Frost*": "1Ha9FtCeuoajMbOG4Kz2d7",
         "Haken": "2SRIVGDkdqQnrQdaXxDkJt",
+        "Jonathan Lundberg": "6t3AHrm1phB25xs2XpST7p",
         "Leprous": "4lgrzShsg2FLA89UM2fdO5",
         "Liquid Tension Experiment": "0r1s1XoxdoXECGfyChzb2v",
         "Meshuggah": "3ggwAqZD3lyT2sbovlmfQY",
@@ -155,7 +156,8 @@ def check_new_albums() -> list:
         latest_album = get_latest_album(artist_id)
 
         album_title = '"' + latest_album["title"] + '"'
-        album_year = datetime.datetime.strptime(latest_album["date"], '%Y-%m-%d').strftime('%Y')
+        album_year = datetime.datetime.strptime(latest_album["date"],
+                                                '%Y-%m-%d').strftime('%Y')
         album_link = latest_album["link"]
         album_id = latest_album["id"]
 
@@ -168,12 +170,14 @@ def check_new_albums() -> list:
                 latest_log = f.read()
 
             if latest_album_summary != latest_log:
-                new_albums.append({"artist": artist, "latest_album": latest_album_summary, 
-                    "album_id": album_id, "album_link": album_link})
+                new_albums.append({"artist": artist,
+                                   "latest_album": latest_album_summary,
+                                   "album_id": album_id,
+                                   "album_link": album_link})
 
         with open(log, "w") as f:
             f.write(latest_album_summary)
-        
+
     return new_albums
 
 
@@ -181,7 +185,7 @@ def get_random_emojis() -> str:
     emojis_file = os.path.join(bin_dir, "emojis")
 
     with open(emojis_file) as f:
-        emojis_list = random.sample(f.readlines(),3)
+        emojis_list = random.sample(f.readlines(), 3)
     emojis_str = " ".join(emojis_list).replace("\n", "")
 
     return emojis_str
@@ -197,13 +201,13 @@ def craft_signal_msg(new_album: dict) -> str:
     random_emojis = get_random_emojis()
 
     new_album_msg = (f"Nytt släpp av {artist}: {latest_album}."
-                    "\n\n"
-                    f"{album_link}"
-                    "\n\n"
-                    f"{power_analysis}"
-                    "\n\n"
-                    f"{random_emojis}")
-    
+                     "\n\n"
+                     f"{album_link}"
+                     "\n\n"
+                     f"{power_analysis}"
+                     "\n\n"
+                     f"{random_emojis}")
+
     return new_album_msg
 
 
@@ -211,7 +215,7 @@ def get_signal_recipient() -> str:
     # private mode (send to self)
     recipient = secrets.phone_number
     return recipient
-    
+
     # oversharing mode (send to group with self as fallback)
     cmd = [signal_cli, "listGroups"]
     result = subprocess.run(cmd, capture_output=True, text=True)
@@ -224,10 +228,10 @@ def get_signal_recipient() -> str:
             break
 
     if group_id:
-        recipient = group_id 
+        recipient = group_id
     else:
         recipient = secrets.phone_number
-        
+
     return recipient
 
 
@@ -244,9 +248,8 @@ def signal_send(msg: str, recipient: str):
         cmd = [signal_cli, "-u", sender, "send", "-m", msg, recipient]
     elif recipient_type == "group":
         cmd = [signal_cli, "-u", sender, "send", "-m", msg, "-g", recipient]
-    
-    subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
+    subprocess.run(cmd, stdout=subprocess.DEVNULL)
 
 
 def main():
@@ -262,7 +265,7 @@ def main():
             msg = craft_signal_msg(new_album)
             signal_send(msg, signal_recipient)
 
-            functions.push(msg) # in case signal-cli fails
+            functions.push(msg)  # in case signal-cli fails
 
 
 if __name__ == "__main__":
@@ -273,8 +276,8 @@ if __name__ == "__main__":
         err = str(err)
 
         msg = (f"{script} stötte på fel:"
-                "\n\n"
-                f"{err}")
+               "\n\n"
+               f"{err}")
 
         print(err)
         functions.push(msg)
