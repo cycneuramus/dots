@@ -92,10 +92,11 @@ def get_power_analysis(album_id: str) -> str:
                 break
 
         tracks_analysis.update({track_name: [track["energy"],
-                                             track["valence"]]})
+                                             track["valence"],
+                                             track["mode"]]})
 
     # https://redd.it/37iaj4
-    # get track with highest combined sum of energy and valence from dict
+    # get track with highest combined sum of list values in dict
     power_track_name = max(tracks_analysis,
                            key=lambda k:
                            sum(tracks_analysis.get(k)))
@@ -103,9 +104,15 @@ def get_power_analysis(album_id: str) -> str:
     power_track_energy = round(tracks_analysis[power_track_name][0] * 100)
     power_track_valence = round(tracks_analysis[power_track_name][1] * 100)
 
+    if tracks_analysis[power_track_name][2] == 0:
+        power_track_mode = "Den tycks dock inte innehålla så mycket dur."
+    else:
+        power_track_mode = "Den tycks även innehålla en del dur."
+
     power_analysis = (f"Baserat på energi ({power_track_energy}%) och"
                       f" positivitet ({power_track_valence}%) verkar låten"
-                      f" \"{power_track_name}\" ha störst powerpotential.")
+                      f" \"{power_track_name}\" ha störst powerpotential."
+                      f" {power_track_mode}")
 
     return power_analysis
 
