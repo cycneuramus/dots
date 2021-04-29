@@ -81,11 +81,9 @@ def get_power_analysis(album_id: str) -> str:
                                           params={"ids": track_id_list})
     audio_features_data = audio_features_request.json()
 
-    # create dict in the form of track_name: [track_energy, track_valence]
     tracks_analysis = {}
     for track in audio_features_data["audio_features"]:
-
-        # get track name from previous album request by matching track ID
+        # get track name from previous album request by matching the track ID
         for value in album_tracks_data["items"]:
             if value["id"] == track["id"]:
                 track_name = value["name"]
