@@ -216,26 +216,24 @@ def craft_signal_msg(new_album: dict) -> str:
     return new_album_msg
 
 
-def get_signal_recipient() -> str:
-    # private mode (send to self)
-    recipient = mysecrets.phone_number
-    return recipient
-
-    # oversharing mode (send to group with self as fallback)
-    cmd = [signal_cli, "listGroups"]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    signal_groups = result.stdout
-
-    for line in signal_groups.splitlines():
-        cols = line.split()
-        if mysecrets.signal_target_group in line:
-            group_id = cols[1]
-            break
-
-    if group_id:
-        recipient = group_id
-    else:
+def get_signal_recipient(scope: str) -> str:
+    if scope == "self":
         recipient = mysecrets.phone_number
+    elif scope == "group":
+        cmd = [signal_cli, "listGroups"]
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        signal_groups = result.stdout
+
+        for line in signal_groups.splitlines():
+            if mysecrets.signal_target_group in line:
+                cols = line.split()
+                group_id = cols[1]
+                break
+
+        if group_id:
+            recipient = group_id
+        else:
+            recipient = mysecrets.phone_number
 
     return recipient
 
@@ -264,7 +262,7 @@ def main():
     new_albums = check_new_albums()
 
     if new_albums:
-        signal_recipient = get_signal_recipient()
+        signal_recipient = get_signal_recipient("group")
 
         for new_album in new_albums:
             signal_msg = craft_signal_msg(new_album)
