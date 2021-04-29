@@ -19,6 +19,7 @@
 		Plug 'justinmk/vim-sneak'
 		Plug 'lilydjwg/colorizer'
 		Plug 'vim-pandoc/vim-markdownfootnotes'
+		Plug 'Vimjas/vim-python-pep8-indent'
 	"	Plug 'ap/vim-css-color'
 	"	Plug 'junegunn/goyo.vim' 
 	"	Plug 'isobit/vim-caddyfile'

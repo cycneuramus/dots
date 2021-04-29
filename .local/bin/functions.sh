@@ -82,6 +82,7 @@ bt() {
 		sudo bluetooth on 
 		if [[ $(bluetoothctl power on) == *Error* ]]; then
 			fix
+			sleep 0.5
 			bluetoothctl power on
 		fi
 

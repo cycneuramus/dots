@@ -225,10 +225,6 @@ system-services() {
 		sudo usermod -a -G input $USER
 	fi
 
-	if [[ $(which auto-cpufreq) ]]; then
-		sudo systemctl enable auto-cpufreq
-		sudo systemctl start auto-cpufreq
-	fi
 	if [[ $(which tlp) ]]; then
 		sudo systemctl enable tlp.service
 		sudo systemctl start tlp.service
