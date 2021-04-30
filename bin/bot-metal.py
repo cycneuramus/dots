@@ -94,7 +94,7 @@ def get_power_analysis(album_id: str) -> str:
                                              track["mode"]]})
 
     # https://redd.it/37iaj4
-    # get track with highest combined sum of list values in dict
+    # get track with highest combined sum of list values
     power_track_name = max(tracks_analysis,
                            key=lambda k:
                            sum(tracks_analysis.get(k)))
