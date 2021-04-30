@@ -274,7 +274,7 @@ loc() {
 
 # Mount file systems
 mnt() {
-	select mount in crypt homeserver kodi vps raspi restic; do
+	select mount in crypt homeserver kodi raspi restic roborock vps; do
 
 		mountpoint="/home/antsva/.mnt/$mount"
 		if [[ ! -d $mountpoint ]]; then
@@ -291,10 +291,6 @@ mnt() {
 			kodi)
 				sshfs root@192.168.1.23:/storage $mountpoint -C
 				;;
-			vps)
-				. secrets
-				sshfs antsva@$vps_ip:/home/antsva $mountpoint -C -p 4422
-				;;
 			raspi)
 				sshfs pi@192.168.1.192:/home/pi $mountpoint -C
 				;;
@@ -302,6 +298,13 @@ mnt() {
 				. secrets
 				export RESTIC_PASSWORD="$restic_pass"
 				restic -r $restic_repo mount $mountpoint &
+				;;
+			roborock)
+				sshfs root@192.168.1.5:/ $mountpoint -C
+				;;
+			vps)
+				. secrets
+				sshfs antsva@$vps_ip:/home/antsva $mountpoint -C -p 4422
 				;;
 			"")
 				echo "Monteringsmål $mount hittades inte"
@@ -312,7 +315,7 @@ mnt() {
 	done
 
 	xdg-open $mountpoint &
-	exit
+	# exit
 }
 
 

@@ -1,5 +1,4 @@
 albert
-auto-cpufreq
 autotiling
 diogenes
 enact-bin
@@ -22,6 +21,7 @@ signal-cli
 svtplay-dl
 tectonic-bin
 ttf-d2coding
+tuxedo-control-center
 unimatrix-git
 xidlehook
 yay
