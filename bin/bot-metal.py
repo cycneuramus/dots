@@ -89,8 +89,8 @@ def get_power_analysis(album_id: str) -> str:
                 track_name = value["name"]
                 break
 
-        tracks_analysis.update({track_name: [track["energy"],
-                                             track["valence"],
+        tracks_analysis.update({track_name: [round(track["energy"] * 100),
+                                             round(track["valence"] * 100),
                                              track["mode"]]})
 
     # https://redd.it/37iaj4
@@ -99,8 +99,8 @@ def get_power_analysis(album_id: str) -> str:
                            key=lambda k:
                            sum(tracks_analysis.get(k)))
 
-    power_track_energy = round(tracks_analysis[power_track_name][0] * 100)
-    power_track_valence = round(tracks_analysis[power_track_name][1] * 100)
+    power_track_energy = tracks_analysis[power_track_name][0]
+    power_track_valence = tracks_analysis[power_track_name][1]
 
     if tracks_analysis[power_track_name][2] == 0:
         power_track_mode = "Den tycks dock inte innehålla så mycket dur."
@@ -263,7 +263,7 @@ def main():
     new_albums = check_new_albums()
 
     if new_albums:
-        signal_recipient = get_signal_recipient("group")
+        signal_recipient = get_signal_recipient("self")
 
         for new_album in new_albums:
             signal_msg = craft_signal_msg(new_album)
