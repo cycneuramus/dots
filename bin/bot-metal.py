@@ -125,6 +125,7 @@ def check_new_albums() -> list:
         "Allen Lande": "2hxa4ytcni5FUIK8IR27tX",
         "Arch Echo": "4ilweWzFHh6vrr7OOuDcUh",
         "Ayreon": "2RSApl0SXcVT8Yiy4UaPSt",
+        "Blackfield": "3xrzXKnScjOEoy172vsJMW",
         "Beast In Black": "0rEuaTPLMhlViNCJrg3NEH",
         "Blind Guardian": "7jxJ25p0pPjk0MStloN6o6",
         "Devin Townsend": "6uejjWIOshliv2Ho0OJAQN",
@@ -132,9 +133,11 @@ def check_new_albums() -> list:
         "DGM": "5Rq2C3wWiwL3NqjutXMt8e",
         "Dirty Loops": "5Apl0wL4OwNUDYkx69rMDQ",
         "Dream Theater": "2aaLAng2L2aWD2FClzwiep",
+        "Fleshgod Apocalypse": "5ctFffJBdJe8PZL7W7NeML",
         "Freedom Call": "55RDuy7cQW2Dqrcz3Jjl6F",
         "Frost*": "1Ha9FtCeuoajMbOG4Kz2d7",
         "Haken": "2SRIVGDkdqQnrQdaXxDkJt",
+        "Jaga Jazzist": "68HFSFMCZzyRjkkm9bv5Vt",
         "Jonathan Lundberg": "6t3AHrm1phB25xs2XpST7p",
         "Leprous": "4lgrzShsg2FLA89UM2fdO5",
         "Liquid Tension Experiment": "0r1s1XoxdoXECGfyChzb2v",
@@ -147,6 +150,7 @@ def check_new_albums() -> list:
         "Plini": "3Gs10XJ4S4OEFrMRqZJcic",
         "Running Wild": "7954VFaZClkL503srfV5PE",
         "Star One": "1W5pfX7IGyw9wCmfARg1pi",
+        "Steven Wilson": "4X42BfuhWCAZ2swiVze9O0",
         "Symphony X": "4MnZkh4dpNmTMPxkl4Ev5L",
         "The Rippingtons": "6hjqP9annof75B2TNBE0rO",
         "Thomas Bergersen": "6BF0bXbsdujMSMeFZBGcBq",
@@ -154,6 +158,7 @@ def check_new_albums() -> list:
         "Ulver": "6bYFkBNvayh3nGqxcPp7Sv",
         "Vanden Plas": "1ke5Q2ijh6Tm31kH2HELEe",
         "Vince DiCola": "5Q2nBzXfyXGIEf8KpHqeHn",
+        "VOLA": "1HQjBwlj8FSHMhVaNQ4tEI",
         "Wilderun": "0wQmcChWogcmsCThY2SKES"
     }
 
