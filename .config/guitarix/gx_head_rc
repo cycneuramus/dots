@@ -229,7 +229,7 @@
       "amp.fuzz": 1.84075,
       "amp.on_off": 0,
       "amp.out_amp": -13.44,
-      "amp.out_master": -49,
+      "amp.out_master": -50,
       "amp.tonestack.Bass": 0.525,
       "amp.tonestack.Middle": 0.5,
       "amp.tonestack.Treble": 0.5,
@@ -1111,7 +1111,7 @@
       "stereoecho.invert": "linear",
       "stereoecho.lbpm": 80,
       "stereoecho.lfobpm": 188.64,
-      "stereoecho.on_off": 1,
+      "stereoecho.on_off": 0,
       "stereoecho.percent_l": 18.8794,
       "stereoecho.percent_r": 30.7262,
       "stereoecho.position": 1,
@@ -1322,11 +1322,11 @@
   },
   "jack_connections", {
     "input": ["alsa_in:capture_1"],
-    "output1": ["system:playback_1"],
-    "output2": ["system:playback_2"],
+    "output1": ["Family 17h (Models 10h-1fh) HD Audio Controller Analog stereo utgång:playback_FL"],
+    "output2": ["Family 17h (Models 10h-1fh) HD Audio Controller Analog stereo utgång:playback_FR"],
     "midi_input": [],
     "midi_output": [],
     "insert_out": ["%F:in_0"],
-    "insert_in": ["%A:out_0", "alsa_in:capture_1", "alsa_in:capture_2"]
+    "insert_in": ["%A:out_0"]
   }
 ]

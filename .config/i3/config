@@ -11,7 +11,7 @@ for_window[title="albert"] border none
 assign [class="firefox"] number 1
 assign [class="scli"] number 2
 assign [class="Thunderbird"] number 2
-# assign [class="pcmanfm"] number 3
+assign [class="ncspot"] number 10
 
 # Program-specific layouts
 for_window [class="scli"] layout tabbed

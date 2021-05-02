@@ -10,7 +10,7 @@ push() {
 
 # Fix imput signal from POD XT to Jack
 a-in() {
-	alsa_in -d hw:2
+	pw-jack	alsa_in -d hw:2
 }
 
 
@@ -83,6 +83,7 @@ bt() {
 		if [[ $(bluetoothctl power on) == *Error* ]]; then
 			fix
 			sleep 0.5
+			sudo rfkill unblock bluetooth
 			bluetoothctl power on
 		fi
 
