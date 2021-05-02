@@ -12,7 +12,7 @@ services:
       - "3000:3000/tcp"
     volumes:
       - ./work:/opt/adguardhome/work
-      - ./config:/opt/adguardhome/config
+      - ./conf:/opt/adguardhome/conf
 # networks:
 #   default:
 #     external:
