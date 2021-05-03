@@ -246,11 +246,11 @@ def craft_signal_msg(new_album: dict) -> str:
     return new_album_msg
 
 
-def get_signal_recipient(scope: str) -> str:
-    if scope == "self":
+def get_signal_recipient(target: str) -> str:
+    if target == "self":
         recipient = mysecrets.phone_number
 
-    elif scope == "group":
+    elif target == "group":
         cmd = [signal_cli, "listGroups"]
         result = subprocess.run(cmd, capture_output=True, text=True)
         signal_groups = result.stdout
