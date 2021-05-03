@@ -25,9 +25,14 @@ def get_api_auth_header() -> dict:
 
     auth_url = "https://accounts.spotify.com/api/token"
 
-    response = requests.post(auth_url, {"grant_type": "client_credentials",
-                                        "client_id": client_id,
-                                        "client_secret": client_secret})
+    response = requests.post(
+        auth_url,
+        {
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
+        },
+    )
 
     response_data = response.json()
     token = response_data["access_token"]
@@ -41,11 +46,11 @@ def get_latest_album(artist_id: str) -> dict:
     url = api_base_url + "artists/" + artist_id + "/albums"
     auth_header = get_api_auth_header()
 
-    request = requests.get(url,
-                           headers=auth_header,
-                           params={"include_groups": "album",
-                                   "limit": 1,
-                                   "market": "SE"})
+    request = requests.get(
+        url,
+        headers=auth_header,
+        params={"include_groups": "album", "limit": 1, "market": "SE"},
+    )
     request_data = request.json()
 
     for album in request_data["items"]:
@@ -54,10 +59,7 @@ def get_latest_album(artist_id: str) -> dict:
         link = album["external_urls"]["spotify"]
         id_ = album["id"]
 
-    latest_album = {"title": title,
-                    "date": date,
-                    "link": link,
-                    "id": id_}
+    latest_album = {"title": title, "date": date, "link": link, "id": id_}
 
     return latest_album
 
@@ -66,8 +68,7 @@ def get_power_analysis(album_id: str) -> str:
     url = api_base_url + "albums/" + album_id + "/tracks"
     auth_header = get_api_auth_header()
 
-    album_tracks_request = requests.get(url,
-                                        headers=auth_header)
+    album_tracks_request = requests.get(url, headers=auth_header)
     album_tracks_data = album_tracks_request.json()
 
     # get comma-separated list of track IDs for API request
@@ -76,9 +77,11 @@ def get_power_analysis(album_id: str) -> str:
         track_id_list.append(track["id"])
     track_id_list = ",".join(track_id_list)
 
-    audio_features_request = requests.get(api_base_url + "audio-features/",
-                                          headers=auth_header,
-                                          params={"ids": track_id_list})
+    audio_features_request = requests.get(
+        api_base_url + "audio-features/",
+        headers=auth_header,
+        params={"ids": track_id_list},
+    )
     audio_features_data = audio_features_request.json()
 
     tracks_analysis = {}
@@ -89,15 +92,19 @@ def get_power_analysis(album_id: str) -> str:
                 track_name = value["name"]
                 break
 
-        tracks_analysis.update({track_name: [round(track["energy"] * 100),
-                                             round(track["valence"] * 100),
-                                             track["mode"]]})
+        tracks_analysis.update(
+            {
+                track_name: [
+                    round(track["energy"] * 100),
+                    round(track["valence"] * 100),
+                    track["mode"],
+                ]
+            }
+        )
 
     # https://redd.it/37iaj4
     # get track with highest combined sum of list values
-    power_track_name = max(tracks_analysis,
-                           key=lambda k:
-                           sum(tracks_analysis.get(k)))
+    power_track_name = max(tracks_analysis, key=lambda k: sum(tracks_analysis.get(k)))
 
     power_track_energy = tracks_analysis[power_track_name][0]
     power_track_valence = tracks_analysis[power_track_name][1]
@@ -107,10 +114,12 @@ def get_power_analysis(album_id: str) -> str:
     else:
         power_track_mode = "Den tycks även innehålla en del dur."
 
-    power_analysis = (f"Baserat på energi ({power_track_energy}%) och"
-                      f" positivitet ({power_track_valence}%) verkar låten"
-                      f" \"{power_track_name}\" ha störst powerpotential."
-                      f" {power_track_mode}")
+    power_analysis = (
+        f"Baserat på energi ({power_track_energy}%) och"
+        f" positivitet ({power_track_valence}%) verkar låten"
+        f' "{power_track_name}" ha störst powerpotential.'
+        f" {power_track_mode}"
+    )
 
     return power_analysis
 
@@ -151,6 +160,7 @@ def check_new_albums() -> list:
         "Moon Safari": "0Wr0oT0aCD6w7O25TPwnoX",
         "Myrath": "72500XOYPw5e7OgFWuW2Gl",
         "Opeth": "0ybFZ2Ab08V8hueghSXm6E",
+        "Pagan's Mind": "0dvzEeVLv8VDQ0Rv36PZis",
         "Pain Of Salvation": "1uRpg2s2jNaxbmoNiJDGfd",
         "Peter Gabriel": "7C4sUpWGlTy7IANjruj02I",
         "Plini": "3Gs10XJ4S4OEFrMRqZJcic",
@@ -167,7 +177,7 @@ def check_new_albums() -> list:
         "Vanden Plas": "1ke5Q2ijh6Tm31kH2HELEe",
         "Vince DiCola": "5Q2nBzXfyXGIEf8KpHqeHn",
         "VOLA": "1HQjBwlj8FSHMhVaNQ4tEI",
-        "Wilderun": "0wQmcChWogcmsCThY2SKES"
+        "Wilderun": "0wQmcChWogcmsCThY2SKES",
     }
 
     new_albums = []
@@ -175,8 +185,9 @@ def check_new_albums() -> list:
         latest_album = get_latest_album(artist_id)
 
         album_title = '"' + latest_album["title"] + '"'
-        album_year = datetime.datetime.strptime(latest_album["date"],
-                                                '%Y-%m-%d').strftime('%Y')
+        album_year = datetime.datetime.strptime(
+            latest_album["date"], "%Y-%m-%d"
+        ).strftime("%Y")
         album_link = latest_album["link"]
         album_id = latest_album["id"]
 
@@ -188,10 +199,14 @@ def check_new_albums() -> list:
                 latest_log = f.read()
 
             if latest_album_summary != latest_log:
-                new_albums.append({"artist": artist,
-                                   "latest_album": latest_album_summary,
-                                   "album_id": album_id,
-                                   "album_link": album_link})
+                new_albums.append(
+                    {
+                        "artist": artist,
+                        "latest_album": latest_album_summary,
+                        "album_id": album_id,
+                        "album_link": album_link,
+                    }
+                )
 
         with open(log, "w") as f:
             f.write(latest_album_summary)
@@ -218,13 +233,15 @@ def craft_signal_msg(new_album: dict) -> str:
     power_analysis = get_power_analysis(album_id)
     random_emojis = get_random_emojis()
 
-    new_album_msg = (f"Nytt släpp av {artist}: {latest_album}."
-                     "\n\n"
-                     f"{album_link}"
-                     "\n\n"
-                     f"{power_analysis}"
-                     "\n\n"
-                     f"{random_emojis}")
+    new_album_msg = (
+        f"Nytt släpp av {artist}: {latest_album}."
+        "\n\n"
+        f"{album_link}"
+        "\n\n"
+        f"{power_analysis}"
+        "\n\n"
+        f"{random_emojis}"
+    )
 
     return new_album_msg
 
@@ -292,9 +309,7 @@ if __name__ == "__main__":
         script = os.path.basename(__file__)
         err = str(err)
 
-        err_msg = (f"{script} stötte på fel:"
-                   "\n\n"
-                   f"{err}")
+        err_msg = f"{script} stötte på fel:" "\n\n" f"{err}"
 
         print(err)
         functions.push(err_msg)
