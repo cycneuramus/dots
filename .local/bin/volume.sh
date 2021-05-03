@@ -9,8 +9,7 @@ fi
 # current_volume=$(pamixer --get-volume)
 # current_volume=$(pacmd list-sinks | grep -A 15 '* index'| awk '/volume: front/{ print $5 }' | sed 's/[%|,]//g')
 current_sink=$(pactl list short sinks | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1)
-# current_volume=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $current_sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-current_volume=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $current_sink + 1 )) | head -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+current_volume=$(pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $current_sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
 
 
 if (( $current_volume < 25 )); then
