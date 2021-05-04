@@ -41,7 +41,6 @@ if [[ $(echo $loc | grep latitude) ]]; then
 else
  	echo "Kunde inte fastställa plats, avbryter..."
 	termux-notification -c "Kunde inte fastställa plats" --icon location_off
- 	termux-wake-unlock
 	exit
 fi
 
