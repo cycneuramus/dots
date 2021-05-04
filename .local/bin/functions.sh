@@ -650,7 +650,7 @@ vpn() {
 		# Kill VPN if no internet
 		if [[ $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
 			until [[ $(internet) == on ]]; do
-				sleep 2
+				sleep 1
 				(( count++ ))
 				if (( count > 5 )); then break; fi
 			done
@@ -692,10 +692,13 @@ vpn-fix() {
 wifi() {
 	. /home/antsva/.local/bin/secrets # Full path b/c of system script (90-on-wifi.sh)
 
-	ssid=$(ssid)
 	# Case-sensitive matching off
 	shopt -s nocasematch
+	# Extended globbing on (since case patterns are stored in variables)
+	shopt -s extglob
 	
+	ssid=$(ssid)
+
 	case $ssid in
 		$wifi_home)
 			wifi="home"
@@ -717,8 +720,8 @@ wifi() {
 			;;
 	esac
 	
-	# Case-sensitive matching on
 	shopt -u nocasematch
+	shopt -u extglob
 	
 	echo $wifi
 }
