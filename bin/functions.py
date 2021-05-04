@@ -12,9 +12,7 @@ def internet():
 
 def push(msg):
     requests.post(
-            url=mysecrets.gotify_url,
-            headers={"X-Gotify-Key": mysecrets.gotify_token},
-            data={
-                "message": msg,
-                "priority": 1}
-            )
+        url=mysecrets.gotify_url,
+        headers={"X-Gotify-Key": mysecrets.gotify_token},
+        data={"message": msg, "priority": 1},
+    )

@@ -1,4 +1,4 @@
-. secrets
+. secrets > /dev/null 2>&1
 . functions.sh
 
 trap 'push "$(basename $0) stötte på fel"' err

@@ -165,6 +165,7 @@ def check_new_albums() -> list:
         "Peter Gabriel": "7C4sUpWGlTy7IANjruj02I",
         "Plini": "3Gs10XJ4S4OEFrMRqZJcic",
         "Running Wild": "7954VFaZClkL503srfV5PE",
+        "Seal": "5GtMEZEeFFsuHY8ad4kOxv",
         "Snarky Puppy": "7ENzCHnmJUr20nUjoZ0zZ1",
         "Star One": "1W5pfX7IGyw9wCmfARg1pi",
         "Steven Wilson": "4X42BfuhWCAZ2swiVze9O0",

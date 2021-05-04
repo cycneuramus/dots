@@ -1,7 +1,7 @@
 #!/bin/bash
 
 push() {
-	. secrets
+	. secrets > /dev/null 2>&1
 	curl -X POST "$gotify_server/message?token=$gotify_token" -F "message=$1" -F "priority=1"
 }
 
@@ -38,7 +38,7 @@ internet() {
 }
 
 signal-file() {
-	. secrets
+	. secrets > /dev/null 2>&1
 	$HOME/bin/signal-cli/bin/signal-cli -u $phone_number send -m "Från $(hostname)" $phone_number -a "$1"
 }
 
@@ -47,7 +47,7 @@ signal-link() {
 }
 
 signal-msg() {
-	. secrets
+	. secrets > /dev/null 2>&1
 	$HOME/bin/signal-cli/bin/signal-cli -u $phone_number send -m "$1" $phone_number
 }
 

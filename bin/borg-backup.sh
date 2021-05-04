@@ -10,7 +10,7 @@ if (( $EUID != 0 )); then
 fi
 
 . functions.sh
-. secrets
+. secrets > /dev/null 2>&1
 
 trap 'push "$(basename $0) stötte på fel"' err
 
