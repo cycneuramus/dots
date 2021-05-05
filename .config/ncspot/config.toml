@@ -4,6 +4,10 @@ use_nerdfort = true
 [keybindings]
 "Space" = "playpause"
 "Shift+p" = "queue"
+"Shift+b" = "seek -1000"
+"Shift+f" = "seek +1000"
+"b" = "seek -10000"
+"f" = "seek +10000"
 "g" = "move top"
 "G" = "move bottom"
 "Ctrl+u" = "move up 5"

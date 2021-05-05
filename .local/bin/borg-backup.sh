@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . $BIN/functions.sh
-. $BIN/secrets
+. $BIN/secrets > /dev/null 2>&1
 
 export BORG_REPO=$borg_repo
 export BORG_PASSPHRASE=$borg_pass

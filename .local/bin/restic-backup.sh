@@ -6,7 +6,7 @@ if [[ -z $BIN ]]; then
 fi
 
 . $BIN/functions.sh
-. $BIN/secrets
+. $BIN/secrets > /dev/null 2>&1
 
 export RESTIC_REPOSITORY="$restic_repo"
 export RESTIC_PASSWORD="$restic_pass"

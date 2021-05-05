@@ -3,7 +3,7 @@
 
 # Push message to phone
 push() {
-	. secrets
+	. secrets > /dev/null 2>&1
 	curl -X POST "$gotify_server/message?token=$gotify_token" -F "message=$1" -F "priority=1"
 }
 
@@ -65,7 +65,7 @@ av-scan() {
 # Toggle bluetooth
 bt() { 
 	fix() {
-		. secrets 
+		. secrets > /dev/null 2>&1 
 		echo $pass | sudo -S modprobe -r btusb
 		sleep 0.5
 		echo $pass | sudo -S systemctl stop bluetooth.service
@@ -296,7 +296,7 @@ mnt() {
 				sshfs pi@192.168.1.192:/home/pi $mountpoint -C
 				;;
 			restic)
-				. secrets
+				. secrets > /dev/null 2>&1
 				export RESTIC_PASSWORD="$restic_pass"
 				restic -r $restic_repo mount $mountpoint &
 				;;
@@ -304,7 +304,7 @@ mnt() {
 				sshfs root@192.168.1.5:/ $mountpoint -C
 				;;
 			vps)
-				. secrets
+				. secrets > /dev/null 2>&1
 				sshfs antsva@$vps_ip:/home/antsva $mountpoint -C -p 4422
 				;;
 			"")
@@ -438,14 +438,14 @@ signal-link() {
 
 # Send Signal message to self
 signal-msg() {
-	. secrets
+	. secrets > /dev/null 2>&1
 	signal-cli -u $phone_number send -m "$1" $phone_number
 }
 
 
 # Send file to self via Signal
 signal-file() {
-	. secrets
+	. secrets > /dev/null 2>&1
 	signal-cli -u $phone_number send -m "Från $(hostname)" $phone_number -a "$1"
 }
 
@@ -690,7 +690,8 @@ vpn-fix() {
 
 # Test Wi-Fi connection
 wifi() {
-	. /home/antsva/.local/bin/secrets # Full path b/c of system script (90-on-wifi.sh)
+	# Full path b/c of system script (90-on-wifi.sh)
+	. /home/antsva/.local/bin/secrets > /dev/null 2>&1
 
 	# Case-sensitive matching off
 	shopt -s nocasematch

@@ -3,9 +3,9 @@
 # Must be owned by root! (chown root:root)
 
 # DEBUG
-log=/home/antsva/nm-dispatcher.log
-exec 1>$log 2>&1
-set -x
+# log=/home/antsva/nm-dispatcher.log
+# exec 1>$log 2>&1
+# set -x
 
 . /home/antsva/.local/bin/functions.sh
 	

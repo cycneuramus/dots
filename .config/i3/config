@@ -1,4 +1,5 @@
 set $mod Mod4
+set $polybar_scripts $polybar_scripts
 
 # Disable title bar and specify border size
 new_window pixel 1
@@ -59,14 +60,14 @@ bindsym $mod+Shift+Return [instance="scratchterm"] scratchpad show
 bindsym $mod+Shift+Control+Return exec --no-startup-id kitty --name="scratchterm"
 
 # Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.local/bin/volume.sh up
-bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.local/bin/volume.sh down
+bindsym XF86AudioRaiseVolume exec --no-startup-id $BIN/volume.sh up
+bindsym XF86AudioLowerVolume exec --no-startup-id $BIN/volume.sh down
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle 
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
 
 # Control display brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.local/bin/brightness.sh up 
-bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.local/bin/brightness.sh down
+bindsym XF86MonBrightnessUp exec --no-startup-id $BIN/brightness.sh up 
+bindsym XF86MonBrightnessDown exec --no-startup-id $BIN/brightness.sh down
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -172,11 +173,11 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # Restart bar
-bindsym $mod+Shift+b exec $HOME/.config/polybar/scripts/launch.sh
+bindsym $mod+Shift+b exec $polybar_scripts/launch.sh
 
 # System controls
 mode "sysctl" {
-		bindsym b exec bash $HOME/.local/bin/functions.sh bt; mode "default"
+		bindsym b exec bash $BIN/functions.sh bt; mode "default"
 		bindsym Return mode "default"
 		bindsym $mod+Shift+s mode "default"
 }
@@ -221,10 +222,10 @@ exec_always --no-startup-id picom
 exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
 exec_always --no-startup-id libinput-gestures-setup restart
-exec_always --no-startup-id xss-lock $HOME/.local/bin/lock.sh
-exec_always --no-startup-id $HOME/.local/bin/xidlehook.sh
-exec_always --no-startup-id $HOME/.config/polybar/scripts/launch.sh
-exec --no-startup-id $HOME/.local/bin/redshift.sh
+exec_always --no-startup-id xss-lock $BIN/lock.sh
+exec_always --no-startup-id $BIN/xidlehook.sh
+exec_always --no-startup-id $polybar_scripts/launch.sh
+exec --no-startup-id $BIN/redshift.sh
 exec --no-startup-id $HOME/.fehbg
 exec --no-startup-id enact --pos left --watch
 exec --no-startup-id copyq
@@ -236,8 +237,8 @@ exec --no-startup-id nextcloud
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
-# exec --no-startup-id cbatticon -c 10 -u 30 -n -c $BIN/low-battery.sh
-exec --no-startup-id mate-power-manager
+exec --no-startup-id cbatticon -c 10 -u 30 -n -c $polybar_scripts/low-battery.sh
+# exec --no-startup-id mate-power-manager
 exec gtk-launch scli
 exec thunderbird
 exec firefox
