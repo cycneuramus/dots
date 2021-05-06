@@ -1,5 +1,5 @@
 set $mod Mod4
-set $polybar_scripts $polybar_scripts
+set $polybar_scripts $HOME/.config/polybar/scripts
 
 # Disable title bar and specify border size
 new_window pixel 1
@@ -237,8 +237,8 @@ exec --no-startup-id nextcloud
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
-exec --no-startup-id cbatticon -c 10 -u 30 -n -c $polybar_scripts/low-battery.sh
-# exec --no-startup-id mate-power-manager
+# exec --no-startup-id cbatticon -c 10 -u 30 -n -c $polybar_scripts/low-battery.sh
+exec --no-startup-id mate-power-manager
 exec gtk-launch scli
 exec thunderbird
 exec firefox

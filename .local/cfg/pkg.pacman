@@ -14,7 +14,6 @@ binutils
 bison
 blueman
 bluez-utils
-cbatticon
 chromium
 copyq
 cups
@@ -76,7 +75,6 @@ lightdm-webkit-theme-litarvan
 lightdm-webkit2-greeter
 linux
 linux-firmware
-linux-headers
 lvm2
 lxappearance
 m4

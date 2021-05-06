@@ -316,7 +316,7 @@ mnt() {
 	done
 
 	xdg-open $mountpoint &
-	# exit
+	exit
 }
 
 
