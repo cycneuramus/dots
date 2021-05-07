@@ -80,12 +80,14 @@ bt() {
 	elif [[ $(bluetooth) == *off* ]]; then
 		sudo rfkill unblock bluetooth
 		sudo bluetooth on 
-		if [[ $(bluetoothctl power on) == *Error* ]]; then
+		while [[ $(bluetoothctl power on) == *Error* ]]; do
 			fix
 			sleep 0.5
 			sudo rfkill unblock bluetooth
 			bluetoothctl power on
-		fi
+			(( count++ ))
+			if (( count > 5 )); then break; fi
+		done
 
 		devices_paired=$(bluetoothctl paired-devices | grep Device | cut -d ' ' -f 2)
 		echo "$devices_paired" | while read -r line; do
