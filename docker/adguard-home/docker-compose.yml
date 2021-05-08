@@ -13,6 +13,8 @@ services:
     volumes:
       - ./work:/opt/adguardhome/work
       - ./conf:/opt/adguardhome/conf
+    environment:
+      - TZ=Europe/Stockholm
 # networks:
 #   default:
 #     external:
