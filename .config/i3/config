@@ -234,11 +234,11 @@ exec --no-startup-id dunst
 exec --no-startup-id /usr/lib/kdeconnectd
 exec --no-startup-id kdeconnect-indicator
 exec --no-startup-id nextcloud
-exec --no-startup-id blueman-applet
-exec --no-startup-id nm-applet
-exec --no-startup-id pasystray
+# exec --no-startup-id nm-applet
+# exec --no-startup-id pasystray
+# exec --no-startup-id blueman-applet
+# exec --no-startup-id mate-power-manager
 # exec --no-startup-id cbatticon -c 10 -u 30 -n -c $polybar_scripts/low-battery.sh
-exec --no-startup-id mate-power-manager
 exec gtk-launch scli
 exec thunderbird
 exec firefox

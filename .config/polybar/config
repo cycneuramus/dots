@@ -28,21 +28,21 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 1
-padding-right = 1
+padding = 1
 
-module-margin-left = 2
-module-margin-right = 2
+module-margin = 2
 
 font-0 = Fira Sans:pixelsize=10;2
 font-1 = Fira Sans:pixelsize=12;2
 font-2 = Symbols Nerd Font:pixelsize=13;3
+font-3 = Material Design Icons:pixelsize=15;4
+font-4 = Material Design Icons:pixelsize=13;3
 
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-; modules-right = updates battery bluetooth 
-modules-right = updates 
+modules-right = updates bluetooth pulseaudio battery networkmanager
+; modules-right = updates 
 
 tray-position = right
 tray-padding = 6
@@ -121,23 +121,120 @@ label = %time%
 type = custom/script
 exec = $HOME/.config/polybar/scripts/bluetooth.sh
 interval = 2
-click-right = exec blueman-manager
-click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
+click-left = exec blueman-manager
+click-right = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
 format-background = color.background
 format-foreground = color.foreground
-format-font = 3
+format-font = 5
 
 [module/battery]
 type = custom/script
 exec = ~/.config/polybar/scripts/battery.sh
 interval = 10
-format-font = 3
+format-font = 5
+
+[module/networkmanager]
+type = custom/script
+exec = ~/.config/polybar/scripts/networkmanager.sh
+interval = 10
+format-font = 5
 
 [module/updates]
 type = custom/script
 exec = ~/.config/polybar/scripts/updates.sh
 interval = 3600
 format-font = 3
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Interval for volume increase/decrease (in percent points)
+interval = 5
+
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume = <ramp-volume>
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels%
+;label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels%
+label-muted = 󰖁
+label-muted-foreground = #666
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 󰕿
+ramp-volume-1 = 󰖀
+ramp-volume-2 = 󰕾
+ramp-volume-font = 4
+
+; Right and Middle click
+click-left = pavucontrol
+
+[module/network]
+type = internal/network
+; Name of the network interface to display. You can get the names of the
+; interfaces on your machine with `ip link`
+; Wireless interfaces often start with `wl` and ethernet interface with `eno` or `eth`
+interface = wlp1s0
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 5
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices like USB network adapters have 
+; an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <ramp-signal>  <label-connected>
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+
+; Default: %ifname% %local_ip%
+label-connected = %essid%
+label-connected-font = 1
+label-connected-foreground = #eefafafa
+
+; Default: (none)
+label-disconnected = 󰤫
+label-disconnected-foreground = #66ffffff
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 󰤯
+ramp-signal-1 = 󰤟
+ramp-signal-2 = 󰤢
+ramp-signal-3 = 󰤥
+ramp-signal-4 = 󰤨
+ramp-signal-5 = 󰤨
+ramp-signal-font = 5
 
 [settings]
 screenchange-reload = true

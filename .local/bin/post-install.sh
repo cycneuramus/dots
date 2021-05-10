@@ -9,7 +9,7 @@ main() {
 	pkg-install-aur
 	grub-theme
 	lightdm-theme
-	acpi-handler
+	power-management
 	disable-system-beep
 	sandboxing
 	system-configs
@@ -113,7 +113,7 @@ lightdm-theme() {
 	fi
 }
 
-acpi-handler() {
+power-management() {
 	echo ""
 	echo $FUNCNAME
 	echo ""
@@ -123,6 +123,10 @@ acpi-handler() {
 		sudo systemctl start acpid.service
 		sudo rm /etc/acpi/handler.sh
 		sudo ln -s /home/antsva/.local/bin/handler.sh /etc/acpi/handler.sh
+	fi
+
+	if [[ -f /etc/systemd/logind.conf ]]; then
+		sudo sed -i "s/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/" logind.conf
 	fi
 }
 
