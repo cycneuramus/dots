@@ -30,7 +30,7 @@ border-color = #00000000
 
 padding = 1
 
-module-margin = 2
+module-margin = 3
 
 font-0 = Fira Sans:pixelsize=10;2
 font-1 = Fira Sans:pixelsize=12;2
@@ -41,7 +41,7 @@ font-4 = Material Design Icons:pixelsize=13;3
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-modules-right = updates bluetooth pulseaudio battery networkmanager
+modules-right = updates bluetooth networkmanager pulseaudio battery 
 ; modules-right = updates 
 
 tray-position = right
@@ -121,8 +121,7 @@ label = %time%
 type = custom/script
 exec = $HOME/.config/polybar/scripts/bluetooth.sh
 interval = 2
-click-left = exec blueman-manager
-click-right = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
+click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
 format-background = color.background
 format-foreground = color.foreground
 format-font = 5
@@ -159,7 +158,7 @@ interval = 5
 ;   <label-volume> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-format-volume = <ramp-volume>
+format-volume = <ramp-volume> <label-volume>
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -186,55 +185,6 @@ ramp-volume-font = 4
 
 ; Right and Middle click
 click-left = pavucontrol
-
-[module/network]
-type = internal/network
-; Name of the network interface to display. You can get the names of the
-; interfaces on your machine with `ip link`
-; Wireless interfaces often start with `wl` and ethernet interface with `eno` or `eth`
-interface = wlp1s0
-
-; Seconds to sleep between updates
-; Default: 1
-interval = 5
-
-; Accumulate values from all interfaces
-; when querying for up/downspeed rate
-; Default: false
-accumulate-stats = true
-
-; Consider an `UNKNOWN` interface state as up.
-; Some devices like USB network adapters have 
-; an unknown state, even when they're running
-; Default: false
-unknown-as-up = true
-
-; Available tags:
-;   <label-connected> (default)
-;   <ramp-signal>
-format-connected = <ramp-signal>  <label-connected>
-
-; Available tags:
-;   <label-disconnected> (default)
-format-disconnected = <label-disconnected>
-
-; Default: %ifname% %local_ip%
-label-connected = %essid%
-label-connected-font = 1
-label-connected-foreground = #eefafafa
-
-; Default: (none)
-label-disconnected = 󰤫
-label-disconnected-foreground = #66ffffff
-
-; Only applies if <ramp-signal> is used
-ramp-signal-0 = 󰤯
-ramp-signal-1 = 󰤟
-ramp-signal-2 = 󰤢
-ramp-signal-3 = 󰤥
-ramp-signal-4 = 󰤨
-ramp-signal-5 = 󰤨
-ramp-signal-font = 5
 
 [settings]
 screenchange-reload = true

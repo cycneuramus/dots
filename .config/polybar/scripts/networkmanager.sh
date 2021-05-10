@@ -15,6 +15,9 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 	interface=$(echo $connection | cut -d ":" -f 2)
 
 	signal=$(nmcli -f in-use,signal device wifi | awk '/\*/{print $2}')
+	if [[ -z $signal ]]; then
+		signal=0
+	fi
 
 	if [[ $vpn == "0" ]]; then
 		if (( $signal >= 75 )); then
@@ -23,8 +26,10 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 			icon="󰤥"
 		elif (( $signal >= 25 )); then
 			icon="󰤢"
-		else
+		elif (( $signal >= 1 )); then
 			icon="󰤟"
+		else
+			icon="%{F#66ffffff}󰤭"
 		fi
 	else
 		if (( $signal >= 75 )); then
@@ -33,8 +38,10 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 			icon="󰤧"
 		elif (( $signal >= 25 )); then
 			icon="󰤤"
-		else
+		elif (( $signal >= 1 )); then
 			icon="󰤡"
+		else
+			icon="%{F#66ffffff}󰤭"
 		fi
 	fi
 else
@@ -42,4 +49,4 @@ else
 	echo "$icon"
 fi
 
-echo "$icon %{F-}%{T1}$ssid"
+echo "$icon  %{F-}%{T1}$ssid"
