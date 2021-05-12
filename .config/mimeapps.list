@@ -42,6 +42,7 @@ image/jpg=feh.desktop;
 image/jpeg=feh.desktop;
 image/gif=mpv.desktop;
 image/png=feh.desktop;
+image/webp=feh.desktop;
 image/svg=feh.desktop;
 image/svg+xml=feh.desktop;
 inode/directory=ranger.desktop;

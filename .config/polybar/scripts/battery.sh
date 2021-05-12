@@ -66,6 +66,7 @@ if [ "$ac" -eq 1 ]; then
 	fi
 
 	echo "$icon %{F-}%{T1}$battery_percent % "
+	# echo "$icon"
 else
 	if [ "$battery_percent" -ge 90 ]; then
 		icon="󰁹"
@@ -92,6 +93,6 @@ else
 	if [ "$battery_percent" -eq 20 ]; then
 		$HOME/.config/polybar/scripts/low-battery.sh
 	fi
-	echo "$icon %{F-}%{T1}$battery_percent % "
-	# echo "$icon"
+	# echo "$icon %{F-}%{T1}$battery_percent % "
+	echo "$icon"
 fi

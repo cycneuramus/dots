@@ -28,9 +28,9 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding = 1
+padding = 0
 
-module-margin = 3
+module-margin = 2
 
 font-0 = Fira Sans:pixelsize=10;2
 font-1 = Fira Sans:pixelsize=12;2
@@ -120,10 +120,8 @@ label = %time%
 [module/bluetooth]
 type = custom/script
 exec = $HOME/.config/polybar/scripts/bluetooth.sh
-interval = 2
+interval = 5
 click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
-format-background = color.background
-format-foreground = color.foreground
 format-font = 5
 
 [module/battery]
@@ -136,6 +134,8 @@ format-font = 5
 type = custom/script
 exec = ~/.config/polybar/scripts/networkmanager.sh
 interval = 10
+click-left = exec kitty -e nmtui
+click-right = exec nm-connection-editor
 format-font = 5
 
 [module/updates]
@@ -158,7 +158,7 @@ interval = 5
 ;   <label-volume> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-format-volume = <ramp-volume> <label-volume>
+format-volume = <ramp-volume>
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -181,6 +181,7 @@ label-muted-foreground = #666
 ramp-volume-0 = 󰕿
 ramp-volume-1 = 󰖀
 ramp-volume-2 = 󰕾
+ramp-volume-3 = 󱄠
 ramp-volume-font = 4
 
 ; Right and Middle click

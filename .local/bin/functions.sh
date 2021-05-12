@@ -747,6 +747,13 @@ ytv() {
 	youtube-dl -o "$HOME/Hämtningar/%(title)s.%(ext)s" "$1"
 }
 
+
+# Preview webcam
+webcam() {
+	mpv av://v4l2:/dev/video0 --profile=low-latency --untimed
+}
+
+
 # Kör funktion genom externt anrop, t ex: /abc/def/functions.sh wifi
 # if [[ "$1" && "$2" ]]; then 
 #	  "$1" "$2"
