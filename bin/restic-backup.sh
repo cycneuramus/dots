@@ -35,13 +35,5 @@ restic forget			\
 	--keep-monthly 2 	\
 	--keep-yearly 1 	\
 	--prune
-prune_exit=$?
 
 restic check --with-cache
-check_exit=$?
-
-if (( $backup_exit + $prune_exit + $check_exit > 0 )); then
-	push "Schemalagd säkerhetskopiering stötte på fel"
-else
-	push "Schemalagd säkerhetskopiering slutförd med framgång"
-fi
