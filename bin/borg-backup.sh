@@ -74,11 +74,4 @@ if (( $backup_exit + $prune_exit == 0 )); then
         --transfers=16						\
         --delete-excluded					\
         --stats=10s
-    rclone_exit=$?
-else
-    rclone_exit=0
-fi
-
-if (( $backup_exit + $prune_exit + $rclone_exit > 0 )); then
-    push "Schemalagd säkerhetskopiering stötte på fel"
 fi
