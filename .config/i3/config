@@ -2,8 +2,8 @@ set $mod Mod4
 set $polybar_scripts $HOME/.config/polybar/scripts
 
 # Disable title bar and specify border size
-new_window pixel 1
 default_floating_border none
+new_window pixel 1
 
 # No borders for Albert
 for_window[title="albert"] border none

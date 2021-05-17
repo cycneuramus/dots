@@ -149,6 +149,9 @@
 " Disable concealing
 	set conceallevel=0
 
+" Disable bottom-left status
+	set noruler
+
 " Line numbering
 	set number "relativenumber
 

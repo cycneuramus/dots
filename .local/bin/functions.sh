@@ -738,7 +738,7 @@ yta() {
 
 # Stream YouTube video 
 yts() {
-	youtube-dl -o - "$1" | mpv --force-seekable=yes -
+	youtube-dl -o - "$1" | mpv --force-seekable=yes - 
 }
 
 

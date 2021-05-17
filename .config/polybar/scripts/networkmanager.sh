@@ -1,7 +1,6 @@
 #!/bin/bash
 
 if [[ $(nmcli radio wifi) == "enabled" ]]; then
-
 	connection=$(nmcli -t -f name,device,state connection show --order type --active 2>/dev/null | grep -v ":bridge:")
 
 	if [[ $(echo $connection | grep "Wireguard\|pivpn") ]]; then
@@ -19,19 +18,7 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 		signal=0
 	fi
 
-	if [[ $vpn ]]; then
-		if (( $signal >= 75 )); then
-			icon="󰤨"
-		elif (( $signal >= 50 )); then
-			icon="󰤥"
-		elif (( $signal >= 25 )); then
-			icon="󰤢"
-		elif (( $signal >= 1 )); then
-			icon="󰤟"
-		else
-			icon="%{F#66ffffff}󰤭"
-		fi
-	else
+	if [[ $vpn == "true" ]]; then
 		if (( $signal >= 75 )); then
 			icon="󰤪"
 		elif (( $signal >= 50 )); then
@@ -43,10 +30,21 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 		else
 			icon="%{F#66ffffff}󰤭"
 		fi
+	else
+		if (( $signal >= 75 )); then
+			icon="󰤨"
+		elif (( $signal >= 50 )); then
+			icon="󰤥"
+		elif (( $signal >= 25 )); then
+			icon="󰤢"
+		elif (( $signal >= 1 )); then
+			icon="󰤟"
+		else
+			icon="%{F#66ffffff}󰤭"
+		fi
 	fi
 else
 	icon="%{F#66ffffff}󰤭" 
-	echo "$icon"
 fi
 
 echo "$icon"

@@ -127,13 +127,13 @@ format-font = 5
 [module/battery]
 type = custom/script
 exec = ~/.config/polybar/scripts/battery.sh
-interval = 10
+interval = 30
 format-font = 5
 
 [module/networkmanager]
 type = custom/script
 exec = ~/.config/polybar/scripts/networkmanager.sh
-interval = 10
+interval = 5
 click-left = exec kitty -e nmtui
 click-right = exec nm-connection-editor
 format-font = 5

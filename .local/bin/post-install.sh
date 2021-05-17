@@ -60,7 +60,7 @@ pkg-install-pacman() {
 	sudo pacman -Syu
 
 	# AUR helper
-	if [[ ! $(which yay) ]]; then
+	if [[ ! $(type yay) ]]; then
 		cd $HOME
 		sudo pacman -S git base-devel --needed --noconfirm
 		git clone https://aur.archlinux.org/yay.git
@@ -79,13 +79,13 @@ pkg-install-aur() {
 	echo ""
 
 	# Prepare rust environment for building certain AUR packages
-	if [[ $(which rustup) ]]; then
+	if [[ $(type rustup) ]]; then
 		rustup update stable
 	fi
 
 	yay -S --needed - < $HOME/.local/cfg/pkg.aur
 
-	if [[ $(which signal-cli) ]]; then
+	if [[ $(type signal-cli) ]]; then
 		sudo archlinux-java fix
 	fi
 }
@@ -95,7 +95,7 @@ grub-theme() {
 	echo $FUNCNAME
 	echo ""
 	
-	if [[ -f /etc/default/grub && $(which grub-mkconfig) ]]; then
+	if [[ -f /etc/default/grub && $(type grub-mkconfig) ]]; then
 		sudo sed -i "s/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=hidden/" /etc/default/grub
 		sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/" /etc/default/grub
 		sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -107,7 +107,7 @@ lightdm-theme() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(which lightdm) && $(which lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
+	if [[ $(type lightdm) && $(type lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
 		sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
 		sudo sed -i "s/webkit_theme.*/webkit_theme = litarvan/" /etc/lightdm/lightdm-webkit2-greeter.conf
 	fi
@@ -118,7 +118,7 @@ power-management() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(which acpid) ]]; then
+	if [[ $(type acpid) ]]; then
 		sudo systemctl enable acpid.service
 		sudo systemctl start acpid.service
 		sudo rm /etc/acpi/handler.sh
@@ -147,8 +147,8 @@ sandboxing() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(which firejail) ]]; then
-		if [[ $(which steam) ]]; then
+	if [[ $(type firejail) ]]; then
+		if [[ $(type steam) ]]; then
 			if [[ ! -d $HOME/.firejail/steam ]]; then
 				mkdir -p $HOME/.firejail/steam
 			fi
@@ -156,11 +156,11 @@ sandboxing() {
 			sudo ln -s /usr/bin/firejail /usr/local/bin/steam
 		fi
 
-		if [[ $(which wine) ]]; then
+		if [[ $(type wine) ]]; then
 			sudo ln -s /usr/bin/firejail /usr/local/bin/wine
 		fi
 
-		if [[ $(which firefox) ]]; then
+		if [[ $(type firefox) ]]; then
 			sudo ln -s /usr/bin/firejail /usr/local/bin/firefox
 		fi
 
@@ -184,7 +184,7 @@ system-configs() {
 
 	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 
-	if [[ $(which tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
+	if [[ $(type tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
 		sudo rm /etc/tlp.conf 
 		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
 	fi
@@ -203,17 +203,17 @@ system-services() {
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
 
-	if [[ $(which sshd) ]]; then
+	if [[ $(type sshd) ]]; then
 		sudo systemctl enable sshd
 		sudo systemctl start sshd
 	fi
 
 	# Printer support
-	if [[ $(which avahi-daemon) ]]; then
+	if [[ $(type avahi-daemon) ]]; then
 		sudo systemctl enable avahi-daemon.service
 		sudo systemctl start avahi-daemon.service
 	fi
-	if [[ $(which cups-config) ]]; then
+	if [[ $(type cups-config) ]]; then
 		sudo systemctl enable cups.service
 		sudo systemctl start cups.service
 	fi
@@ -222,19 +222,19 @@ system-services() {
 		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
 
-	if [[ $(which libinput-gestures) ]]; then
+	if [[ $(type libinput-gestures) ]]; then
 		sudo gpasswd -a $USER input
-	elif [[ $(which gebaar) ]]; then
+	elif [[ $(type gebaar) ]]; then
 		ln -s /home/antsva/.local/cfg/gebaard.toml /home/antsva/.config/gebaar/gebaard.toml
 		sudo usermod -a -G input $USER
 	fi
 
-	if [[ $(which tlp) ]]; then
+	if [[ $(type tlp) ]]; then
 		sudo systemctl enable tlp.service
 		sudo systemctl start tlp.service
 	fi
 
-	if [[ $(which clight) ]]; then
+	if [[ $(type clight) ]]; then
 		sudo systemctl enable clightd.service
 		sudo systemctl start clightd.service
 	fi
@@ -260,7 +260,6 @@ user-services() {
 		systemctl --user start trash.timer
 	fi
 }
-
 
 jack-setup() {
 	echo ""

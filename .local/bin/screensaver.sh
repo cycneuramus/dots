@@ -2,9 +2,12 @@
 
 . $BIN/functions.sh
 
-
-if [[ $(pgrep -f "audacity|zoom|ffmpeg|mpv") || $(pactl list sinks | grep RUNNING) || $(lid) == "closed" ]]; then
+if [[ $(pgrep -f "audacity|zoom|ffmpeg|mpv|pacman|yay") || $(pactl list sinks | grep RUNNING) || $(lid) == "closed" ]]; then
 	exit
+fi
+
+if [[ ! $(wmctrl -lp | grep unimatrix) ]]; then
+	kitty --start-as fullscreen -e unimatrix -l Gg -s 90 &
 fi
 
 # if (( $idletime > $targettime )); then
@@ -14,7 +17,3 @@ fi
 # 	fi
 # 	konsole --fullscreen -geometry 1920x1200+0-0 -e unimatrix -l Gg -s 90 &   
 # fi
-
-if [[ ! $(wmctrl -lp | grep unimatrix) ]]; then
-	kitty --start-as fullscreen -e unimatrix -l Gg -s 90 &
-fi
