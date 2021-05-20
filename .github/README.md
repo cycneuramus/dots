@@ -1,17 +1,17 @@
 Automated install from an Arch Linux live USB:
 
 ```
-# loadkeys [keymap]       # Load keyboard keymap, eg. loadkeys es, loadkeys us, loadkeys de
-# iwctl --passphrase "[WIFI_KEY]" station [WIFI_INTERFACE] connect "[WIFI_ESSID]"          # (Optional) Connect to WIFI network. _ip link show_ to know WIFI_INTERFACE.
-# curl -sL https://raw.githubusercontent.com/cycneuramus/alis/master/download.sh | bash     # Download alis scripts
-# vim alis.conf           # Edit configuration and change variables values with your preferences (system configuration)
-# ./alis.sh               # Start installation
-# ./alis-reboot.sh        # (Optional) Reboot the system, only necessary when REBOOT="false"
+loadkeys [keymap]
+iwctl --passphrase "[WIFI_KEY]" station [WIFI_INTERFACE] connect "[WIFI_ESSID]"
+curl -sL https://raw.githubusercontent.com/cycneuramus/alis/master/download.sh | bash
+vim alis.conf
+./alis.sh
+./alis-reboot.sh
 ```
 
 ---
 
-On a fresh Arch Linux host:
+System setup on a fresh Arch Linux host:
 
 ```
 curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/dots-setup.sh > dots-setup.sh
