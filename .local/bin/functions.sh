@@ -468,6 +468,11 @@ stonks() {
 sys-clean() {
 	sudo pacman -Scc --noconfirm
 	[[ $(sudo pacman -Qtdq) ]] && sudo pacman -Rns $(sudo pacman -Qtdq)
+
+	if [[ $(type flatpak) ]]; then
+		flatpak uninstall --unused
+	fi
+
 	sudo pacdiff
 }
 
@@ -738,7 +743,7 @@ yta() {
 
 # Stream YouTube video 
 yts() {
-	youtube-dl -o - "$1" | mpv --force-seekable=yes - 
+	youtube-dl -o - "$1" | mpv --force-seekable=yes -
 }
 
 

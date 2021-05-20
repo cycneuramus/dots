@@ -64,12 +64,13 @@ else
 	result="framgång"
 fi
 
-notify-send -t 60000 "Säkerhetskopiering" "Slutfördes med $result"
-
 # fwupdmgr refresh
 # if [[ $(fwupdmgr get-updates | grep "Ny version\|New version") ]]; then
 #	  notify-send -t 60000 "fwupdmgr" "Uppdateringar tillgängliga"
 # fi
+
+notify-send "Säkerhetskopiering" "Uppdaterar flatpak"
+flatpak update
 
 # https://github.com/rand256/valetudo/issues/41#issuecomment-565130242
 curl http://192.168.1.5/api/get_config > $HOME/Nextcloud/Säkerhetskopior/Dammsugare/valetudo_bak.json
@@ -77,3 +78,5 @@ curl http://192.168.1.5/api/get_config > $HOME/Nextcloud/Säkerhetskopior/Dammsu
 pkg-update-check pjheslin/diogenes
 pkg-update-check rand256/valetudo
 # pkg-update-check john9527/asuswrt-merlin
+
+notify-send -t 60000 "Säkerhetskopiering" "Slutfördes med $result"

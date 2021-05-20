@@ -141,7 +141,7 @@ format-font = 5
 [module/updates]
 type = custom/script
 exec = ~/.config/polybar/scripts/updates.sh
-interval = 3600
+interval = 7200
 format-font = 3
 
 [module/pulseaudio]

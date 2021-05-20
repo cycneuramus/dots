@@ -147,6 +147,13 @@ sandboxing() {
 	echo $FUNCNAME
 	echo ""
 
+	if [[ $(type flatpak) ]]; then
+		if [[ ! $(type steam) ]]; then
+			flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+			flatpak --user install flathub com.valvesoftware.Steam
+		fi
+	fi
+
 	if [[ $(type firejail) ]]; then
 		if [[ $(type steam) ]]; then
 			if [[ ! -d $HOME/.firejail/steam ]]; then

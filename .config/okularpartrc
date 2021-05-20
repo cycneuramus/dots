@@ -12,6 +12,7 @@ RecolorForeground=216,222,233
 SlidesBackgroundColor=40,40,40
 
 [Document]
+ChangeColors=true
 PaperColor=40,40,40
 RenderMode=Recolor
 
