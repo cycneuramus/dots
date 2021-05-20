@@ -24,17 +24,18 @@ initial-checks() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
-		echo "Source folders missing"
-		exit
-	fi 
-
 	# Bail out if running in chroot (otherwise `systemctl --user` commands will fail)
 	if [[ "$(sudo stat -c %d:%i /)" != "$(sudo stat -c %d:%i /proc/1/root/.)" ]]; then
 		echo "This script ought not to be run in a chroot"
 		echo "Exiting..."
 		exit
 	fi
+
+	if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
+		echo "Source folders missing"
+		echo "Exiting..."
+		exit
+	fi 
 }
 
 # Prepare log directory for various script outputs
@@ -61,7 +62,7 @@ pkg-install-pacman() {
 	sudo pacman -Syu
 
 	# AUR helper
-	if [[ ! $(type yay) ]]; then
+	if [[ ! $(command -v yay) ]]; then
 		cd $HOME
 		sudo pacman -S git base-devel --needed --noconfirm
 		git clone https://aur.archlinux.org/yay.git
@@ -80,14 +81,14 @@ pkg-install-aur() {
 	echo ""
 
 	# Prepare rust environment for building certain AUR packages
-	if [[ $(type rustup) ]]; then
+	if [[ $(command -v rustup) ]]; then
 		rustup update stable
 	fi
 
 	sed -i '/diogenes/d' $HOME/.local/cfg/pkg.aur
 	yay -S --needed - < $HOME/.local/cfg/pkg.aur
 
-	if [[ $(type signal-cli) ]]; then
+	if [[ $(command -v signal-cli) ]]; then
 		sudo archlinux-java fix
 	fi
 }
@@ -97,7 +98,7 @@ grub-theme() {
 	echo $FUNCNAME
 	echo ""
 	
-	if [[ -f /etc/default/grub && $(type grub-mkconfig) ]]; then
+	if [[ -f /etc/default/grub && $(command -v grub-mkconfig) ]]; then
 		sudo sed -i "s/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=hidden/" /etc/default/grub
 		sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/" /etc/default/grub
 		sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -109,7 +110,7 @@ lightdm-theme() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(type lightdm) && $(type lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
+	if [[ $(command -v lightdm) && $(command -v lightdm-webkit2-greeter) && -d /usr/share/lightdm-webkit/themes/litarvan/ ]]; then
 		sudo sed -i "s/#greeter-session=.*/greeter-session=lightdm-webkit2-greeter/" /etc/lightdm/lightdm.conf
 		sudo sed -i "s/webkit_theme.*/webkit_theme = litarvan/" /etc/lightdm/lightdm-webkit2-greeter.conf
 	fi
@@ -120,7 +121,7 @@ power-management() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(type acpid) ]]; then
+	if [[ $(command -v acpid) ]]; then
 		sudo systemctl enable acpid.service
 		sudo systemctl start acpid.service
 		sudo rm /etc/acpi/handler.sh
@@ -140,6 +141,7 @@ disable-system-beep() {
 	if [[ $(lsmod | grep pcspkr) ]]; then
 		sudo modprobe -r pcspkr
 	fi
+
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 }
 
@@ -148,15 +150,15 @@ sandboxing() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(type flatpak) ]]; then
-		if [[ ! $(type steam) ]]; then
+	if [[ $(command -v flatpak) ]]; then
+		if [[ ! $(command -v steam) ]]; then
 			flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 			flatpak --user install flathub com.valvesoftware.Steam
 		fi
 	fi
 
-	if [[ $(type firejail) ]]; then
-		if [[ $(type steam) ]]; then
+	if [[ $(command -v firejail) ]]; then
+		if [[ $(command -v steam) ]]; then
 			if [[ ! -d $HOME/.firejail/steam ]]; then
 				mkdir -p $HOME/.firejail/steam
 			fi
@@ -164,11 +166,11 @@ sandboxing() {
 			sudo ln -s /usr/bin/firejail /usr/local/bin/steam
 		fi
 
-		if [[ $(type wine) ]]; then
+		if [[ $(command -v wine) ]]; then
 			sudo ln -s /usr/bin/firejail /usr/local/bin/wine
 		fi
 
-		if [[ $(type firefox) ]]; then
+		if [[ $(command -v firefox) ]]; then
 			sudo ln -s /usr/bin/firejail /usr/local/bin/firefox
 		fi
 
@@ -192,7 +194,7 @@ system-configs() {
 
 	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 
-	if [[ $(type tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
+	if [[ $(command -v tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
 		sudo rm /etc/tlp.conf 
 		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
 	fi
@@ -211,17 +213,17 @@ system-services() {
 	sudo systemctl enable bluetooth
 	sudo systemctl start bluetooth
 
-	if [[ $(type sshd) ]]; then
+	if [[ $(command -v sshd) ]]; then
 		sudo systemctl enable sshd
 		sudo systemctl start sshd
 	fi
 
 	# Printer support
-	if [[ $(type avahi-daemon) ]]; then
+	if [[ $(command -v avahi-daemon) ]]; then
 		sudo systemctl enable avahi-daemon.service
 		sudo systemctl start avahi-daemon.service
 	fi
-	if [[ $(type cups-config) ]]; then
+	if [[ $(command -v cups-config) ]]; then
 		sudo systemctl enable cups.service
 		sudo systemctl start cups.service
 	fi
@@ -230,19 +232,19 @@ system-services() {
 		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
 
-	if [[ $(type libinput-gestures) ]]; then
+	if [[ $(command -v libinput-gestures) ]]; then
 		sudo gpasswd -a $USER input
-	elif [[ $(type gebaar) ]]; then
+	elif [[ $(command -v gebaar) ]]; then
 		ln -s /home/antsva/.local/cfg/gebaard.toml /home/antsva/.config/gebaar/gebaard.toml
 		sudo usermod -a -G input $USER
 	fi
 
-	if [[ $(type tlp) ]]; then
+	if [[ $(command -v tlp) ]]; then
 		sudo systemctl enable tlp.service
 		sudo systemctl start tlp.service
 	fi
 
-	if [[ $(type clight) ]]; then
+	if [[ $(command -v clight) ]]; then
 		sudo systemctl enable clightd.service
 		sudo systemctl start clightd.service
 	fi
