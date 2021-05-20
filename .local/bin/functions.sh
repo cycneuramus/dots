@@ -300,7 +300,7 @@ mnt() {
 			restic)
 				. secrets > /dev/null 2>&1
 				export RESTIC_PASSWORD="$restic_pass"
-				restic -r $restic_repo mount $mountpoint &
+				restic -r "$restic_repo" mount $mountpoint &
 				;;
 			roborock)
 				sshfs root@192.168.1.5:/ $mountpoint -C

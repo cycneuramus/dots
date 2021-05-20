@@ -16,6 +16,7 @@ main() {
 	system-services
 	user-services
 	jack-setup
+	restic-restore
 }
 
 initial-checks() {
@@ -127,7 +128,7 @@ power-management() {
 	fi
 
 	if [[ -f /etc/systemd/logind.conf ]]; then
-		sudo sed -i "s/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/" logind.conf
+		sudo sed -i "s/#HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/" /etc/systemd/logind.conf
 	fi
 }
 
@@ -138,7 +139,6 @@ disable-system-beep() {
 
 	if [[ $(lsmod | grep pcspkr) ]]; then
 		sudo modprobe -r pcspkr
-		sudo rmmod pcspkr
 	fi
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 }
@@ -278,6 +278,21 @@ jack-setup() {
 	sudo usermod -aG audio $USER
 	sudo sed -i '/End of file/ i @audio          -       rtprio          95' /etc/security/limits.conf
 	sudo sed -i '/End of file/ i @audio          -       memlock         unlimited' /etc/security/limits.conf
+}
+
+restic-restore() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	. secrets > /dev/null 2>&1
+	export RESTIC_PASSWORD="$restic_pass"
+
+	restic -r "$restic_repo" restore latest --verbose --target / 	\
+		--include /home/antsva/.mozilla								\
+		--include /home/antsva/.thunderbird							\
+		--include /home/antsva/.local/share/zotero					\
+		--include /home/antsva/.zotero
 }
 
 main
