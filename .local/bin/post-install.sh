@@ -17,6 +17,7 @@ main() {
 	user-services
 	jack-setup
 	restic-restore
+	diogenes-install
 }
 
 initial-checks() {
@@ -295,6 +296,24 @@ restic-restore() {
 		--include /home/antsva/.thunderbird							\
 		--include /home/antsva/.local/share/zotero					\
 		--include /home/antsva/.zotero
+}
+
+diogenes-install() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	latest_release=$(curl --silent "https://api.github.com/repos/pjheslin/diogenes/releases/latest" | jq -r .tag_name)
+	wget https://github.com/pjheslin/diogenes/releases/download/$latest_release/diogenes-$latest_release.pkg.tar.xz
+
+	pkg="diogenes-$latest_release.pkg.tar.xz"
+
+	if [[ -f "$pkg" ]]; then
+		sudo pacman -U --noconfirm diogenes-$latest_release.pkg.tar.xz
+		rm "$pkg"
+	else
+		echo "Kunde inte hitta $pkg"
+	fi
 }
 
 main
