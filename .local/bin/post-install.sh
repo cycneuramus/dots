@@ -288,7 +288,7 @@ restic-restore() {
 	echo $FUNCNAME
 	echo ""
 
-	. secrets > /dev/null 2>&1
+	. $HOME/.local/bin/secrets > /dev/null 2>&1
 	export RESTIC_PASSWORD="$restic_pass"
 
 	restic -r "$restic_repo" restore latest --verbose --target / 	\
