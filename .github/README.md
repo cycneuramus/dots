@@ -1,17 +1,21 @@
-Automated install from an Arch Linux live USB:
+# Fresh install
+
+On an Arch Linux live USB:
 
 ```
 loadkeys [keymap]
 iwctl --passphrase "[WIFI_KEY]" station [WIFI_INTERFACE] connect "[WIFI_ESSID]"
+
 curl -sL https://raw.githubusercontent.com/cycneuramus/alis/master/download.sh | bash
 vim alis.conf
+
 ./alis.sh
 ./alis-reboot.sh
 ```
 
----
+# System setup
 
-System setup on a fresh Arch Linux host:
+On a fresh Arch Linux host:
 
 ```
 curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/dots-setup.sh > dots-setup.sh
