@@ -1,4 +1,4 @@
-## Fresh install
+## System installation
 
 On an Arch Linux live USB:
 

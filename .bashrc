@@ -12,7 +12,9 @@ dots-sync() {
 }
 
 # Suggest package when entering an unrecognized command
-source /usr/share/doc/pkgfile/command-not-found.bash
+if [[ $(type pkgfile) ]]; then
+	source /usr/share/doc/pkgfile/command-not-found.bash
+fi
 
 # if [[ $(which fzf) ]]; then
 #	source /usr/share/fzf/key-bindings.bash

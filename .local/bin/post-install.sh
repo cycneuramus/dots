@@ -83,6 +83,7 @@ pkg-install-aur() {
 		rustup update stable
 	fi
 
+	sed -i '/diogenes/d' $HOME/.local/cfg/pkg.aur
 	yay -S --needed - < $HOME/.local/cfg/pkg.aur
 
 	if [[ $(type signal-cli) ]]; then
