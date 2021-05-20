@@ -4,6 +4,7 @@ On an Arch Linux live USB:
 
 ```
 loadkeys [keymap]
+ip link show
 iwctl --passphrase "[WIFI_KEY]" station [WIFI_INTERFACE] connect "[WIFI_ESSID]"
 
 curl -sL https://raw.githubusercontent.com/cycneuramus/alis/master/download.sh | bash
