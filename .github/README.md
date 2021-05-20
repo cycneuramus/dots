@@ -1,4 +1,4 @@
-# Fresh install
+## Fresh install
 
 On an Arch Linux live USB:
 
@@ -13,7 +13,7 @@ vim alis.conf
 ./alis-reboot.sh
 ```
 
-# System setup
+## System setup
 
 On a fresh Arch Linux host:
 
