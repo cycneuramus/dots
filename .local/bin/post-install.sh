@@ -293,6 +293,8 @@ restic-restore() {
 
 	restic -r "$restic_repo" restore latest --verbose --target / 	\
 		--include /home/antsva/.mozilla								\
+		--include /home/antsva/.local/share/scli					\
+		--include /home/antsva/.local/share/signal-cli				\
 		--include /home/antsva/.thunderbird							\
 		--include /home/antsva/.local/share/zotero					\
 		--include /home/antsva/.zotero

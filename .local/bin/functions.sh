@@ -415,7 +415,7 @@ rga-fzf() {
 # Toggle redshift
 rs() {
 	if [[ $1 = on ]]; then
-		redshift -l $(loc | sed s/,/:/) -t 6500:3400 &
+		redshift -l $(loc | sed s/,/:/) -t 6500:3400 & disown
 	elif [[ $1 = off ]]; then
 		redshift -x && killall -9 redshift
 	fi
