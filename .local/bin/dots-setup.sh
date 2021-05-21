@@ -48,7 +48,7 @@ elif [[ $1 == "bootstrap" ]]; then
 	echo "Bootstrapping from branch "$2"..." 
 
 	cd $HOME
-	git clone -b $2 --separate-git-dir=$HOME/.dots $remote_repo dots-tmp
+	git clone -b $2 --single-branch --separate-git-dir=$HOME/.dots $remote_repo dots-tmp
 
 	echo "Decrypt protected files (password required)?"
 	select answer in yes no; do

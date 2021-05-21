@@ -609,6 +609,16 @@ vm-create() {
 	fi
 }
 
+
+# Create a VM snapshot
+vm-snapshot() {
+	select vm in $(ls $HOME/.vm); do
+		qemu-img create -f qcow2 -b "$HOME/.vm/$vm" $HOME/.vm/snapshot-"$vm"
+		break
+	done
+}
+
+
 # Start VM
 vm-start() {
 	select vm in $(ls $HOME/.vm); do
