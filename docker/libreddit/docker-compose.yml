@@ -1,0 +1,15 @@
+version: "3"
+
+networks:
+  default:
+    external:
+      name: caddy_net
+
+services:
+  web:
+    image: spikecodes/libreddit:latest
+    restart: unless-stopped
+    container_name: libreddit
+    environment:
+      LIBREDDIT_DEFAULT_COMMENT_SORT: "top"
+      LIBREDDIT_SHOW_NSFW: "on"

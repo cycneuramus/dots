@@ -19,6 +19,8 @@ services:
       - EMAIL=$email
       - INVIDIOUS_USER=$invidious_user
       - INVIDIOUS_PASSWORD=$invidious_password
+      - LIBREDDIT_USER=$libreddit_user
+      - LIBREDDIT_PASSWORD=$libreddit_password
       - IP=$ip
       - TZ=Europe/Stockholm
     volumes:
