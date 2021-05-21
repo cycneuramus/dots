@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [[ ! $(which git) ]]; then
+script=$(basename $0)
+
+if [[ ! $(command -v git) ]]; then
 	echo "git not found, aborting..."
 	exit
 fi
@@ -34,11 +36,11 @@ elif [[ $1 == "bootstrap" ]]; then
 
 	if [[ -z $2 ]]; then
 		echo "Expected remote branch as argument:"
-		echo "dots.sh bootstrap <branch>"
+		echo "$script bootstrap <branch>"
 		exit
 	fi
 
-	if [[ ! $(which rsync) ]]; then
+	if [[ ! $(command -v rsync) ]]; then
 		echo "rsync not found, aborting..."
 		exit
 	fi
@@ -47,22 +49,32 @@ elif [[ $1 == "bootstrap" ]]; then
 
 	cd $HOME
 	git clone -b $2 --separate-git-dir=$HOME/.dots $remote_repo dots-tmp
-	git clone https://github.com/elasticdog/transcrypt.git
 
-	echo "Input transcrypt password:"
-	read pass
-	cd dots-tmp
+	echo "Decrypt protected files (password required)?"
+	select answer in yes no; do
 
-	git status > /dev/null # prevents "dirty repo" complaints from transcrypt
-	yes | ~/transcrypt/transcrypt -c aes-256-cbc -p "$pass"
+		if [[ "$answer" == "yes" ]]; then
+			git clone https://github.com/elasticdog/transcrypt.git
 
-	cd $HOME
+			echo "Input transcrypt password:"
+			read pass
+			cd dots-tmp
+
+			git status > /dev/null # prevents "dirty repo" complaints from transcrypt
+			yes | ~/transcrypt/transcrypt -c aes-256-cbc -p "$pass"
+
+			cd $HOME
+			yes | rm -r transcrypt/
+		fi
+
+		break
+	done
+
 	rsync --recursive --verbose --exclude '.git' dots-tmp/ $HOME/
 	yes | rm -r dots-tmp/
-	yes | rm -r transcrypt/
 
 else
-	echo "Usage: dots.sh [init]/[bootstrap branch]"
+	echo "Usage: $script [init]/[bootstrap branch]"
 fi
 
 git --git-dir=$HOME/.dots/ --work-tree=$HOME config status.showUntrackedFiles no

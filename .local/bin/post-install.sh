@@ -33,7 +33,7 @@ initial-checks() {
 	fi
 
 	if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
-		echo "Source folders missing"
+		echo "Source files missing"
 		echo "Exiting..."
 		exit
 	fi 
@@ -68,7 +68,7 @@ pkg-install-pacman() {
 		sudo pacman -S git base-devel --needed --noconfirm
 		git clone https://aur.archlinux.org/yay.git
 		cd yay
-		makepkg -si
+		makepkg -sir --noconfirm
 		cd $HOME
 		sudo rm -r yay
 	fi
