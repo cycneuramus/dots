@@ -3,11 +3,17 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 " Install vim-plug if missing
-	if empty(glob('~/.vim/autoload/plug.vim'))
-	  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+	if empty(glob(data_dir . '/autoload/plug.vim'))
+		silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 	endif
+
+	" if empty(glob('~/.vim/autoload/plug.vim'))
+	"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+	" 	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	" endif
 
 " Plugins to load
 	call plug#begin() 
@@ -66,10 +72,10 @@
 	augroup END
 	
 " Customize vim-pandoc and vim-pandoc-syntax
- 	let g:pandoc#modules#enabled = ["bibliographies","completion"]
- 	let g:pandoc#biblio#sources = "bgy"
- 	let g:pandoc#biblio#bibs = ["/home/antsva/Nextcloud/Arbeten/Referensbibliotek.bib"]
- 	let g:pandoc#syntax#conceal#use = 0
+	let g:pandoc#modules#enabled = ["bibliographies","completion"]
+	let g:pandoc#biblio#sources = "bgy"
+	let g:pandoc#biblio#bibs = ["/home/antsva/Nextcloud/Arbeten/Referensbibliotek.bib"]
+	let g:pandoc#syntax#conceal#use = 0
 	let g:pandoc#syntax#style#use_definition_lists = 0
 	let g:pandoc#syntax#codeblocks#embeds#langs = []
 	
@@ -78,14 +84,14 @@
 	let g:sneak#use_ic_scs = 1
 
 " normal-mode
-    nmap ö <Plug>Sneak_s
-    nmap Ö <Plug>Sneak_S
+	nmap ö <Plug>Sneak_s
+	nmap Ö <Plug>Sneak_S
 " visual-mode
-    xmap ö <Plug>Sneak_s
-    xmap Ö <Plug>Sneak_S
+	xmap ö <Plug>Sneak_s
+	xmap Ö <Plug>Sneak_S
 " operator-pending-mode
-    omap ö <Plug>Sneak_s
-    omap Ö <Plug>Sneak_S
+	omap ö <Plug>Sneak_s
+	omap Ö <Plug>Sneak_S
 
 "" Ensure :q to quit even when Goyo is active
 "	function! s:goyo_enter()
@@ -123,17 +129,17 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 " Override color scheme background for system theme consistency
-"  	augroup MyColors
-"  		autocmd!
-"  		autocmd ColorScheme * highlight Normal ctermbg=NONE
-"  						  \ | highlight NonText ctermbg=NONE ctermfg=NONE
-"  						  \ | highlight LineNr ctermbg=NONE
-"  						  \ | highlight EndOfBuffer ctermbg=NONE ctermfg=NONE
-"  	augroup END
-  	
+"	augroup MyColors
+"		autocmd!
+"		autocmd ColorScheme * highlight Normal ctermbg=NONE
+"						  \ | highlight NonText ctermbg=NONE ctermfg=NONE
+"						  \ | highlight LineNr ctermbg=NONE
+"						  \ | highlight EndOfBuffer ctermbg=NONE ctermfg=NONE
+"	augroup END
+	
   " Better colors for the autocomplete menu
-  	highlight Pmenu ctermbg=gray guibg=gray
-  	
+	highlight Pmenu ctermbg=gray guibg=gray
+	
 
 " set Vim-specific sequences for RGB colors 
 " (https://github.com/vim/vim/issues/993#issuecomment-255651605)
@@ -179,14 +185,14 @@
 	set splitbelow splitright
 
 " Shorter wait for keysequence completion
- 	set timeoutlen=200
+	set timeoutlen=200
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 " System clipboard compatibility
-    set clipboard=unnamedplus
+	set clipboard=unnamedplus
 
 " Tab length
 	set shiftwidth=4
@@ -198,8 +204,8 @@
 
 " Correct indentation behaviour for .yaml files
 	augroup yaml_fix
-    autocmd!
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
+	autocmd!
+	autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
 	augroup END
 
 " Spell checking
