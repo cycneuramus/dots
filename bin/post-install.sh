@@ -17,6 +17,7 @@ main() {
 	log-dir
 	pkg-install
 	dots
+	signal-cli
 	docker
 	unattended-upgrades
 	system-configs
@@ -54,10 +55,6 @@ pkg-install() {
 		tlp \
 		unattended-upgrades \
 		vim
-
-	if [[ -f $HOME/bin/signal-cli-update.sh ]]; then
-		$HOME/bin/signal-cli-update.sh
-	fi
 }
 
 dots() {
@@ -69,6 +66,12 @@ dots() {
 	chmod +x dots-setup.sh
 
 	./dots-setup.sh bootstrap homeserver
+}
+
+signal-cli() {
+	if [[ -f $HOME/bin/signal-cli-update.sh && ! -d $HOME/bin/signal-cli ]]; then
+		$HOME/bin/signal-cli-update.sh
+	fi
 }
 
 docker() {
@@ -130,6 +133,10 @@ system-configs() {
 	fi
 
 	if [[ -f $HOME/bak/adguardhome.conf.bak ]]; then
+		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
+			sudo mkdir -p /etc/systemd/resolved.conf.d
+		fi
+
 		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
 	fi
 }
