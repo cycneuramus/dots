@@ -4,7 +4,7 @@ On a fresh Debian host:
 
 ```
 su -
-apt install sudo -y
+apt install -y sudo
 usermod -aG sudo [user]
 
 chsh -s /bin/bash/ [user]

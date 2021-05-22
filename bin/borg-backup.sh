@@ -37,7 +37,6 @@ cp /etc/systemd/logind.conf /home/antsva/bak/logind.conf.bak
 cp /etc/default/tlp /home/antsva/bak/tlp.bak
 cp /etc/default/grub /home/antsva/bak/grub.bak
 cp /etc/fstab /home/antsva/bak/fstab.bak
-cp /etc/sysctl.conf /home/antsva/bak/sysctl.conf.bak
 cp /etc/systemd/resolved.conf.d/adguardhome.conf /home/antsva/bak/adguardhome.conf.bak
 
 crontab -l > /home/antsva/bak/crontab-root.bak

@@ -49,6 +49,7 @@ pkg-install() {
 		git 				\
 		hdparm				\
 		jq 					\
+		openjdk-11-jre		\
 		python3 			\
 		rclone 				\
 		rsync 				\
@@ -95,7 +96,9 @@ docker() {
 	sudo apt update
 	sudo apt install -y docker-ce docker-ce-cli docker-compose containerd.io
 
-	sudo groupadd docker
+	if grep -q "^docker:" /etc/group; then
+		sudo groupadd docker
+	fi
 	sudo usermod -aG docker $USER
 
 	sudo systemctl enable docker.service
@@ -129,21 +132,25 @@ system-configs() {
 	fi
 
 	if [[ $(command -v tlp) && -f /etc/default/tlp && -f $HOME/bak/tlp.bak ]]; then
+		sudo apt install -y acpi-call-dkms
+		
 		sudo rm /etc/default/tlp 
 		sudo cp $HOME/bak/tlp.bak /etc/default/tlp
+		
+		sudo systemctl enable tlp.service
+		sudo systemctl start tlp.service
 	fi
 
-	if [[ -f /etc/sysctl.conf && -f $HOME/bak/sysctl.conf.bak ]]; then
-		sudo rm /etc/sysctl.conf
-		sudo cp $HOME/bak/sysctl.conf.bak /etc/sysctl.conf
-	fi
-
-	if [[ -f $HOME/bak/adguardhome.conf.bak ]]; then
+	if [[ -f $HOME/bak/adguardhome.conf.bak && -d $HOME/docker/adguard-home ]]; then
 		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
 			sudo mkdir -p /etc/systemd/resolved.conf.d
 		fi
-
 		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
+
+		if [[ -f /etc/resolv.conf ]]; then
+			mv /etc/resolv.conf /etc/resolv.conf.backup
+			ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+		fi
 	fi
 }
 
