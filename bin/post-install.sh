@@ -96,7 +96,7 @@ docker() {
 	sudo apt update
 	sudo apt install -y docker-ce docker-ce-cli docker-compose containerd.io
 
-	if grep -q "^docker:" /etc/group; then
+	if ! grep -q "^docker:" /etc/group; then
 		sudo groupadd docker
 	fi
 	sudo usermod -aG docker $USER
@@ -148,8 +148,8 @@ system-configs() {
 		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
 
 		if [[ -f /etc/resolv.conf ]]; then
-			mv /etc/resolv.conf /etc/resolv.conf.backup
-			ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+			sudo mv /etc/resolv.conf /etc/resolv.conf.backup
+			sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 		fi
 	fi
 }
@@ -170,7 +170,10 @@ external-hd() {
 	echo $FUNCNAME
 	echo ""
 
-	sudo mkdir /mnt/extern
+	if [[ ! -d /mnt/extern ]]; then
+		sudo mkdir /mnt/extern
+	fi
+
 	echo "UUID=64073cce-9b55-4231-af58-cf0b0206ecc2 /mnt/extern ext4 defaults,nofail,x-systemd.device-timeout=4,auto,users,rw 0 2" \
 		| sudo tee -a /etc/fstab
 }
