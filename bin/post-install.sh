@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# ```
-# apt install sudo -y
-# usermod -aG sudo antsva
-# 
-# chsh -s /bin/bash antsva
-# su antsva
-#
-# wget https://raw.githubusercontent.com/cycneuramus/dots/homeserver/bin/post-install.sh
-# chmod +x post-install.sh
-# ```
-
 set -e
 
 main() {
@@ -25,6 +14,7 @@ main() {
 	external-hd
 }
 
+# Prepare log dir for various script outputs
 log-dir() {
 	echo ""
 	echo $FUNCNAME
@@ -67,6 +57,7 @@ dots() {
 	chmod +x dots-setup.sh
 
 	./dots-setup.sh bootstrap homeserver
+	rm dots-setup.sh
 }
 
 signal-cli() {
@@ -110,7 +101,9 @@ unattended-upgrades() {
 	echo $FUNCNAME
 	echo ""
 
-	echo "APT::Periodic::Update-Package-Lists \"1\";APT::Periodic::Unattended-Upgrade \"1\";" \
+	echo "APT::Periodic::Update-Package-Lists \"1\";
+APT::Periodic::Unattended-Upgrade \"1\";
+APT::Periodic::AutocleanInterval \"7\";" \
 		| sudo tee -a /etc/apt/apt.conf.d/20auto-upgrades
 }
 
