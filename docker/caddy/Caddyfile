@@ -29,6 +29,14 @@ nextcloud.{$DOMAIN} {
 	redir /.well-known/caldav /remote.php/caldav 301
 }
 
+nitter.{$DOMAIN} {
+	reverse_proxy nitter:8080
+	import security
+	basicauth /* {
+		{$NITTER_USER} {$NITTER_PASSWORD}
+	}
+}
+
 photos.{$DOMAIN} {
 	reverse_proxy photoprism-app:2342
 	# reverse_proxy librephotos-proxy:80

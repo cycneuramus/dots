@@ -21,6 +21,8 @@ services:
       - INVIDIOUS_PASSWORD=$invidious_password
       - LIBREDDIT_USER=$libreddit_user
       - LIBREDDIT_PASSWORD=$libreddit_password
+      - NITTER_USER=$nitter_user
+      - NITTER_PASSWORD=$nitter_password
       - IP=$ip
       - TZ=Europe/Stockholm
     volumes:
