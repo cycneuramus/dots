@@ -40,7 +40,7 @@ pkg-install() {
 	echo ""
 
 	sudo apt update
-	sudo apt install \
+	sudo apt install -y \
 		black \
 		borgbackup \
 		curl \
@@ -76,7 +76,7 @@ docker() {
 	echo $FUNCNAME
 	echo ""
 
-	sudo apt install 		\
+	sudo apt install -y 	\
 		apt-transport-https \
 		ca-certificates 	\
 		gnupg 				\
@@ -89,7 +89,8 @@ docker() {
 		"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
 		$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-	sudo apt install docker-ce docker-ce-cli docker-compose containerd.io
+	sudo apt update
+	sudo apt install -y docker-ce docker-ce-cli docker-compose containerd.io
 }
 
 unattended-upgrades() {
