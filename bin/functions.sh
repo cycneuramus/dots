@@ -13,8 +13,8 @@ alert-done() {
 }
 
 cpu() {
-	# mpstat 2 1 | grep "Genomsnitt" | awk '$12 ~ /[0-9.]+/ { print 100 - $12"%" }'
-	{ head -n1 /proc/stat; sleep 5; head -n1 /proc/stat; } | awk '/^cpu /{u=$2-u;s=$4-s;i=$5-i;w=$6-w}END{print int(0.5+100*(u+s+w)/(u+s+i+w))"%"}'
+	# { head -n1 /proc/stat; sleep 5; head -n1 /proc/stat; } | awk '/^cpu /{u=$2-u;s=$4-s;i=$5-i;w=$6-w}END{print int(0.5+100*(u+s+w)/(u+s+i+w))"%"}'
+	cat /proc/loadavg | awk '{print $1*100 "%"}'
 }
 
 cheat() {
@@ -52,6 +52,5 @@ signal-msg() {
 }
 
 temp() {
-        sed 's/...$/°C/' /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp1_input
-	# /sys/class/hwmon/hwmon2/temp1_input
+	sed 's/...$/°C/' /sys/class/thermal/thermal_zone0/temp
 }

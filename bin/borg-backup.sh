@@ -38,6 +38,7 @@ cp /etc/default/tlp /home/antsva/bak/tlp.bak
 cp /etc/default/grub /home/antsva/bak/grub.bak
 cp /etc/fstab /home/antsva/bak/fstab.bak
 cp /etc/systemd/resolved.conf.d/adguardhome.conf /home/antsva/bak/adguardhome.conf.bak
+cp /etc/update-motd.d/20-sysinfo /home/antsva/bak/20-sysinfo.bak
 
 crontab -l > /home/antsva/bak/crontab-root.bak
 crontab -u antsva -l > /home/antsva/bak/crontab-antsva.bak
