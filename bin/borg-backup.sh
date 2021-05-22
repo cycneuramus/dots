@@ -1,8 +1,13 @@
 #!/bin/bash
 
 # Återställningsexempel (notera sudo): 
+#
+# cd /
+# sudo borg extract --list /mnt/extern/backup/x230/borgbak::x230-20210522_040002 home/antsva/
+#
 # sudo rclone mount Backblaze:antsva-x230 mnt/ --config=/home/antsva/.config/rclone/rclone.conf &
-# sudo borg extract /home/antsva/mnt::x230-20201130_040002 home/antsva/
+# cd /
+# sudo borg extract --list /home/antsva/mnt::x230-20201130_040002 home/antsva/
 
 if (( $EUID != 0 )); then
     echo "Needs to be run as root"
