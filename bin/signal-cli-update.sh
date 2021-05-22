@@ -9,10 +9,11 @@ trap 'push "$(basename $0) stötte på fel"' err
 log=/home/antsva/log/signal-cli-update.log
 latest_release=$(curl --silent "https://api.github.com/repos/AsamK/signal-cli/releases/latest" | jq -r .tag_name)
 
-if [[ -f $log && $latest_release != $(cat $log) ]]; then
+if [[ ! -d $HOME/bin/signal-cli || -f $log && $latest_release != $(cat $log) ]]; then
 
 	cd $HOME/bin
 	wget -c $(curl --silent "https://api.github.com/repos/AsamK/signal-cli/releases/latest" | jq -r '.assets[0].browser_download_url')
+
 	signal_new_tar=$(ls signal*.tar.gz)
 	tar xf $signal_new_tar
 	rm $signal_new_tar
@@ -26,4 +27,3 @@ if [[ -f $log && $latest_release != $(cat $log) ]]; then
 fi
 
 echo $latest_release > $log
-
