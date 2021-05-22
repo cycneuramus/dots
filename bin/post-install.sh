@@ -41,18 +41,18 @@ pkg-install() {
 	echo ""
 
 	sudo apt update
-	sudo apt install -y \
-		black \
-		borgbackup \
-		curl \
-		flake8 \
-		git \
-		hdparm\
-		jq \
-		python3 \
-		rclone \
-		rsync \
-		tlp \
+	sudo apt install -y		\
+		black 				\
+		borgbackup 			\
+		curl 				\
+		flake8 				\
+		git 				\
+		hdparm				\
+		jq 					\
+		python3 			\
+		rclone 				\
+		rsync 				\
+		tlp 				\
 		unattended-upgrades \
 		vim
 }
@@ -94,6 +94,12 @@ docker() {
 
 	sudo apt update
 	sudo apt install -y docker-ce docker-ce-cli docker-compose containerd.io
+
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+
+	sudo systemctl enable docker.service
+	sudo systemctl enable containerd.service
 }
 
 unattended-upgrades() {
