@@ -11,6 +11,10 @@ select backup in $(sudo borg list "$backup_dir" | awk '{print $1}' | tr "\n" " "
 	read answer
 
 	if [[ "$answer" == "yes" ]]; then
+		if [[ ! -d $HOME/.local/share/signal-cli ]]; then
+			mkdir -p $HOME/.local/share/signal-cli
+		fi
+
 		cd /
 		sudo borg extract --list "$backup_dir"::"$backup"	\
 			home/$USER/docker								\

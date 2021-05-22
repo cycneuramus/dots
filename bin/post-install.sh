@@ -38,8 +38,10 @@ pkg-install() {
 		flake8 				\
 		git 				\
 		hdparm				\
+		htop				\
 		jq 					\
 		openjdk-11-jre		\
+		openssh-server		\
 		python3 			\
 		rclone 				\
 		rsync 				\
