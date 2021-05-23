@@ -6,12 +6,14 @@ main() {
 	log-dir
 	pkg-install
 	dots
-	signal-cli
-	docker
-	unattended-upgrades
-	system-configs
 	grub
+	system-configs
+	power-management
+	crontabs
 	external-hd
+	unattended-upgrades
+	docker
+	signal-cli
 }
 
 # Prepare log dir for various script outputs
@@ -62,10 +64,111 @@ dots() {
 	rm dots-setup.sh
 }
 
-signal-cli() {
-	if [[ -f $HOME/bin/signal-cli-update.sh && ! -d $HOME/bin/signal-cli ]]; then
-		$HOME/bin/signal-cli-update.sh
+grub() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ -f /etc/default/grub && $(ls /usr/sbin/update-grub) ]]; then
+		sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/" /etc/default/grub
+		sudo update-grub
 	fi
+}
+
+system-configs() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ -f $HOME/.terminfo/x/xterm-kitty ]]; then
+		if [[ ! -d /etc/terminfo/x ]]; then
+			sudo mkdir -p /etc/terminfo/x
+		fi
+		sudo cp $HOME/.terminfo/x/xterm-kitty /etc/terminfo/x/
+	fi
+
+	if [[ -f $HOME/bak/adguardhome.conf.bak && -d $HOME/docker/adguard-home ]]; then
+		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
+			sudo mkdir -p /etc/systemd/resolved.conf.d
+		fi
+		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
+
+		if [[ -f /etc/resolv.conf ]]; then
+			sudo mv /etc/resolv.conf /etc/resolv.conf.backup
+			sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+		fi
+	fi
+
+	if [[ -f $HOME/bak/20-sysinfo.bak ]]; then
+		if [[ -f /etc/motd ]]; then
+			sudo rm /etc/motd
+		fi
+
+		sudo cp $HOME/bak/20-sysinfo /etc/update-motd.d/
+		sudo chown root:root /etc/update-motd.d/20-sysinfo
+		sudo chmod +x /etc/update-motd.d/20-sysinfo
+	fi
+}
+
+power-management() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ -f /etc/systemd/logind.conf ]]; then
+		sudo sed -i "s/#HandleLidSwitch=.*/HandleLidSwitch=ignore/" /etc/systemd/logind.conf
+	fi
+
+	if [[ $(command -v tlp) && -f /etc/default/tlp && -f $HOME/bak/tlp.bak ]]; then
+		sudo apt install -y acpi-call-dkms
+		
+		sudo rm /etc/default/tlp 
+		sudo cp $HOME/bak/tlp.bak /etc/default/tlp
+		
+		sudo systemctl enable tlp.service
+		sudo systemctl start tlp.service
+	fi
+}
+
+crontabs() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ -f $HOME/bak/crontab-antsva.bak ]]; then
+		crontab $HOME/bak/crontab-antsva.bak
+	fi
+	if [[ -f $HOME/bak/crontab-root.bak ]]; then
+		sudo crontab $HOME/bak/crontab-root.bak
+	fi
+}
+
+external-hd() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ ! -d /mnt/extern ]]; then
+		sudo mkdir /mnt/extern
+	fi
+
+	echo "UUID=64073cce-9b55-4231-af58-cf0b0206ecc2 /mnt/extern ext4 defaults,nofail,x-systemd.device-timeout=4,auto,users,rw 0 2" \
+		| sudo tee -a /etc/fstab
+
+	echo "options usb-storage quirks=0bc2:231a:" \
+		| sudo tee -a /etc/modprobe.d/ext_hd_quirk.conf
+	sudo update-initramfs -u
+}
+
+unattended-upgrades() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	echo "APT::Periodic::Update-Package-Lists \"1\";
+APT::Periodic::Unattended-Upgrade \"1\";
+APT::Periodic::AutocleanInterval \"7\";" \
+		| sudo tee -a /etc/apt/apt.conf.d/20auto-upgrades
 }
 
 docker() {
@@ -98,100 +201,10 @@ docker() {
 	sudo systemctl enable containerd.service
 }
 
-unattended-upgrades() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	echo "APT::Periodic::Update-Package-Lists \"1\";
-APT::Periodic::Unattended-Upgrade \"1\";
-APT::Periodic::AutocleanInterval \"7\";" \
-		| sudo tee -a /etc/apt/apt.conf.d/20auto-upgrades
-}
-
-system-configs() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	if [[ -f $HOME/bak/crontab-antsva.bak ]]; then
-		crontab $HOME/bak/crontab-antsva.bak
+signal-cli() {
+	if [[ -f $HOME/bin/signal-cli-update.sh && ! -d $HOME/bin/signal-cli ]]; then
+		$HOME/bin/signal-cli-update.sh
 	fi
-	if [[ -f $HOME/bak/crontab-root.bak ]]; then
-		sudo crontab $HOME/bak/crontab-root.bak
-	fi
-
-	if [[ -f /etc/systemd/logind.conf && -f $HOME/bak/logind.conf.bak ]]; then
-		sudo rm /etc/systemd/logind.conf
-		sudo cp $HOME/bak/logind.conf.bak /etc/systemd/logind.conf
-	fi
-
-	if [[ $(command -v tlp) && -f /etc/default/tlp && -f $HOME/bak/tlp.bak ]]; then
-		sudo apt install -y acpi-call-dkms
-		
-		sudo rm /etc/default/tlp 
-		sudo cp $HOME/bak/tlp.bak /etc/default/tlp
-		
-		sudo systemctl enable tlp.service
-		sudo systemctl start tlp.service
-	fi
-
-	if [[ -f $HOME/bak/adguardhome.conf.bak && -d $HOME/docker/adguard-home ]]; then
-		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
-			sudo mkdir -p /etc/systemd/resolved.conf.d
-		fi
-		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
-
-		if [[ -f /etc/resolv.conf ]]; then
-			sudo mv /etc/resolv.conf /etc/resolv.conf.backup
-			sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
-		fi
-	fi
-
-	if [[ -f $HOME/.terminfo/x/xterm-kitty ]]; then
-		if [[ ! -d /etc/terminfo/x ]]; then
-			sudo mkdir -p /etc/terminfo/x
-		fi
-		sudo cp $HOME/.terminfo/x/xterm-kitty /etc/terminfo/x/
-	fi
-
-	if [[ -f $HOME/bak/20-sysinfo.bak ]]; then
-		if [[ -f /etc/motd ]]; then
-			sudo rm /etc/motd
-		fi
-
-		sudo cp $HOME/bak/20-sysinfo /etc/update-motd.d/
-		sudo chown root:root /etc/update-motd.d/20-sysinfo
-		sudo chmod +x /etc/update-motd.d/20-sysinfo
-	fi
-}
-
-grub() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	if [[ -f /etc/default/grub && $(ls /usr/sbin/update-grub) ]]; then
-		sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/" /etc/default/grub
-		sudo update-grub
-	fi
-}
-
-external-hd() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	if [[ ! -d /mnt/extern ]]; then
-		sudo mkdir /mnt/extern
-	fi
-
-	echo "UUID=64073cce-9b55-4231-af58-cf0b0206ecc2 /mnt/extern ext4 defaults,nofail,x-systemd.device-timeout=4,auto,users,rw 0 2" \
-		| sudo tee -a /etc/fstab
-
-	echo "options usb-storage quirks=0bc2:231a:" \
-		| sudo tee -a /etc/modprobe.d/ext_hd_quirk.conf
-	sudo update-initramfs -u
 }
 
 main
