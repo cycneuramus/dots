@@ -13,10 +13,10 @@ alert-done() {
 }
 
 cpu() {
-	# Get non-multicore load average from /proc/loadavg,
-	# multiply by 100 to get percent value, divide by number of cpu cores 
-	# to get the multicore load average, and round to nearest integer 
-	# using 0.5 as the break-off value for rounding up or down
+	# Get non-multicore load average from /proc/loadavg, multiply by 100 
+	# to get percent value, divide by number of cpu cores to get the 
+	# multicore load average (meaning 100% cpu is the maximum), and round 
+	# to nearest integer using 0.5 as the break-off value for rounding up or down
 	cat /proc/loadavg | awk -v cores=$(nproc) '{print int((($1 * 100) / cores) + 0.5)"%"}'
 }
 
