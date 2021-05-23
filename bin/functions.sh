@@ -13,8 +13,11 @@ alert-done() {
 }
 
 cpu() {
-	# { head -n1 /proc/stat; sleep 5; head -n1 /proc/stat; } | awk '/^cpu /{u=$2-u;s=$4-s;i=$5-i;w=$6-w}END{print int(0.5+100*(u+s+w)/(u+s+i+w))"%"}'
-	cat /proc/loadavg | awk '{print $1*100 "%"}'
+	# Get non-multicore load average from /proc/loadavg,
+	# multiply by 100 to get percent value, divide by number of cpu cores 
+	# to get the multicore load average, and round to nearest integer 
+	# using 0.5 as the break-off value for rounding up or down
+	cat /proc/loadavg | awk -v cores=$(nproc) '{print int((($1 * 100) / cores) + 0.5)"%"}'
 }
 
 cheat() {
