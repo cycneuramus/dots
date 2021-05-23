@@ -3,7 +3,7 @@
 . functions.sh
 
 if (( $EUID != 0 )); then
-    echo "Var vänlig kör som root"
+    echo "Needs to be run as root"
     exit
 fi
 
