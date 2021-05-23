@@ -20,6 +20,7 @@
 		Plug 'lilydjwg/colorizer'
 		Plug 'vim-pandoc/vim-markdownfootnotes'
 		Plug 'Vimjas/vim-python-pep8-indent'
+		Plug 'dense-analysis/ale'
 	"	Plug 'ap/vim-css-color'
 		Plug 'junegunn/goyo.vim' 
 	"	Plug 'isobit/vim-caddyfile'
@@ -42,6 +43,11 @@
 	let g:nord_italic = 1
 	let g:nord_bold = 1
 	let g:nord_underline = 1
+
+" Python linting
+	let g:ale_python_flake8_options = '--max-line-length=88'
+	let g:ale_fixers = {"python": ["black"]}
+	let g:ale_fix_on_save = 1
 
 " Syntax highlighting for bash variables in nord-vim
 	augroup nord

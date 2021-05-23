@@ -16,7 +16,7 @@ main() {
 	system-services
 	user-services
 	jack-setup
-	restic-restore
+	restore-backup
 	diogenes-install
 }
 
@@ -283,7 +283,7 @@ jack-setup() {
 	sudo sed -i '/End of file/ i @audio          -       memlock         unlimited' /etc/security/limits.conf
 }
 
-restic-restore() {
+restore-backup() {
 	echo ""
 	echo $FUNCNAME
 	echo ""
