@@ -188,6 +188,10 @@ external-hd() {
 
 	echo "UUID=64073cce-9b55-4231-af58-cf0b0206ecc2 /mnt/extern ext4 defaults,nofail,x-systemd.device-timeout=4,auto,users,rw 0 2" \
 		| sudo tee -a /etc/fstab
+
+	echo "options usb-storage quirks=0bc2:231a:" \
+		| sudo tee -a /etc/modprobe.d/ext_hd_quirk.conf
+	sudo update-initramfs -u
 }
 
 main

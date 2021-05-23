@@ -271,7 +271,7 @@ DEVICES_TO_DISABLE_ON_STARTUP="bluetooth wifi wwan"
 # START_CHARGE_THRESH value and stops when exceeding the STOP_CHARGE_THRESH value.
 # Main / Internal battery (values in %)
 START_CHARGE_THRESH_BAT0=40
-STOP_CHARGE_THRESH_BAT0=80
+STOP_CHARGE_THRESH_BAT0=60
 # Ultrabay / Slice / Replaceable battery (values in %)
 # START_CHARGE_THRESH_BAT1=30
 # STOP_CHARGE_THRESH_BAT1=80
