@@ -1322,8 +1322,8 @@
   },
   "jack_connections", {
     "input": ["alsa_in:capture_1"],
-    "output1": ["Family 17h (Models 10h-1fh) HD Audio Controller Analog stereo utgång:playback_FL"],
-    "output2": ["Family 17h (Models 10h-1fh) HD Audio Controller Analog stereo utgång:playback_FR"],
+    "output1": ["Family 17h (Models 10h-1fh) HD Audio Controller Analog stereo:playback_FL"],
+    "output2": ["Family 17h (Models 10h-1fh) HD Audio Controller Analog stereo:playback_FR"],
     "midi_input": [],
     "midi_output": [],
     "insert_out": ["%F:in_0"],

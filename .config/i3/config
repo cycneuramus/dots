@@ -178,6 +178,7 @@ bindsym $mod+Shift+b exec $polybar_scripts/launch.sh
 # System controls
 mode "sysctl" {
 		bindsym b exec bash $BIN/functions.sh bt; mode "default"
+		bindsym m exec $polybar_scripts/microphone.sh toggle; mode "default"
 		bindsym Return mode "default"
 		bindsym Escape mode "default"
 		bindsym $mod+Shift+s mode "default"

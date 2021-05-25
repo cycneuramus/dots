@@ -579,6 +579,10 @@ vid-targetsize() {
 
 		 ffmpeg -y -i "$1" -c:v libx264 -b:v "$target_video_bitrate_kbit_s"k -pass 1 -an -f mp4 /dev/null && ffmpeg -i "$1" -c:v libx264 -b:v "$target_video_bitrate_kbit_s"k -pass 2 -c:a aac -b:a "$target_audio_bitrate_kbit_s"k "${1%.*}-$2mB.mp4"
 	fi
+
+	if [[ $(ls ffmpeg2pass*) ]]; then
+		rm ffmpeg2pass*
+	fi
 }
 
 

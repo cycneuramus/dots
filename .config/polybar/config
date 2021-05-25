@@ -35,13 +35,13 @@ module-margin = 2
 font-0 = Fira Sans:pixelsize=10;2
 font-1 = Fira Sans:pixelsize=12;2
 font-2 = Symbols Nerd Font:pixelsize=13;3
-font-3 = Material Design Icons:pixelsize=15;4
+font-3 = Material Design Icons:pixelsize=14;4
 font-4 = Material Design Icons:pixelsize=13;3
 
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-modules-right = updates bluetooth networkmanager pulseaudio battery 
+modules-right = updates microphone bluetooth pulseaudio networkmanager battery 
 ; modules-right = updates 
 
 tray-position = right
@@ -143,6 +143,13 @@ type = custom/script
 exec = ~/.config/polybar/scripts/updates.sh
 interval = 7200
 format-font = 3
+
+[module/microphone]
+type = custom/script
+exec = ~/.config/polybar/scripts/microphone.sh
+interval = 5
+click-left = ~/.config/polybar/scripts/microphone.sh toggle
+format-font = 4
 
 [module/pulseaudio]
 type = internal/pulseaudio
