@@ -1,5 +1,6 @@
 set $mod Mod4
 set $polybar_scripts $HOME/.config/polybar/scripts
+set $i3_scripts $HOME/.config/i3/scripts
 
 # Disable title bar and specify border size
 default_floating_border none
@@ -77,6 +78,11 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
+
+# open new workspace without having to specify a number
+bindsym $mod+n exec --no-startup-id $i3_scripts/next_available_ws.sh
+# move to new workspace without having to specify a number
+bindsym $mod+Shift+n exec --no-startup-id $i3_scripts/next_available_ws.sh -m
 
 # change focus
 bindsym $mod+h focus left
