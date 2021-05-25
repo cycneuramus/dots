@@ -11,13 +11,13 @@ services:
     container_name: jellyfin
     restart: always
     ports:
-        - 8096:8096
+      - 8096:8096
     volumes: 
-        - ./config:/config
-        - /mnt/extern:/mnt/extern 
+      - ./config:/config
+      - /mnt/extern:/mnt/extern 
     environment:
-        - TZ=Europe/Stockholm
+      - TZ=Europe/Stockholm
     # För att stödja hårdvaruomkodning (vaapi):
-        - GIDLIST=44
+      - GIDLIST=44
     devices:
-        - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/renderD128:/dev/dri/renderD128

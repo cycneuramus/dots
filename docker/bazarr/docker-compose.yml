@@ -4,6 +4,7 @@ services:
   bazarr:
     image: linuxserver/bazarr
     container_name: bazarr
+    hostname: bazarr
     environment:
       - PUID=1000
       - PGID=1000

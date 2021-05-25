@@ -3,6 +3,7 @@ services:
   wireguard:
     image: ghcr.io/linuxserver/wireguard
     container_name: wireguard
+    hostname: wireguard
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

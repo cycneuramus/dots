@@ -9,6 +9,7 @@ services:
   gotify:
     image: gotify/server
     container_name: gotify
+    hostname: gotify
     restart: always
     # ports:
     #     - 5657:5657

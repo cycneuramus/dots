@@ -20,6 +20,11 @@ gotify.{$DOMAIN} {
 	import security
 }
 
+grocy.{$DOMAIN} {
+	reverse_proxy grocy:80
+	import security
+}
+
 jellyfin.{$DOMAIN} {
 	reverse_proxy jellyfin:8096
 	import security

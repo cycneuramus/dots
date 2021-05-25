@@ -4,6 +4,7 @@ services:
   photoprism:
     image: photoprism/photoprism:latest
     container_name: photoprism-app
+    hostname: photoprism
     restart: always
     # Uncomment and edit the following line to set a specific user / group id:
     # user: "33:33"

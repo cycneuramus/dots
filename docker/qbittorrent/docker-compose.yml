@@ -4,6 +4,7 @@ services:
   qbittorrent:
     image: linuxserver/qbittorrent
     container_name: qbittorrent
+    hostname: qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
