@@ -59,6 +59,5 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
       - OVERWRITEHOST=$nextcloud_domain
       - OVERWRITEPROTOCOL=https
-#    user: 1000:1000
 #    sysctls:
 #      - net.ipv4.ip_unprivileged_port_start=0

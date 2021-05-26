@@ -3,7 +3,7 @@
 set -e
 
 main() {
-	log-dir
+	home-dirs
 	pkg-install
 	dots
 	grub
@@ -16,14 +16,18 @@ main() {
 	signal-cli
 }
 
-# Prepare log dir for various script outputs
-log-dir() {
+# Prepare directories in ~
+home-dirs() {
 	echo ""
 	echo $FUNCNAME
 	echo ""
 
 	if [[ ! -d $HOME/log ]]; then
 		mkdir $HOME/log
+	fi
+
+	if [[ ! -d $HOME/mnt ]]; then
+		mkdir $HOME/mnt
 	fi
 }
 

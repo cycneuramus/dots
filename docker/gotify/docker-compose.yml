@@ -13,6 +13,7 @@ services:
     restart: always
     # ports:
     #     - 5657:5657
+    user: 1000:1000
     volumes: 
         - ./data:/app/data
     environment:
