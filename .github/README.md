@@ -6,7 +6,7 @@ On a fresh Debian host:
 su -
 
 apt update && apt upgrade -y
-apt install -y sudo
+apt install sudo -y
 usermod -aG sudo [user]
 
 chsh -s /bin/bash/ [user]
