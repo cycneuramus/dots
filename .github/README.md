@@ -5,7 +5,7 @@ On a fresh Debian host:
 ```
 su -
 
-apt update && apt upgrade
+apt update && apt upgrade -y
 apt install -y sudo
 usermod -aG sudo [user]
 

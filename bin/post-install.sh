@@ -7,13 +7,13 @@ main() {
 	pkg-install
 	dots
 	grub
-	system-configs
 	power-management
 	crontabs
 	external-hd
 	unattended-upgrades
 	docker
 	signal-cli
+	system-configs
 }
 
 # Prepare directories in ~
