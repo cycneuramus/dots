@@ -1,4 +1,4 @@
-version: "3" 
+version: "2.4"
 
 networks:
   default:
@@ -15,9 +15,12 @@ services:
     volumes: 
       - ./config:/config
       - /mnt/extern:/mnt/extern 
+    user: 1000:1000
     environment:
       - TZ=Europe/Stockholm
-    # För att stödja hårdvaruomkodning (vaapi):
-      - GIDLIST=44
+    group_add:  # grep -E 'render|video' /etc/group | cut -d: -f3
+      - 44
+      - 107
     devices:
+      - /dev/dri/card0:/dev/dri/card0 
       - /dev/dri/renderD128:/dev/dri/renderD128

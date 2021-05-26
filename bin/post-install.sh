@@ -49,6 +49,7 @@ pkg-install() {
 		rsync 				\
 		tlp 				\
 		unattended-upgrades \
+		vainfo				\
 		vim
 }
 
