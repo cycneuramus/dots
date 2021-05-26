@@ -10,6 +10,7 @@ services:
     image: zedeus/nitter:latest
     restart: unless-stopped
     container_name: nitter
+    user: 1000:1000
     volumes:
       - ./nitter.conf:/src/nitter.conf
     depends_on:
@@ -20,6 +21,7 @@ services:
   nitter-db:
     image: redis:alpine
     container_name: nitter-db
+    user: 1000:1000
     restart: unless-stopped
     volumes:
       - ./data/redis:/data

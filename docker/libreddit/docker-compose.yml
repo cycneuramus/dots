@@ -10,6 +10,7 @@ services:
     image: spikecodes/libreddit:latest
     restart: unless-stopped
     container_name: libreddit
+    user: 1000:1000
     environment:
       LIBREDDIT_DEFAULT_COMMENT_SORT: "top"
       LIBREDDIT_SHOW_NSFW: "on"
