@@ -114,7 +114,6 @@ pkgfile
 python-html2text
 python-pillow
 qemu
-qjackctl
 qt5ct
 ranger
 rclone
