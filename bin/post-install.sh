@@ -80,41 +80,6 @@ grub() {
 	fi
 }
 
-system-configs() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	if [[ -f $HOME/.terminfo/x/xterm-kitty ]]; then
-		if [[ ! -d /etc/terminfo/x ]]; then
-			sudo mkdir -p /etc/terminfo/x
-		fi
-		sudo cp $HOME/.terminfo/x/xterm-kitty /etc/terminfo/x/
-	fi
-
-	if [[ -f $HOME/bak/adguardhome.conf.bak && -d $HOME/docker/adguard-home ]]; then
-		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
-			sudo mkdir -p /etc/systemd/resolved.conf.d
-		fi
-		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
-
-		if [[ -f /etc/resolv.conf ]]; then
-			sudo mv /etc/resolv.conf /etc/resolv.conf.backup
-			sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
-		fi
-	fi
-
-	if [[ -f $HOME/bak/20-sysinfo.bak ]]; then
-		if [[ -f /etc/motd ]]; then
-			sudo rm /etc/motd
-		fi
-
-		sudo cp $HOME/bak/20-sysinfo /etc/update-motd.d/
-		sudo chown root:root /etc/update-motd.d/20-sysinfo
-		sudo chmod +x /etc/update-motd.d/20-sysinfo
-	fi
-}
-
 power-management() {
 	echo ""
 	echo $FUNCNAME
@@ -209,6 +174,41 @@ docker() {
 signal-cli() {
 	if [[ -f $HOME/bin/signal-cli-update.sh && ! -d $HOME/bin/signal-cli ]]; then
 		$HOME/bin/signal-cli-update.sh
+	fi
+}
+
+system-configs() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ -f $HOME/.terminfo/x/xterm-kitty ]]; then
+		if [[ ! -d /etc/terminfo/x ]]; then
+			sudo mkdir -p /etc/terminfo/x
+		fi
+		sudo cp $HOME/.terminfo/x/xterm-kitty /etc/terminfo/x/
+	fi
+
+	if [[ -f $HOME/bak/adguardhome.conf.bak && -d $HOME/docker/adguard-home ]]; then
+		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
+			sudo mkdir -p /etc/systemd/resolved.conf.d
+		fi
+		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
+
+		if [[ -f /etc/resolv.conf ]]; then
+			sudo mv /etc/resolv.conf /etc/resolv.conf.backup
+			sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+		fi
+	fi
+
+	if [[ -f $HOME/bak/20-sysinfo.bak ]]; then
+		if [[ -f /etc/motd ]]; then
+			sudo rm /etc/motd
+		fi
+
+		sudo cp $HOME/bak/20-sysinfo /etc/update-motd.d/
+		sudo chown root:root /etc/update-motd.d/20-sysinfo
+		sudo chmod +x /etc/update-motd.d/20-sysinfo
 	fi
 }
 
