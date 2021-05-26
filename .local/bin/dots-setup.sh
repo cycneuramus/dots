@@ -7,12 +7,27 @@ if [[ ! $(command -v git) ]]; then
 	exit
 fi
 
-echo "Input remote repo:"
-read remote_repo
-echo "Input git username:"
-read git_username
-echo "Input git email:"
-read git_email
+remote_repo="https://github.com/cycneuramus/dots"
+git_username="cycneuramus"
+git_email="cycneuramus@local"
+
+echo "remote repo: $remote_repo"
+echo "git username: $git_username"
+echo "git email: $git_email"
+echo ""
+echo "Use these settings?"
+
+select answer in yes no; do
+	if [[ "$answer" == "no" ]]; then
+		echo "Input remote repo:"
+		read remote_repo
+		echo "Input git username:"
+		read git_username
+		echo "Input git email:"
+		read git_email
+	fi
+	break
+done
 
 if [[ $1 == "init" ]]; then
 
