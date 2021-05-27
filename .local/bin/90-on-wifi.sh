@@ -25,3 +25,5 @@ elif [[ $status == "connectivity-change" || $status == "down" ]]; then
 		vpn off
 	fi
 fi
+
+polybar-msg hook networkmanager 1 &>/dev/null

@@ -115,7 +115,7 @@ time = %a  %H:%M
 time-alt = %c
 label-font= 2
 
-# format =   <label>
+; format =   <label>
 
 label = %time%
 
@@ -133,9 +133,9 @@ interval = 30
 format-font = 5
 
 [module/networkmanager]
-type = custom/script
-exec = ~/.config/polybar/scripts/networkmanager.sh
-interval = 5
+type = custom/ipc
+hook-0 = ~/.config/polybar/scripts/networkmanager.sh
+initial = 1
 click-left = exec kitty -e nmtui
 click-right = exec nm-connection-editor
 format-font = 5
@@ -144,11 +144,11 @@ format-font = 5
 type = custom/script
 exec = polybar-msg hook updates 1 &>/dev/null
 interval = 7200
-format-font = 3
 
 [module/updates]
 type = custom/ipc
 hook-0 = ~/.config/polybar/scripts/updates.sh
+format-font = 3
 
 [module/microphone]
 type = custom/script
