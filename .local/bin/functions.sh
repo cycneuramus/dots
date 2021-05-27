@@ -710,7 +710,7 @@ vpn-fix() {
 
 
 # Test Wi-Fi connection
-wifi() {
+wifi_type() {
 	# Full path b/c of system script (90-on-wifi.sh)
 	. /home/antsva/.local/bin/secrets > /dev/null 2>&1
 
@@ -723,29 +723,29 @@ wifi() {
 
 	case $ssid in
 		$wifi_home)
-			wifi="home"
+			wifi_type="home"
 			;;
 		$wifi_trusted)
-			wifi="trusted"
+			wifi_type="trusted"
 			;;
 		$wifi_public)
-			wifi="public"
+			wifi_type="public"
 			;;
 		$wifi_work)
-			wifi="work"
+			wifi_type="work"
 			;;
 		$wifi_hotspot)
-			wifi="hotspot"
+			wifi_type="hotspot"
 			;;
 		"")
-			wifi="off"
+			wifi_type="off"
 			;;
 	esac
 	
 	shopt -u nocasematch
 	shopt -u extglob
 	
-	echo $wifi
+	echo $wifi_type
 }
 
 

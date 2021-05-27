@@ -28,7 +28,7 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 		elif (( $signal >= 1 )); then
 			icon="󰤡"
 		else
-			icon="%{F#66ffffff}󰤭"
+			icon="%{F#66ffffff}󰤨"
 		fi
 	else
 		if (( $signal >= 75 )); then
@@ -40,7 +40,7 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 		elif (( $signal >= 1 )); then
 			icon="󰤟"
 		else
-			icon="%{F#66ffffff}󰤭"
+			icon="%{F#66ffffff}󰤨"
 		fi
 	fi
 else

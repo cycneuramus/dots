@@ -12,16 +12,18 @@
 interface="$1"
 status="$2"
 
-wifi=$(wifi)
+wifi_interface=$(ls /sys/class/ieee80211/*/device/net/)
+wifi_type=$(wifi_type)
+vpn=$(nmcli con show -a | grep "Wireguard\|pivpn")
 
-if [[ $interface == "wlp1s0" && $status == "up" ]]; then
-	if [[ $wifi != @(home|hotspot) && ! $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then 
+if [[ "$interface" == "$wifi_interface" && "$status" == "up" ]]; then
+	if [[ "$wifi_type" != @(home|hotspot) && ! "$vpn" ]]; then 
 		vpn on
-	elif [[ $wifi == @(home|hotspot) && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
+	elif [[ "$wifi_type" == @(home|hotspot) && "$vpn" ]]; then
 		vpn off
 	fi
-elif [[ $status == "connectivity-change" || $status == "down" ]]; then
-	if [[ $wifi == "off" && $(nmcli con show -a | grep "Wireguard\|pivpn") ]]; then
+elif [[ "$status" == "down" || "$status" == "connectivity-change" ]]; then
+	if [[ "$wifi_type" == "off" && "$vpn" ]]; then
 		vpn off
 	fi
 fi
