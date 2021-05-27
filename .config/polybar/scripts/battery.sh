@@ -36,10 +36,10 @@ battery_max=$(("$battery_max_0 + $battery_max_1"))
 battery_percent=$(("$battery_level * 100"))
 battery_percent=$(("$battery_percent / $battery_max"))
 
-teal="%{F#88C0D0}"
-green="%{F#A3BE8C}"
+# teal="%{F#88C0D0}"
+# green="%{F#A3BE8C}"
 yellow="%{F#EBCB8B}"
-orange="%{F#D08770}"
+# orange="%{F#D08770}"
 red="%{F#BF616A}"
 
 if [ "$ac" -eq 1 ]; then

@@ -5,7 +5,7 @@ On an Arch Linux live USB:
 ```
 loadkeys [keymap]
 ip link show
-iwctl --passphrase "[WIFI_KEY]" station [WIFI_INTERFACE] connect "[WIFI_ESSID]"
+iwctl --passphrase "[wifi_password]" station [wifi_interface] connect "[ssid]"
 
 curl -sL https://raw.githubusercontent.com/cycneuramus/alis/master/download.sh | bash
 vim alis.conf

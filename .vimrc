@@ -251,7 +251,7 @@
 " Remap potentially harmful all-lowercase command
 	vnoremap u <Nop>
 	vnoremap <c-u> u
-	
+
 " Insert Markdown footnote
 	nmap <buffer> <Leader>f <Plug>AddVimFootnote
 	nmap <buffer> <Leader>r <Plug>ReturnFromFootnote

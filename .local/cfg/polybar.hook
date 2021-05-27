@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Refreshing polybar package updates...
+Depends = polybar
+When = PostTransaction
+Exec = /usr/bin/bash -c "/usr/bin/polybar-msg hook updates 1 &>/dev/null || true"

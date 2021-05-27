@@ -1,6 +1,6 @@
 #!/bin/sh
+
 if [[ $(rfkill list bluetooth | grep "Soft blocked: yes") ]]; then
-# if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]; then
 	sudo rfkill unblock bluetooth
 	sleep 1
 	bluetoothctl power on >> /dev/null

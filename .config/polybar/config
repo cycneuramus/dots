@@ -38,10 +38,12 @@ font-2 = Symbols Nerd Font:pixelsize=13;3
 font-3 = Material Design Icons:pixelsize=14;4
 font-4 = Material Design Icons:pixelsize=13;3
 
+enable-ipc = true
+
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-modules-right = updates microphone bluetooth pulseaudio networkmanager battery 
+modules-right = updates-trigger updates microphone bluetooth pulseaudio networkmanager battery 
 ; modules-right = updates 
 
 tray-position = right
@@ -138,11 +140,15 @@ click-left = exec kitty -e nmtui
 click-right = exec nm-connection-editor
 format-font = 5
 
-[module/updates]
+[module/updates-trigger]
 type = custom/script
-exec = ~/.config/polybar/scripts/updates.sh
+exec = polybar-msg hook updates 1 &>/dev/null
 interval = 7200
 format-font = 3
+
+[module/updates]
+type = custom/ipc
+hook-0 = ~/.config/polybar/scripts/updates.sh
 
 [module/microphone]
 type = custom/script

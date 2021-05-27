@@ -200,6 +200,13 @@ system-configs() {
 		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
 	fi
 
+	if [[ ! -d /etc/pacman.d/hooks/ ]]; then
+		sudo mkdir -p /etc/pacman.d/hooks
+	fi
+	if [[ -f $HOME/.local/cfg/polybar.hook ]]; then
+		sudo ln -s /home/antsva/.local/cfg/polybar.hook /etc/pacman.d/hooks/polybar.hook
+	fi
+
 	# To change backlight with xbacklight (via acpilight package)
 	sudo usermod -aG video $USER
 }
