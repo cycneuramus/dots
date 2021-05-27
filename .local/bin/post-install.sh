@@ -207,6 +207,13 @@ system-configs() {
 		sudo ln -s /home/antsva/.local/cfg/polybar.hook /etc/pacman.d/hooks/polybar.hook
 	fi
 
+	if [[ ! -d /etc/udev/rules.d ]]; then
+		sudo mkdir -p /etc/udev/rules.d
+	fi
+	if [[ -f $HOME/.local/cfg/95-battery.rules ]]; then
+		sudo ln -s /home/antsva/.local/cfg/95-battery.rules /etc/udev/rules.d/95-battery.rules
+	fi
+
 	# To change backlight with xbacklight (via acpilight package)
 	sudo usermod -aG video $USER
 }

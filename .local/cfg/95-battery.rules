@@ -1,0 +1,4 @@
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", \
+    RUN+="polybar-msg hook battery 1 &>/dev/null"
+SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", \
+    RUN+="polybar-msg hook battery 1 &>/dev/null"

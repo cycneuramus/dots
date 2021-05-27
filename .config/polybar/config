@@ -127,9 +127,9 @@ click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
 format-font = 5
 
 [module/battery]
-type = custom/script
-exec = ~/.config/polybar/scripts/battery.sh
-interval = 30
+type = custom/ipc
+hook-0 = ~/.config/polybar/scripts/battery.sh
+initial = 1
 format-font = 5
 
 [module/networkmanager]
