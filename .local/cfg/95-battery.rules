@@ -1,4 +1,2 @@
-SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", \
-    RUN+="/usr/bin/polybar-msg hook battery 1 &>/dev/null"
-SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", \
-    RUN+="/usr/bin/polybar-msg hook battery 1 &>/dev/null"
+SUBSYSTEM=="power_supply", ACTION=="change", \
+    RUN+="/usr/bin/bash -c '/usr/bin/polybar-msg hook battery 1 &>/dev/null'"
