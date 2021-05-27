@@ -16,6 +16,7 @@ main() {
 	system-hooks
 	system-services
 	user-services
+	printer-support
 	jack-setup
 	restore-backup
 	diogenes-install
@@ -40,7 +41,6 @@ initial-checks() {
 	fi 
 }
 
-# Prepare log directory for various script outputs
 log-dir() {
 	echo ""
 	echo $FUNCNAME
@@ -63,7 +63,6 @@ pkg-install-pacman() {
 
 	sudo pacman -Syu
 
-	# AUR helper
 	if [[ ! $(command -v yay) ]]; then
 		cd $HOME
 		sudo pacman -S git base-devel --needed --noconfirm
@@ -128,6 +127,16 @@ power-management() {
 		sudo systemctl start acpid.service
 		sudo rm /etc/acpi/handler.sh
 		sudo ln -s /home/antsva/.local/bin/handler.sh /etc/acpi/handler.sh
+	fi
+
+	if [[ $(command -v tlp) ]]; then
+		if [[ -f $HOME/.local/cfg/tlp.conf ]]; then
+			sudo rm /etc/tlp.conf 
+			sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
+		fi
+
+		sudo systemctl enable tlp.service
+		sudo systemctl start tlp.service
 	fi
 
 	if [[ -f /etc/systemd/logind.conf ]]; then
@@ -205,11 +214,6 @@ system-configs() {
 		sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 	fi
 
-	if [[ $(command -v tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
-		sudo rm /etc/tlp.conf 
-		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
-	fi
-
 	# To change backlight with xbacklight (via acpilight package)
 	sudo usermod -aG video $USER
 }
@@ -257,30 +261,11 @@ system-services() {
 		sudo systemctl start sshd
 	fi
 
-	# Printer support
-	if [[ $(command -v avahi-daemon) ]]; then
-		sudo systemctl enable avahi-daemon.service
-		sudo systemctl start avahi-daemon.service
-	fi
-	if [[ $(command -v cups-config) ]]; then
-		sudo systemctl enable cups.service
-		sudo systemctl start cups.service
-	fi
-	if [[ $(ls /usr/lib/libnss_mdns*) ]]; then
-		sudo rm /etc/nsswitch.conf
-		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
-	fi
-
 	if [[ $(command -v libinput-gestures) ]]; then
 		sudo gpasswd -a $USER input
 	elif [[ $(command -v gebaar) ]]; then
 		ln -s /home/antsva/.local/cfg/gebaard.toml /home/antsva/.config/gebaar/gebaard.toml
 		sudo usermod -a -G input $USER
-	fi
-
-	if [[ $(command -v tlp) ]]; then
-		sudo systemctl enable tlp.service
-		sudo systemctl start tlp.service
 	fi
 
 	if [[ $(command -v clight) ]]; then
@@ -294,7 +279,6 @@ user-services() {
 	echo $FUNCNAME
 	echo ""
 
-	# Wallpaper switcher
 	if [[ -f $HOME/.config/systemd/user/wallpaper.timer ]]; then
 		systemctl --user enable wallpaper.timer
 		systemctl --user start wallpaper.timer
@@ -303,10 +287,30 @@ user-services() {
 		systemctl --user start wallpaper.service
 	fi
 
-	# Trash auto-emptying
 	if [[ -f $HOME/.config/systemd/user/trash.timer ]]; then
 		systemctl --user enable trash.timer
 		systemctl --user start trash.timer
+	fi
+}
+
+printer-support() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	if [[ $(command -v avahi-daemon) ]]; then
+		sudo systemctl enable avahi-daemon.service
+		sudo systemctl start avahi-daemon.service
+	fi
+
+	if [[ $(command -v cups-config) ]]; then
+		sudo systemctl enable cups.service
+		sudo systemctl start cups.service
+	fi
+
+	if [[ $(ls /usr/lib/libnss_mdns*) ]]; then
+		sudo rm /etc/nsswitch.conf
+		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
 }
 
