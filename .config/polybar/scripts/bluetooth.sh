@@ -4,6 +4,7 @@ if [[ $(rfkill list bluetooth | grep "Soft blocked: yes") ]]; then
 else
 	if [ $(echo info | bluetoothctl | grep 'Device' | wc -c) -eq 0 ]; then 
 		echo "󰂯"
+	else
+		echo "󰂱"
 	fi
-	echo "󰂱"
 fi

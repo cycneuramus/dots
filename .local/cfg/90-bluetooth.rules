@@ -1,0 +1,6 @@
+SUBSYSTEM=="rfkill", ACTION=="change", ENV{RFKILL_TYPE}=="bluetooth", \
+	RUN+="/usr/bin/bash -c '/usr/bin/polybar-msg hook bluetooth 1 &>/dev/null'"
+SUBSYSTEM=="bluetooth", ACTION=="add", \
+	RUN+="/usr/bin/bash -c '/usr/bin/polybar-msg hook bluetooth 1 &>/dev/null'"
+SUBSYSTEM=="bluetooth", ACTION=="remove", \
+	RUN+="/usr/bin/bash -c '/usr/bin/polybar-msg hook bluetooth 1 &>/dev/null'"

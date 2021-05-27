@@ -120,17 +120,18 @@ label-font= 2
 label = %time%
 
 [module/bluetooth]
-type = custom/script
-exec = $HOME/.config/polybar/scripts/bluetooth.sh
-interval = 5
+type = custom/ipc
+hook-0 = $HOME/.config/polybar/scripts/bluetooth.sh
+initial = 1
 click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
 format-font = 5
 
 [module/battery]
 type = custom/ipc
-hook-0 = ~/.config/polybar/scripts/battery.sh
+hook-0 = ~/.config/polybar/scripts/battery-level.sh
 initial = 1
 format-font = 5
+click-left = ~/.config/polybar/scripts/battery-notify.sh
 
 [module/networkmanager]
 type = custom/ipc

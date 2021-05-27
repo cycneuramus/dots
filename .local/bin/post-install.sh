@@ -213,6 +213,9 @@ system-configs() {
 	if [[ -f $HOME/.local/cfg/95-battery.rules ]]; then
 		sudo ln -s /home/antsva/.local/cfg/95-battery.rules /etc/udev/rules.d/95-battery.rules
 	fi
+	if [[ -f $HOME/.local/cfg/90-bluetooth.rules ]]; then
+		sudo ln -s /home/antsva/.local/cfg/90-bluetooth.rules /etc/udev/rules.d/90-bluetooth.rules
+	fi
 
 	# To change backlight with xbacklight (via acpilight package)
 	sudo usermod -aG video $USER
