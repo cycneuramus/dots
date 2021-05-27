@@ -12,7 +12,7 @@ aur=$LOG/pkg.aur
 exclude=$BIN/borg.exclude
 src_path=$HOME/.borgbak
 remote_path="Nextcloud:Säkerhetskopior/Dator"
-wifi=$(wifi)
+wifi_type=$(wifi_type)
 
 # Limit execution to every 24 hours by checking for age of log file
 if [[ -f "$log" && ! $(find "$log" -mmin +1440) ]]; then exit; fi
@@ -48,7 +48,7 @@ borg prune							\
 
 prune_exit=$?
 	
-if [[ $wifi = "home" && $(( $backup_exit + $prune_exit )) == 0 ]]; then
+if [[ $wifi_type = "home" && $(( $backup_exit + $prune_exit )) == 0 ]]; then
 	rclone sync $src_path $remote_path -v \
 	--delete-excluded					  \
 	--stats=10s
@@ -72,7 +72,7 @@ notify-send -t 60000 "Säkerhetskopiering" "Slutfördes med $result"
 # fi
 
 # https://github.com/rand256/valetudo/issues/41#issuecomment-565130242
-if [[ $wifi = "home" ]]; then
+if [[ $wifi_type = "home" ]]; then
 	curl http://192.168.1.5/api/get_config > $HOME/Nextcloud/Säkerhetskopior/Dammsugare/valetudo_bak.json
 fi
 
