@@ -13,6 +13,7 @@ main() {
 	disable-system-beep
 	sandboxing
 	system-configs
+	system-hooks
 	system-services
 	user-services
 	jack-setup
@@ -185,19 +186,42 @@ system-configs() {
 	echo $FUNCNAME
 	echo ""
 
-	sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
-	sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
-	sudo chown root:root /etc/sudoers.d/rfkill
-	sudo chown root:root /etc/sudoers.d/bluetooth
+	if [[ -f $HOME/.local/cfg/rfkill ]]; then
+		sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
+		sudo chown root:root /etc/sudoers.d/rfkill
+	fi
 
-	sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
-	sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
+	if [[ -f $HOME/.local/cfg/bluetooth ]]; then
+		sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
+		sudo chown root:root /etc/sudoers.d/bluetooth
+	fi
 
-	sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
+	if [[ -f $HOME/.local/cfg/wifi ]]; then
+		sudo ln -s /home/antsva/.local/cfg/wifi /etc/sudoers.d/wifi
+		sudo chown root:root /etc/sudoers.d/wifi
+	fi
+
+	if [[ -f $HOME/.local/cfg/30-libinput.conf ]]; then
+		sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
+	fi
 
 	if [[ $(command -v tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
 		sudo rm /etc/tlp.conf 
 		sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
+	fi
+
+	# To change backlight with xbacklight (via acpilight package)
+	sudo usermod -aG video $USER
+}
+
+system-hooks() {
+	echo ""
+	echo "$FUNCNAME"
+	echo ""
+
+	if [[ -f $HOME/.local/bin/90-on-wifi.sh && -d /etc/NetworkManager/dispatcher.d/ ]]; then
+		sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
+		sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
 	fi
 
 	if [[ ! -d /etc/pacman.d/hooks/ ]]; then
@@ -216,9 +240,6 @@ system-configs() {
 	if [[ -f $HOME/.local/cfg/90-bluetooth.rules ]]; then
 		sudo ln -s /home/antsva/.local/cfg/90-bluetooth.rules /etc/udev/rules.d/90-bluetooth.rules
 	fi
-
-	# To change backlight with xbacklight (via acpilight package)
-	sudo usermod -aG video $USER
 }
 
 system-services() {

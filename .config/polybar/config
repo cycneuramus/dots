@@ -43,7 +43,7 @@ enable-ipc = true
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-modules-right = updates-trigger updates microphone bluetooth pulseaudio networkmanager battery 
+modules-right = updates updates-trigger microphone microphone-trigger bluetooth pulseaudio networkmanager networkmanager-trigger battery
 ; modules-right = updates 
 
 tray-position = right
@@ -119,6 +119,17 @@ label-font= 2
 
 label = %time%
 
+[module/updates]
+type = custom/ipc
+hook-0 = ~/.config/polybar/scripts/updates.sh
+format-font = 3
+
+[module/updates-trigger]
+type = custom/script
+exec = polybar-msg hook updates 1 &>/dev/null
+interval = 7200
+
+; Updated by udev rules
 [module/bluetooth]
 type = custom/ipc
 hook-0 = $HOME/.config/polybar/scripts/bluetooth.sh
@@ -126,6 +137,7 @@ initial = 1
 click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
 format-font = 5
 
+; Updated by udev rules
 [module/battery]
 type = custom/ipc
 hook-0 = ~/.config/polybar/scripts/battery-level.sh
@@ -133,6 +145,7 @@ initial = 1
 format-font = 5
 click-left = ~/.config/polybar/scripts/battery-notify.sh
 
+; Updated by dispatcher.d
 [module/networkmanager]
 type = custom/ipc
 hook-0 = ~/.config/polybar/scripts/networkmanager.sh
@@ -141,22 +154,26 @@ click-left = exec kitty -e nmtui
 click-right = exec nm-connection-editor
 format-font = 5
 
-[module/updates-trigger]
+; Poll to get signal strength updates
+[module/networkmanager-trigger]
 type = custom/script
-exec = polybar-msg hook updates 1 &>/dev/null
-interval = 7200
+exec = polybar-msg hook networkmanager 1 &>/dev/null
+interval = 15
 
-[module/updates]
-type = custom/ipc
-hook-0 = ~/.config/polybar/scripts/updates.sh
-format-font = 3
-
+; Updated by i3 bindings
 [module/microphone]
-type = custom/script
-exec = ~/.config/polybar/scripts/microphone.sh
-interval = 5
-click-left = ~/.config/polybar/scripts/microphone.sh toggle
+type = custom/ipc
+hook-0 = ~/.config/polybar/scripts/microphone.sh
+hook-1 = ~/.config/polybar/scripts/microphone.sh toggle
+initial = 1
+click-left = exec polybar-msg hook microphone 2 &>/dev/null
 format-font = 4
+
+; Poll to be paranoid
+[module/microphone-trigger]
+type = custom/script
+exec = polybar-msg hook microphone 1 &>/dev/null
+interval = 60
 
 [module/pulseaudio]
 type = internal/pulseaudio
