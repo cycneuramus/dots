@@ -137,7 +137,7 @@ initial = 1
 click-left = exec $HOME/.config/polybar/scripts/toggle_bluetooth.sh
 format-font = 5
 
-; Updated by udev rules
+; Updated by acpid handler
 [module/battery]
 type = custom/ipc
 hook-0 = ~/.config/polybar/scripts/battery-level.sh
@@ -145,11 +145,11 @@ initial = 1
 format-font = 5
 click-left = ~/.config/polybar/scripts/battery-notify.sh
 
-; Poll to get battery percent updates
+; Poll for battery percent updates
 [module/battery-trigger]
 type = custom/script
 exec = polybar-msg hook battery 1 &>/dev/null
-interval = 30
+interval = 60
 
 ; Updated by dispatcher.d and udev rules
 [module/networkmanager]
@@ -160,7 +160,7 @@ click-left = exec kitty -e nmtui
 click-right = exec nm-connection-editor
 format-font = 5
 
-; Poll to get signal strength updates
+; Poll for signal strength updates
 [module/networkmanager-trigger]
 type = custom/script
 exec = polybar-msg hook networkmanager 1 &>/dev/null

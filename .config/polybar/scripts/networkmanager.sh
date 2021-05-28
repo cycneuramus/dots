@@ -2,12 +2,10 @@
 
 if [[ $(nmcli radio wifi) == "enabled" ]]; then
 	connection=$(nmcli -t -f name,device,state connection show --order type --active 2>/dev/null | grep -v ":bridge:")
+	vpn=$(echo $connection | grep "Wireguard\|pivpn")
 
-	if [[ $(echo $connection | grep "Wireguard\|pivpn") ]]; then
-		vpn=true
+	if [[ $vpn ]]; then
 		connection=$(echo $connection | head -n 1)
-	else
-		vpn=false
 	fi
 
 	ssid=$(echo $connection | cut -d ":" -f 1)
@@ -18,7 +16,7 @@ if [[ $(nmcli radio wifi) == "enabled" ]]; then
 		signal=0
 	fi
 
-	if [[ $vpn == "true" ]]; then
+	if [[ $vpn ]]; then
 		if (( $signal >= 75 )); then
 			icon="󰤪"
 		elif (( $signal >= 50 )); then
