@@ -43,7 +43,7 @@ enable-ipc = true
 modules-left = i3
 modules-center = date
 ; modules-right = xbacklight pulseaudio xkeyboard wlan battery date 
-modules-right = updates updates-trigger microphone microphone-trigger bluetooth pulseaudio networkmanager networkmanager-trigger battery
+modules-right = updates updates-trigger microphone microphone-trigger bluetooth pulseaudio networkmanager networkmanager-trigger battery battery-trigger
 ; modules-right = updates 
 
 tray-position = right
@@ -145,6 +145,12 @@ initial = 1
 format-font = 5
 click-left = ~/.config/polybar/scripts/battery-notify.sh
 
+; Poll to get battery percent updates
+[module/battery-trigger]
+type = custom/script
+exec = polybar-msg hook battery 1 &>/dev/null
+interval = 30
+
 ; Updated by dispatcher.d and udev rules
 [module/networkmanager]
 type = custom/ipc
@@ -158,7 +164,7 @@ format-font = 5
 [module/networkmanager-trigger]
 type = custom/script
 exec = polybar-msg hook networkmanager 1 &>/dev/null
-interval = 15
+interval = 30
 
 ; Updated by i3 bindings
 [module/microphone]

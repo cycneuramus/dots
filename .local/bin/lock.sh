@@ -9,25 +9,25 @@ T='#eceff4'
 W='#Bf616a'
 
 i3lock -C -i $BIN/lock.png 	\
---veriftext=""				\
---wrongtext=""				\
---locktext=""				\
+--verif-text=""				\
+--wrong-text=""				\
+--lock-text=""				\
 							\
---insidevercolor=$D   		\
---ringvercolor=$C    		\
+--insidever-color=$D   		\
+--ringver-color=$C    		\
 							\
---insidewrongcolor=$D 		\
---ringwrongcolor=$W   		\
+--insidewrong-color=$D 		\
+--ringwrong-color=$W   		\
 							\
---insidecolor=$C      		\
---ringcolor=$D        		\
---linecolor=$D        		\
---separatorcolor=$D   		\
+--inside-color=$C      		\
+--ring-color=$D        		\
+--line-color=$D        		\
+--separator-color=$D   		\
 							\
---verifcolor=$T        		\
---wrongcolor=$T        		\
---layoutcolor=$T      		\
---keyhlcolor=$H       		\
---bshlcolor=$H        		\
+--verif-color=$T        	\
+--wrong-color=$T        	\
+--layout-color=$T      		\
+--keyhl-color=$H       		\
+--bshl-color=$H        		\
 							\
 --blur 5              		\
