@@ -7,6 +7,7 @@ main() {
 	log-dir
 	pkg-install-pacman
 	pkg-install-aur
+	diogenes-install
 	grub-theme
 	lightdm-theme
 	power-management
@@ -19,7 +20,6 @@ main() {
 	printer-support
 	jack-setup
 	restore-backup
-	diogenes-install
 }
 
 initial-checks() {
@@ -61,7 +61,14 @@ pkg-install-pacman() {
 		sudo ln -s /home/antsva/.local/cfg/pacman.conf /etc/pacman.conf
 	fi
 
-	sudo pacman -Syu
+	sudo pacman -Syu --noconfirm
+	sudo pacman -S --needed - < $HOME/.local/cfg/pkg.pacman
+}
+
+pkg-install-aur() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
 
 	if [[ ! $(command -v yay) ]]; then
 		cd $HOME
@@ -73,14 +80,6 @@ pkg-install-pacman() {
 		sudo rm -r yay
 	fi
 
-	sudo pacman -S --needed - < $HOME/.local/cfg/pkg.pacman
-}
-
-pkg-install-aur() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
 	# Prepare rust environment for building certain AUR packages
 	if [[ $(command -v rustup) ]]; then
 		rustup update stable
@@ -91,6 +90,24 @@ pkg-install-aur() {
 
 	if [[ $(command -v signal-cli) ]]; then
 		sudo archlinux-java fix
+	fi
+}
+
+diogenes-install() {
+	echo ""
+	echo $FUNCNAME
+	echo ""
+
+	latest_release=$(curl --silent "https://api.github.com/repos/pjheslin/diogenes/releases/latest" | jq -r .tag_name)
+	wget https://github.com/pjheslin/diogenes/releases/download/$latest_release/diogenes-$latest_release.pkg.tar.xz
+
+	pkg="diogenes-$latest_release.pkg.tar.xz"
+
+	if [[ -f "$pkg" ]]; then
+		sudo pacman -U --noconfirm diogenes-$latest_release.pkg.tar.xz
+		rm "$pkg"
+	else
+		echo "Kunde inte hitta $pkg"
 	fi
 }
 
@@ -238,11 +255,17 @@ system-hooks() {
 	if [[ ! -d /etc/udev/rules.d ]]; then
 		sudo mkdir -p /etc/udev/rules.d
 	fi
+
 	if [[ -f $HOME/.local/cfg/95-battery.rules ]]; then
 		sudo ln -s /home/antsva/.local/cfg/95-battery.rules /etc/udev/rules.d/95-battery.rules
 	fi
+
 	if [[ -f $HOME/.local/cfg/90-bluetooth.rules ]]; then
 		sudo ln -s /home/antsva/.local/cfg/90-bluetooth.rules /etc/udev/rules.d/90-bluetooth.rules
+	fi
+
+	if [[ -f $HOME/.local/cfg/85-wifi.rules ]]; then
+		sudo ln -s /home/antsva/.local/cfg/85-wifi.rules /etc/udev/rules.d/85-wifi.rules
 	fi
 }
 
@@ -340,24 +363,6 @@ restore-backup() {
 		--include /home/antsva/.thunderbird							\
 		--include /home/antsva/.local/share/zotero					\
 		--include /home/antsva/.zotero
-}
-
-diogenes-install() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
-	latest_release=$(curl --silent "https://api.github.com/repos/pjheslin/diogenes/releases/latest" | jq -r .tag_name)
-	wget https://github.com/pjheslin/diogenes/releases/download/$latest_release/diogenes-$latest_release.pkg.tar.xz
-
-	pkg="diogenes-$latest_release.pkg.tar.xz"
-
-	if [[ -f "$pkg" ]]; then
-		sudo pacman -U --noconfirm diogenes-$latest_release.pkg.tar.xz
-		rm "$pkg"
-	else
-		echo "Kunde inte hitta $pkg"
-	fi
 }
 
 main

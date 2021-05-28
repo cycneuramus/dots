@@ -145,7 +145,7 @@ initial = 1
 format-font = 5
 click-left = ~/.config/polybar/scripts/battery-notify.sh
 
-; Updated by dispatcher.d
+; Updated by dispatcher.d and udev rules
 [module/networkmanager]
 type = custom/ipc
 hook-0 = ~/.config/polybar/scripts/networkmanager.sh

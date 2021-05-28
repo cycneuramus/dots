@@ -90,6 +90,7 @@ elif [[ $1 == "bootstrap" ]]; then
 
 else
 	echo "Usage: $script [init]/[bootstrap branch]"
+	exit
 fi
 
 git --git-dir=$HOME/.dots/ --work-tree=$HOME config status.showUntrackedFiles no

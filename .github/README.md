@@ -25,7 +25,7 @@ chmod +x dots-setup.sh
 ./dots-setup.sh bootstrap master
 rm dots-setup.sh
 
-.local/bin/post-install.sh
+bash .local/bin/post-install.sh
 ```
 
 ---
