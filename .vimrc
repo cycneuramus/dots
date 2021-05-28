@@ -242,7 +242,7 @@
 " Remap potentially harmful all-lowercase command
 	vnoremap u <Nop>
 	vnoremap <c-u> u
-	
+
 " Insert Markdown footnote
 	nnoremap <leader>f i[^]<left>
 	inoremap <C-r> i[^]<left>
