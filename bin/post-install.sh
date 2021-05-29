@@ -74,7 +74,7 @@ grub() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ -f /etc/default/grub && $(ls /usr/sbin/update-grub) ]]; then
+	if [[ -f /etc/default/grub && -f /usr/sbin/update-grub ]]; then
 		sudo sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=0/" /etc/default/grub
 		sudo update-grub
 	fi

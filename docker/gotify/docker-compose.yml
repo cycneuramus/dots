@@ -18,7 +18,5 @@ services:
         - ./data:/app/data
     environment:
         - TZ=Europe/Stockholm
-        - PUID=1000
-        - PGID=1000
         - GOTIFY_SERVER_PORT=5657
 
