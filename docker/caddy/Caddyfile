@@ -50,3 +50,8 @@ yt.{$DOMAIN} {
 		{$INVIDIOUS_USER} {$INVIDIOUS_PASSWORD}
 	}
 }
+
+whoogle.{$DOMAIN} {
+	reverse_proxy whoogle:5000
+	import security
+}
