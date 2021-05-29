@@ -11,9 +11,9 @@ services:
       - TZ=Europe/Stockholm
     volumes:
       - ./config:/config
-      - /mnt/extern/Media/Filmer/Övrigt:/movies
-      - /mnt/extern/Media/Serier:/tv
-      - /mnt/extern/Media/Dokumentärer:/documentaries
+      - $movies:/movies
+      - $tv:/tv
+      - $documentaries:/documentaries
     ports:
       - 6767:6767
     restart: always

@@ -11,9 +11,9 @@ services:
     volumes: 
       - ./config:/config
       - /home/antsva/docker/qbittorrent/downloads:/downloads
-      - /mnt/extern/Media/Filmer/Övrigt:/movies
-      - /mnt/extern/Media/Dokumentärer:/documentaries
-      - "/mnt/extern/Media/Filmer/Jackie Chan:/jackie"
+      - $movies:/movies
+      - $documentaries:/documentaries
+      - "$jackie:/jackie"
       - /home/antsva/bin:/usrbin:ro
     environment:
       - TZ=Europe/Stockholm

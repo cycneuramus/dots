@@ -12,7 +12,7 @@ services:
       - TZ=Europe/Stockholm
     volumes:
       - ./config:/config
-      - /mnt/extern/Media/Serier:/tv
+      - $tv:/tv
       - /home/antsva/docker/qbittorrent/downloads:/downloads
       - /home/antsva/bin:/usrbin:ro
     ports:
