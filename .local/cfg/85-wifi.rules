@@ -1,0 +1,2 @@
+SUBSYSTEM=="rfkill", ACTION=="change", ENV{RFKILL_TYPE}=="wlan", \
+	RUN+="/usr/bin/bash -c '/usr/bin/polybar-msg hook networkmanager 1 &>/dev/null'"
