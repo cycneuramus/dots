@@ -2,6 +2,12 @@
 	email {$EMAIL}
 }
 
+(untrusted_ips) {
+	@untrusted_ips {
+		not remote_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8
+	}
+}
+
 (security) {
 	header {
 		Strict-Transport-Security "max-age=31536000;"
@@ -11,7 +17,6 @@
 		X-Permitted-Cross-Domain-Policies "none"
 		X-XSS-Protection "1; mode=block"
 		Referrer-Policy "no-referrer-when-downgrade"
-		# Content-Security-Policy "default-src 'none'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; img-src https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none'; form-action 'self'; worker-src 'none'; frame-src https://youtube-nocookie.com;"
 	}
 }
 
@@ -33,7 +38,8 @@ jellyfin.{$DOMAIN} {
 tm.{$DOMAIN} {
 	reverse_proxy terraforming-mars:8080
 	import security
-	basicauth /* {
+	import untrusted_ips
+	basicauth @untrusted_ips {
 		{$TM_USER} {$TM_PASSWORD}
 	}
 }
