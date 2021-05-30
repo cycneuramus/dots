@@ -28,13 +28,11 @@ services:
       - ALL
     read_only: true
     environment: 
-      - WHOOGLE_USER=$whoogle_user
-      - WHOOGLE_PASS=$whoogle_pass
       - WHOOGLE_CONFIG_URL=$whoogle_config_url
       - WHOOGLE_CONFIG_COUNTRY_$whoogle_config_country
       - WHOOGLE_CONFIG_LANGUAGE=$whoogle_config_language
       - WHOOGLE_CONFIG_STYLE=$whoogle_config_style
       - WHOOGLE_CONFIG_DARK=1
       - WHOOGLE_CONFIG_VIEW_IMAGE=1
-      - WHOOGLE_CONFIG_NEW_TAB=1
+      - WHOOGLE_CONFIG_NEW_TAB=0
       - WHOOGLE_CONFIG_TOR=0

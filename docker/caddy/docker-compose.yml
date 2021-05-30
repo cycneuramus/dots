@@ -23,7 +23,10 @@ services:
       - LIBREDDIT_PASSWORD=$libreddit_password
       - NITTER_USER=$nitter_user
       - NITTER_PASSWORD=$nitter_password
+      - WHOOGLE_USER=$whoogle_user
+      - WHOOGLE_PASSWORD=$whoogle_password
       - IP=$ip
+      - HOME_IP=$home_ip
       - TZ=Europe/Stockholm
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro

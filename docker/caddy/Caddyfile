@@ -2,6 +2,12 @@
 	email {$EMAIL}
 }
 
+(untrusted_ips) {
+	@untrusted_ips {
+		not remote_ip {$HOME_IP}
+	}
+}
+
 (security) {
     header {
         Strict-Transport-Security "max-age=31536000;"
@@ -17,14 +23,15 @@
 libreddit.{$DOMAIN} {
 	reverse_proxy libreddit:8080
 	import security
-	basicauth /* {
+	import untrusted_ips
+	basicauth @untrusted_ips {
 		{$LIBREDDIT_USER} {$LIBREDDIT_PASSWORD}
 	}
 }
 
 nextcloud.{$DOMAIN} {
 	reverse_proxy {$IP}:4444
-	header Strict-Transport-Security max-age=31536000; # Nextcloud does not need the whole security block	
+	header Strict-Transport-Security max-age=31536000; # Nextcloud does not need the entire security block	
 	redir /.well-known/carddav /remote.php/carddav 301
 	redir /.well-known/caldav /remote.php/caldav 301
 }
@@ -32,21 +39,21 @@ nextcloud.{$DOMAIN} {
 nitter.{$DOMAIN} {
 	reverse_proxy nitter:8080
 	import security
-	basicauth /* {
+	import untrusted_ips
+	basicauth @untrusted_ips {
 		{$NITTER_USER} {$NITTER_PASSWORD}
 	}
 }
 
 photos.{$DOMAIN} {
 	reverse_proxy photoprism-app:2342
-	# reverse_proxy librephotos-proxy:80
 	import security
 }
 
 yt.{$DOMAIN} {
 	reverse_proxy invidious-app:3000
-	import security
-	basicauth /* {
+	import untrusted_ips
+	basicauth @untrusted_ips {
 		{$INVIDIOUS_USER} {$INVIDIOUS_PASSWORD}
 	}
 }
@@ -54,4 +61,8 @@ yt.{$DOMAIN} {
 whoogle.{$DOMAIN} {
 	reverse_proxy whoogle:5000
 	import security
+	import untrusted_ips
+	basicauth @untrusted_ips {
+		{$WHOOGLE_USER} {$WHOOGLE_PASSWORD}
+	}
 }
