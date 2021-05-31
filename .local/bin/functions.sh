@@ -16,7 +16,7 @@ a-in() {
 
 # Record to file via Jack
 a-rec() {
-	cd $HOME/Musik && jack_capture -f ogg
+	cd $HOME && jack_capture -f ogg
 }
 
 
@@ -157,7 +157,7 @@ et-scrub() {
 
 # Shares file(s) with E2E encryption via Firefox Send
 ffs() { 
-	# Generera arkiv vid flertal filer
+	# Create archive if multiple files
 	if (( $# > 1 )); then
 		zip="$(date +%s).zip"
 		zip -j $zip "$@"
@@ -324,9 +324,10 @@ mnt() {
 
 # Unmount file systems
 umnt() {
+	mount=$(mount)
 	for dir in $(ls $HOME/.mnt); do
 		
-		if [[ $(mount | grep $dir) ]]; then
+		if [[ $(echo "$mount" | grep "$dir") ]]; then
 			umount $HOME/.mnt/$dir
 		fi
 
@@ -454,7 +455,7 @@ signal-file() {
 
 # Get SSID
 ssid() {
-	nmcli con show -a | grep wifi | awk '{ print $1 }'
+	nmcli con show -a | awk '/wifi/{ print $1 }'
 }
 
 
@@ -469,7 +470,7 @@ sys-clean() {
 	sudo pacman -Scc --noconfirm
 	[[ $(sudo pacman -Qtdq) ]] && sudo pacman -Rns $(sudo pacman -Qtdq)
 
-	if [[ $(type flatpak) ]]; then
+	if [[ $(command -v flatpak) ]]; then
 		flatpak uninstall --unused
 	fi
 
@@ -573,9 +574,9 @@ vid-targetsize() {
 		target_video_bitrate_kbit_s=$(awk -v size="$target_video_size_MB" -v duration="$origin_duration_s" -v audio_rate="$target_audio_bitrate_kbit_s" 'BEGIN { print	( ( size * 8192.0 ) / ( 1.048576 * duration ) - audio_rate	) }')
 
 		 # For testing:
-		 # echo "Ljudtarget: $target_audio_bitrate_kbit_s"
-		 # echo "Längd: $origin_duration_s"
-		 # echo "Videotarget: $target_video_bitrate_kbit_s"
+		 # echo "audio target: $target_audio_bitrate_kbit_s"
+		 # echo "duration: $origin_duration_s"
+		 # echo "video target: $target_video_bitrate_kbit_s"
 
 		 ffmpeg -y -i "$1" -c:v libx264 -b:v "$target_video_bitrate_kbit_s"k -pass 1 -an -f mp4 /dev/null && ffmpeg -i "$1" -c:v libx264 -b:v "$target_video_bitrate_kbit_s"k -pass 2 -c:a aac -b:a "$target_audio_bitrate_kbit_s"k "${1%.*}-$2mB.mp4"
 	fi
