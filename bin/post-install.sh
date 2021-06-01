@@ -167,6 +167,12 @@ docker() {
 	fi
 	sudo usermod -aG docker $USER
 
+	# Fix for docker CE permahang blocking system shutdown
+	if [[ -f /lib/systemd/system/docker.service ]]; then
+		sudo sed -i "s/TimeoutSec=.*/TimeoutSec=300/" /lib/systemd/system/docker.service
+		sudo systemctl daemon-reload
+	fi
+
 	sudo systemctl enable docker.service
 	sudo systemctl enable containerd.service
 }

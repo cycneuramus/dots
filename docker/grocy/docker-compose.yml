@@ -1,0 +1,20 @@
+version: "3"
+
+networks:
+  default:
+    external:
+      name: caddy_net
+
+services:
+  grocy:
+    image: linuxserver/grocy
+    container_name: grocy
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="Europe/Stockholm"
+    volumes:
+      - ./config:/config
+    ports:
+      - 9283:80

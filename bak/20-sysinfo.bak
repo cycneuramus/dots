@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cpu_load=$(cat /proc/loadavg | awk -v cores=$(nproc) '{print int((($1 * 100) / cores) + 0.5)"%"}')
+cpu_temp=$(sed 's/...$/°C/' /sys/class/thermal/thermal_zone0/temp)
 memory_usage=$(free -m | awk '/Mem/ { printf("%3.1f%%", $3/($2+1)*100) }')
 swap_usage=$(free -m | awk '/Swap/ { printf("%3.1f%%", $3/($2+1)*100) }')
 disk_usage=$(df -h | awk '{if($(NF) == "/") {print $(NF-1); exit;}}')
@@ -12,6 +13,7 @@ color_value="\033[01;34m"
  
 printf "\n"
 printf "${color_info}CPU Usage      :${color_value} %s\n" "${cpu_load}"
+printf "${color_info}CPU Temp       :${color_value} %s\n" "${cpu_temp}"
 printf "${color_info}Memory Usage   :${color_value} %s\n" "${memory_usage}"
 printf "${color_info}Swap Usage     :${color_value} %s\n" "${swap_usage}"
 printf "${color_info}Disk Usage     :${color_value} %s\n" "${disk_usage}" 

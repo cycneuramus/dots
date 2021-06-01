@@ -6,13 +6,11 @@ services:
     container_name: photoprism-app
     hostname: photoprism
     restart: always
-    # Uncomment and edit the following line to set a specific user / group id:
-    # user: "33:33"
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
     depends_on:
-      - mariadb
+      - photoprism-db
     ports:
       - 2342:2342 # [local port]:[container port]
     environment: # Run "photoprism help" and "photoprism config" too see all config options and current values
@@ -33,7 +31,7 @@ services:
       PHOTOPRISM_SETTINGS_HIDDEN: "false"            # Users can not view or change settings
       # PHOTOPRISM_DATABASE_DRIVER: "sqlite"           # SQLite is an embedded database that doesn't require a server
       PHOTOPRISM_DATABASE_DRIVER: "mysql"          # Use MariaDB (or MySQL) instead of SQLite for improved performance
-      PHOTOPRISM_DATABASE_DSN: "photoprism:insecure@tcp(mariadb:3306)/photoprism?charset=utf8mb4,utf8&parseTime=true"
+      PHOTOPRISM_DATABASE_DSN: "photoprism:insecure@tcp(photoprism-db:3306)/photoprism?charset=utf8mb4,utf8&parseTime=true"
       PHOTOPRISM_SIDECAR_JSON: "true"                # Automatically create JSON sidecar files using Exiftool
       PHOTOPRISM_SIDECAR_YAML: "true"                # Automatically backup metadata to YAML sidecar files
       PHOTOPRISM_WORKERS: 1                        # Number of workers for indexing
@@ -55,8 +53,7 @@ services:
       # Your personal photo and video collection ([local path]:[container path]):
       - /home/antsva/docker/nextcloud/data/antsva/files/Bilder:/photoprism/originals:ro
 
-# Uncomment the following lines to use MariaDB instead of SQLite for improved performance & scalability:
-  mariadb:
+  photoprism-db:
     image: mariadb:10.5
     container_name: photoprism-db
     restart: always
