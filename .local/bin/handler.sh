@@ -33,8 +33,8 @@ case "$1" in
                         ;;
                     00000001)
                         logger 'AC pluged'
-                        sudo -u antsva DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /home/antsva/.local/bin/restic-backup.sh
                         sudo -u antsva polybar-msg hook battery 1 &>/dev/null
+                        sudo -u antsva DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /home/antsva/.local/bin/restic-backup.sh &
                         ;;
                 esac
                 ;;

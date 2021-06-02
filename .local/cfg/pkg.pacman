@@ -119,6 +119,7 @@ ranger
 rclone
 realtime-privileges
 redshift
+reflector
 restic
 rsync
 rustup

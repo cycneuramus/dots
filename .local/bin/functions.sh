@@ -106,6 +106,15 @@ cheat() {
 }
 
 
+cpu() {
+    # Get non-multicore load average from /proc/loadavg, multiply by 100
+    # to get percent value, divide by number of cpu cores to get the
+    # multicore load average (meaning 100% cpu is the maximum), and round
+    # to nearest integer using 0.5 as the break-off value for rounding up or down
+    cat /proc/loadavg | awk -v cores=$(nproc) '{print int((($1 * 100) / cores) + 0.5)"%"}'
+}
+
+
 # Change CPU governor
 cpu-gov() {
 	if [[ $(grep "model name" /proc/cpuinfo) == *Intel* ]]; then
@@ -332,6 +341,12 @@ umnt() {
 		fi
 
 	done
+}
+
+
+# Refresh pacman mirrors
+pacman-mirrors() {
+	sudo reflector --country Sweden --latest 25 --age 24 --protocol https --completion-percent 100 --sort rate --save /etc/pacman.d/mirrorlist
 }
 
 

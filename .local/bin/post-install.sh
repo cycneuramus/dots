@@ -349,16 +349,24 @@ restore-backup() {
 	echo $FUNCNAME
 	echo ""
 
-	. $HOME/.local/bin/secrets > /dev/null 2>&1
-	export RESTIC_PASSWORD="$restic_pass"
+	echo "Restore backup of key directories in \$HOME?"
+	select answer in yes no; do
+		if [[ "$answer" == "yes" ]]; then
+			. $HOME/.local/bin/secrets > /dev/null 2>&1
+			export RESTIC_PASSWORD="$restic_pass"
 
-	restic -r "$restic_repo" restore latest --verbose --target / 	\
-		--include /home/antsva/.mozilla								\
-		--include /home/antsva/.local/share/scli					\
-		--include /home/antsva/.local/share/signal-cli				\
-		--include /home/antsva/.thunderbird							\
-		--include /home/antsva/.local/share/zotero					\
-		--include /home/antsva/.zotero
+			restic -r "$restic_repo" restore latest --verbose --target / 	\
+				--include /home/antsva/.mozilla								\
+				--include /home/antsva/.thunderbird							\
+				--include /home/antsva/.zotero								\
+				--include /home/antsva/.crypt								\
+				--include /home/antsva/.local/share/zotero					\
+				--include /home/antsva/.local/share/digikam-db/				\
+				--include /home/antsva/.local/share/scli					\
+				--include /home/antsva/.local/share/signal-cli				
+		fi
+		break
+	done
 }
 
 main
