@@ -4,4 +4,5 @@ Description=Change wallpaper at regular intervals
 [Service]
 Type=oneshot
 Environment=DISPLAY=:0
-ExecStart=feh --bg-fill --randomize /home/antsva/.local/share/backgrounds/nord
+# ExecStart=feh --bg-fill --randomize /home/antsva/.local/share/backgrounds/nord
+ExecStart=/home/antsva/.local/bin/wallpaper.sh
