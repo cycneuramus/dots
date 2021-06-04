@@ -19,7 +19,8 @@ export RESTIC_PASSWORD=$restic_pass
 # restic -r $restic_repo init
 # exit 
 
-docker pause $(docker ps -q)
+running_containers=$(docker ps -q)
+docker stop "$running_containers"
 
 restic backup /home/antsva			\
 	--verbose						\
@@ -27,7 +28,7 @@ restic backup /home/antsva			\
 	--exclude="/home/antsva/mnt"	
 backup_exit=$?
 
-docker unpause $(docker ps -q)
+docker start "$running_containers"
 
 restic forget			\
 	--keep-daily 1 		\

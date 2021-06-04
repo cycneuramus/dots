@@ -12,7 +12,7 @@
     header {
         Strict-Transport-Security "max-age=31536000;"
         X-Content-Type-Options "nosniff"
-        X-Frame-Options "DENY"
+        X-Frame-Options "SAMEORIGIN"
         X-Robots-Tag "none"
         X-Permitted-Cross-Domain-Policies "none"
         X-XSS-Protection "1; mode=block"
