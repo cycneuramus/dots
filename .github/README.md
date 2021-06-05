@@ -24,7 +24,6 @@ chmod +x post-install.sh
 
 ./post-install.sh
 rm post-install.sh
-
 ```
 
 ---
