@@ -40,7 +40,7 @@ initial-checks() {
 	fi
 }
 
-dots() {
+dots-bootstrap() {
 	echo ""
 	echo "$FUNCNAME"
 	echo ""
