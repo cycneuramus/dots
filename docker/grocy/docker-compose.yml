@@ -9,6 +9,7 @@ services:
   grocy:
     image: linuxserver/grocy
     container_name: grocy
+    hostname: grocy
     restart: unless-stopped
     environment:
       - PUID=1000

@@ -169,7 +169,7 @@ docker() {
 
 	# Fix for docker CE permahang blocking system shutdown
 	if [[ -f /lib/systemd/system/docker.service ]]; then
-		sudo sed -i "s/TimeoutSec=.*/TimeoutSec=300/" /lib/systemd/system/docker.service
+		sudo sed -i "s/TimeoutSec=.*/TimeoutSec=60/" /lib/systemd/system/docker.service
 		sudo systemctl daemon-reload
 	fi
 
