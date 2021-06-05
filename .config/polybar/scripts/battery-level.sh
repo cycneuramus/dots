@@ -82,7 +82,7 @@ else
 		icon="󰁾"
 	elif [ "$battery_percent" -ge 30 ]; then
 		icon="󰁽"
-	elif [ "$battery_percent" -ge 20 ]; then
+	elif [ "$battery_percent" -ge 21 ]; then
 		icon="${yellow}󰁼"
 	elif [ "$battery_percent" -ge 10 ]; then
 		icon="${red}󰁻"
