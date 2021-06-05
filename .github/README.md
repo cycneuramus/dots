@@ -19,13 +19,12 @@ vim alis.conf
 On a fresh Arch Linux host:
 
 ```
-curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/dots-setup.sh > dots-setup.sh
-chmod +x dots-setup.sh
+curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/post-install.sh > post-install.sh
+chmod +x post-install.sh
 
-./dots-setup.sh bootstrap master
-rm dots-setup.sh
+./post-install.sh
+rm post-install.sh
 
-bash .local/bin/post-install.sh
 ```
 
 ---

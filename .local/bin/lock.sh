@@ -8,6 +8,10 @@ H='#81a1c1'
 T='#eceff4'
 W='#Bf616a'
 
+if [[ $(wmctrl -l | grep unimatrix) ]]; then 
+	wmctrl -lp | awk "/unimatrix/{print \$3}" | xargs kill
+fi
+
 i3lock -C -i $BIN/lock.png 	\
 --verif-text=""				\
 --wrong-text=""				\

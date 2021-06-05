@@ -4,7 +4,7 @@ set -e
 
 main() {
 	initial-checks
-	log-dir
+	dots-bootstrap
 	pkg-install-pacman
 	pkg-install-aur
 	diogenes-install
@@ -34,21 +34,28 @@ initial-checks() {
 		exit
 	fi
 
-	if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
-		echo "Source files missing"
-		echo "Exiting..."
-		exit
-	fi 
-}
-
-log-dir() {
-	echo ""
-	echo $FUNCNAME
-	echo ""
-
+	# Prepare log directory for future script outputs
 	if [[ ! -d $HOME/.local/log ]]; then
 		mkdir $HOME/.local/log
 	fi
+}
+
+dots() {
+	echo ""
+	echo "$FUNCNAME"
+	echo ""
+
+	curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/dots-setup.sh > dots-setup.sh
+	chmod +x dots-setup.sh
+
+	./dots-setup.sh bootstrap master
+	rm dots-setup.sh
+
+	if [[ ! -d $HOME/.local/bin || ! -d $HOME/.local/cfg || -z $(ls -a $HOME/.local/bin) || -z $(ls -a $HOME/.local/cfg) ]]; then
+		echo "Dotfiles bootstrap seems to have failed"
+		echo "Exiting..."
+		exit
+	fi 
 }
 
 pkg-install-pacman() {
