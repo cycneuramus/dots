@@ -185,15 +185,17 @@ sandboxing() {
 	echo $FUNCNAME
 	echo ""
 
+	flatpak_steam=$(ls $HOME/.local/share/flatpak/exports/bin/com.valvesoftware.Steam)
+
 	if [[ $(command -v flatpak) ]]; then
-		if [[ ! $(command -v steam) ]]; then
+		if [[ ! $flatpak_steam ]]; then
 			flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 			flatpak --user install flathub com.valvesoftware.Steam
 		fi
 	fi
 
 	if [[ $(command -v firejail) ]]; then
-		if [[ $(command -v steam) ]]; then
+		if [[ $(command -v steam) && ! $flatpak_steam ]]; then
 			if [[ ! -d $HOME/.firejail/steam ]]; then
 				mkdir -p $HOME/.firejail/steam
 			fi
