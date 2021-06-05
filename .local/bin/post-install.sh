@@ -114,7 +114,7 @@ diogenes-install() {
 		sudo pacman -U --noconfirm diogenes-$latest_release.pkg.tar.xz
 		rm "$pkg"
 	else
-		echo "Kunde inte hitta $pkg"
+		echo "Not found: $pkg"
 	fi
 }
 
