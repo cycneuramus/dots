@@ -19,7 +19,7 @@ vim alis.conf
 On a fresh Arch Linux host:
 
 ```
-curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/post-install.sh > post-install.sh
+wget https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/post-install.sh
 chmod +x post-install.sh
 
 ./post-install.sh
