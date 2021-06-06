@@ -36,7 +36,7 @@ initial-checks() {
 
 	# Prepare log directory for future script outputs
 	if [[ ! -d $HOME/.local/log ]]; then
-		mkdir $HOME/.local/log
+		mkdir -p $HOME/.local/log
 	fi
 }
 
@@ -174,7 +174,7 @@ disable-system-beep() {
 	echo ""
 
 	if [[ $(lsmod | grep pcspkr) ]]; then
-		sudo modprobe -r pcspkr
+		sudo modprobe -r pcspkr || true
 	fi
 
 	echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
@@ -185,17 +185,17 @@ sandboxing() {
 	echo $FUNCNAME
 	echo ""
 
-	flatpak_steam=$(ls $HOME/.local/share/flatpak/exports/bin/com.valvesoftware.Steam)
+	flatpak_steam=$HOME/.local/share/flatpak/exports/bin/com.valvesoftware.Steam
 
 	if [[ $(command -v flatpak) ]]; then
-		if [[ ! $flatpak_steam ]]; then
+		if [[ ! -f $flatpak_steam ]]; then
 			flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 			flatpak --user install flathub com.valvesoftware.Steam
 		fi
 	fi
 
 	if [[ $(command -v firejail) ]]; then
-		if [[ $(command -v steam) && ! $flatpak_steam ]]; then
+		if [[ $(command -v steam) && ! -f $flatpak_steam ]]; then
 			if [[ ! -d $HOME/.firejail/steam ]]; then
 				mkdir -p $HOME/.firejail/steam
 			fi
