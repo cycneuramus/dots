@@ -5,7 +5,7 @@ set -e
 main() {
 	home-dirs
 	pkg-install
-	dots
+	dots-bootstrap
 	grub
 	power-management
 	crontabs
@@ -57,7 +57,7 @@ pkg-install() {
 		vim
 }
 
-dots() {
+dots-bootstrap() {
 	echo ""
 	echo $FUNCNAME
 	echo ""

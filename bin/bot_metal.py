@@ -37,14 +37,12 @@ def get_api_auth_header() -> dict:
     response_data = response.json()
     token = response_data["access_token"]
 
+    global auth_header
     auth_header = {"Authorization": "Bearer " + token}
-
-    return auth_header
 
 
 def get_latest_album(artist_id: str) -> dict:
     url = api_base_url + "artists/" + artist_id + "/albums"
-    auth_header = get_api_auth_header()
 
     request = requests.get(
         url,
@@ -66,7 +64,6 @@ def get_latest_album(artist_id: str) -> dict:
 
 def get_power_analysis(album_id: str) -> str:
     url = api_base_url + "albums/" + album_id + "/tracks"
-    auth_header = get_api_auth_header()
 
     album_tracks_request = requests.get(url, headers=auth_header)
     album_tracks_data = album_tracks_request.json()
@@ -148,6 +145,7 @@ def check_new_albums() -> list:
         "Frost*": "1Ha9FtCeuoajMbOG4Kz2d7",
         "Haken": "2SRIVGDkdqQnrQdaXxDkJt",
         "Hammerfall": "2o18h28enlHxj887tATc58",
+        "Helloween": "4pQN0GB0fNEEOfQCaWotsY",
         "Jaga Jazzist": "68HFSFMCZzyRjkkm9bv5Vt",
         "Jonathan Lundberg": "6t3AHrm1phB25xs2XpST7p",
         "Katatonia": "2CWWgbxApjbyByxBBCvGTm",
@@ -293,6 +291,7 @@ def main():
     if not functions.internet():
         exit()
 
+    get_api_auth_header()
     new_albums = check_new_albums()
 
     if new_albums:

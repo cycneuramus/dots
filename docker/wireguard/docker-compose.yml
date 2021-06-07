@@ -14,7 +14,7 @@ services:
       - SERVERURL=$domain
       - SERVERPORT=51280 
       - PEERS=$peer1,$peer2,$peer3
-      - PEERDNS=192.168.1.94
+      - PEERDNS=192.168.1.94,94.140.14.14
       - INTERNAL_SUBNET=10.13.13.0 
       - ALLOWEDIPS=0.0.0.0/0
     volumes:
