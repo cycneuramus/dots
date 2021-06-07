@@ -288,7 +288,7 @@ loc() {
 mnt() {
 	select mount in crypt homeserver kodi raspi restic roborock vps; do
 
-		mountpoint="/home/antsva/.mnt/$mount"
+		mountpoint="$HOME/.mnt/$mount"
 		if [[ ! -d $mountpoint ]]; then
 			mkdir -p $mountpoint
 		fi
@@ -298,7 +298,7 @@ mnt() {
 				gocryptfs -i 30m $HOME/.crypt $mountpoint
 				;;
 			homeserver)
-				sshfs antsva@192.168.1.94:/home/antsva $mountpoint -C
+				sshfs antsva@192.168.1.94:$HOME $mountpoint -C
 				;;
 			kodi)
 				sshfs root@192.168.1.23:/storage $mountpoint -C
@@ -316,7 +316,7 @@ mnt() {
 				;;
 			vps)
 				. secrets > /dev/null 2>&1
-				sshfs antsva@$vps_ip:/home/antsva $mountpoint -C -p 4422
+				sshfs antsva@$vps_ip:$HOME $mountpoint -C -p 4422
 				;;
 			"")
 				echo "Monteringsmål $mount hittades inte"

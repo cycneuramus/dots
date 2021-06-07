@@ -45,7 +45,7 @@ dots-bootstrap() {
 	echo "$FUNCNAME"
 	echo ""
 
-	curl https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/dots-setup.sh > dots-setup.sh
+	wget https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/dots-setup.sh
 	chmod +x dots-setup.sh
 
 	./dots-setup.sh bootstrap master
@@ -65,7 +65,7 @@ pkg-install-pacman() {
 
 	if [[ -f $HOME/.local/cfg/pacman.conf ]]; then
 		sudo rm /etc/pacman.conf
-		sudo ln -s /home/antsva/.local/cfg/pacman.conf /etc/pacman.conf
+		sudo ln -s /home/$USER/.local/cfg/pacman.conf /etc/pacman.conf
 	fi
 
 	sudo pacman -Syu --noconfirm
@@ -150,13 +150,13 @@ power-management() {
 		sudo systemctl enable acpid.service
 		sudo systemctl start acpid.service
 		sudo rm /etc/acpi/handler.sh
-		sudo ln -s /home/antsva/.local/bin/handler.sh /etc/acpi/handler.sh
+		sudo ln -s /home/$USER/.local/bin/handler.sh /etc/acpi/handler.sh
 	fi
 
 	if [[ $(command -v tlp) ]]; then
 		if [[ -f $HOME/.local/cfg/tlp.conf ]]; then
 			sudo rm /etc/tlp.conf 
-			sudo ln -s /home/antsva/.local/cfg/tlp.conf /etc/tlp.conf
+			sudo ln -s /home/$USER/.local/cfg/tlp.conf /etc/tlp.conf
 		fi
 
 		sudo systemctl enable tlp.service
@@ -222,22 +222,22 @@ system-configs() {
 	echo ""
 
 	if [[ -f $HOME/.local/cfg/rfkill ]]; then
-		sudo ln -s /home/antsva/.local/cfg/rfkill /etc/sudoers.d/rfkill
+		sudo ln -s /home/$USER/.local/cfg/rfkill /etc/sudoers.d/rfkill
 		sudo chown root:root /etc/sudoers.d/rfkill
 	fi
 
 	if [[ -f $HOME/.local/cfg/bluetooth ]]; then
-		sudo ln -s /home/antsva/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
+		sudo ln -s /home/$USER/.local/cfg/bluetooth /etc/sudoers.d/bluetooth
 		sudo chown root:root /etc/sudoers.d/bluetooth
 	fi
 
 	if [[ -f $HOME/.local/cfg/wifi ]]; then
-		sudo ln -s /home/antsva/.local/cfg/wifi /etc/sudoers.d/wifi
+		sudo ln -s /home/$USER/.local/cfg/wifi /etc/sudoers.d/wifi
 		sudo chown root:root /etc/sudoers.d/wifi
 	fi
 
 	if [[ -f $HOME/.local/cfg/30-libinput.conf ]]; then
-		sudo ln -s /home/antsva/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
+		sudo ln -s /home/$USER/.local/cfg/30-libinput.conf /etc/X11/xorg.conf.d/30-libinput.conf
 	fi
 
 	# To change backlight with xbacklight (via acpilight package)
@@ -250,7 +250,7 @@ system-hooks() {
 	echo ""
 
 	if [[ -f $HOME/.local/bin/90-on-wifi.sh && -d /etc/NetworkManager/dispatcher.d/ ]]; then
-		sudo ln -s /home/antsva/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
+		sudo ln -s /home/$USER/.local/bin/90-on-wifi.sh /etc/NetworkManager/dispatcher.d/90-on-wifi.sh 
 		sudo chown root:root /etc/NetworkManager/dispatcher.d/90-on-wifi.sh
 	fi
 
@@ -258,7 +258,7 @@ system-hooks() {
 		sudo mkdir -p /etc/pacman.d/hooks
 	fi
 	if [[ -f $HOME/.local/cfg/polybar.hook ]]; then
-		sudo ln -s /home/antsva/.local/cfg/polybar.hook /etc/pacman.d/hooks/polybar.hook
+		sudo ln -s /home/$USER/.local/cfg/polybar.hook /etc/pacman.d/hooks/polybar.hook
 	fi
 
 	if [[ ! -d /etc/udev/rules.d ]]; then
@@ -266,11 +266,11 @@ system-hooks() {
 	fi
 
 	if [[ -f $HOME/.local/cfg/90-bluetooth.rules ]]; then
-		sudo ln -s /home/antsva/.local/cfg/90-bluetooth.rules /etc/udev/rules.d/90-bluetooth.rules
+		sudo ln -s /home/$USER/.local/cfg/90-bluetooth.rules /etc/udev/rules.d/90-bluetooth.rules
 	fi
 
 	if [[ -f $HOME/.local/cfg/85-wifi.rules ]]; then
-		sudo ln -s /home/antsva/.local/cfg/85-wifi.rules /etc/udev/rules.d/85-wifi.rules
+		sudo ln -s /home/$USER/.local/cfg/85-wifi.rules /etc/udev/rules.d/85-wifi.rules
 	fi
 }
 
@@ -292,7 +292,7 @@ system-services() {
 	if [[ $(command -v libinput-gestures) ]]; then
 		sudo gpasswd -a $USER input
 	elif [[ $(command -v gebaar) ]]; then
-		ln -s /home/antsva/.local/cfg/gebaard.toml /home/antsva/.config/gebaar/gebaard.toml
+		ln -s /home/$USER/.local/cfg/gebaard.toml /home/$USER/.config/gebaar/gebaard.toml
 		sudo usermod -a -G input $USER
 	fi
 
@@ -338,7 +338,7 @@ printer-support() {
 
 	if [[ $(ls /usr/lib/libnss_mdns*) ]]; then
 		sudo rm /etc/nsswitch.conf
-		sudo ln -s /home/antsva/.local/cfg/nsswitch.conf /etc/nsswitch.conf
+		sudo ln -s /home/$USER/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
 }
 
@@ -365,14 +365,14 @@ restore-backup() {
 			export RESTIC_PASSWORD="$restic_pass"
 
 			restic -r "$restic_repo" restore latest --verbose --target / 	\
-				--include /home/antsva/.mozilla								\
-				--include /home/antsva/.thunderbird							\
-				--include /home/antsva/.zotero								\
-				--include /home/antsva/.crypt								\
-				--include /home/antsva/.local/share/zotero					\
-				--include /home/antsva/.local/share/digikam-db/				\
-				--include /home/antsva/.local/share/scli					\
-				--include /home/antsva/.local/share/signal-cli				
+				--include /home/$USER/.mozilla								\
+				--include /home/$USER/.thunderbird							\
+				--include /home/$USER/.zotero								\
+				--include /home/$USER/.crypt								\
+				--include /home/$USER/.local/share/zotero					\
+				--include /home/$USER/.local/share/digikam-db/				\
+				--include /home/$USER/.local/share/scli					\
+				--include /home/$USER/.local/share/signal-cli				
 		fi
 		break
 	done
