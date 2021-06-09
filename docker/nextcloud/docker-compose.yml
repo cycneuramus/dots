@@ -30,6 +30,16 @@ services:
     networks:
       - nextcloud-network
 
+  collabora:
+    image: collabora/code
+    container_name: collabora
+    restart: unless-stopped
+    environment:
+      - DONT_GEN_SSL_CERT=1
+      - domain=$collabora_domain
+      - "dictionaries=en sv" 
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true"
+
   app:
     image: nextcloud:latest
     container_name: nextcloud-app
