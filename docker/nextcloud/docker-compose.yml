@@ -45,10 +45,9 @@ services:
     container_name: nextcloud-app
     hostname: nextcloud
     restart: always
-    ports:
-      - 4444:80
     networks:
       - nextcloud-network
+      - default
     depends_on:
       - db
       - redis
@@ -68,6 +67,4 @@ services:
       - MYSQL_USER=nextcloud
       - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
       - OVERWRITEHOST=$nextcloud_domain
-      - OVERWRITEPROTOCOL=https
-#    sysctls:
-#      - net.ipv4.ip_unprivileged_port_start=0
+      - OVERWRITEPROTOCOL=http
