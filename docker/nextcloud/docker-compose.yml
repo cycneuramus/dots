@@ -1,9 +1,9 @@
 version: '3' 
 
 networks:
-#   default:
-#     external:
-#       name: caddy_net
+  default:
+    external:
+      name: caddy_net
   nextcloud-network:
     external: false
 
@@ -29,6 +29,16 @@ services:
     restart: unless-stopped
     networks:
       - nextcloud-network
+
+  collabora:
+    image: collabora/code
+    container_name: collabora
+    restart: unless-stopped
+    environment:
+      - DONT_GEN_SSL_CERT=1
+      - domain=$collabora_domain
+      - "dictionaries=en sv"
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true"
 
   app:
     image: nextcloud:latest
@@ -57,15 +67,3 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
       - OVERWRITEHOST=$nextcloud_domain
       - OVERWRITEPROTOCOL=https
-#   collabora:
-#     image: collabora/code
-#     container_name: nextcloud-collabora
-#     networks:
-#       - nextcloud-network
-#     environment:
-#       - username="$collabora_username"
-#       - password="$collabora_password"
-#     restart: unless-stopped
-#    user: 1000:1000
-#    sysctls:
-#      - net.ipv4.ip_unprivileged_port_start=0

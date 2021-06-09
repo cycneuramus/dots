@@ -6,7 +6,7 @@ if (( $EUID != 0 )); then
 fi
 
 . functions.sh
-. secrets
+. secrets > /dev/null 2>&1
 
 trap 'push "$(basename $0) stötte på fel"' err
 
@@ -20,7 +20,7 @@ export RESTIC_PASSWORD=$restic_pass
 # exit 
 
 running_containers=$(docker ps -q)
-docker stop "$running_containers"
+docker stop $running_containers
 
 restic backup /home/antsva			\
 	--verbose						\
@@ -28,7 +28,7 @@ restic backup /home/antsva			\
 	--exclude="/home/antsva/mnt"	
 backup_exit=$?
 
-docker start "$running_containers"
+docker start $running_containers
 
 restic forget			\
 	--keep-daily 1 		\
