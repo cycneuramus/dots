@@ -35,7 +35,8 @@ libreddit.{$DOMAIN} {
 }
 
 nextcloud.{$DOMAIN} {
-	reverse_proxy {$IP}:4444
+	reverse_proxy nextcloud-app:80
+	# reverse_proxy {$IP}:4444
 	header Strict-Transport-Security max-age=31536000; # Nextcloud does not need the entire security block	
 	redir /.well-known/carddav /remote.php/carddav 301
 	redir /.well-known/caldav /remote.php/caldav 301
