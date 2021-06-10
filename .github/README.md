@@ -22,6 +22,7 @@ rm post-install.sh
 sudo reboot now
 
 bin/borg-restore.sh
+for d in docker/*; do cd $d; docker-compose up -d; cd; done
 ```
 
 ---
