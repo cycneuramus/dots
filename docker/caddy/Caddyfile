@@ -51,7 +51,6 @@ tm.{$DOMAIN} {
 
 nextcloud.{$DOMAIN} {
 	reverse_proxy nextcloud-app:80
-	# reverse_proxy 192.168.1.94:4444
 	header Strict-Transport-Security max-age=31536000; # Nextcloud does not need the whole security block	
 	redir /.well-known/carddav /remote.php/carddav 301
 	redir /.well-known/caldav /remote.php/caldav 301

@@ -19,14 +19,14 @@ services:
       - mysql_password=$mysql_password
       - mysql_database=nextcloud
       - mysql_user=nextcloud
-    restart: always
+    restart: unless-stopped
     networks:
       - nextcloud-network
 
   redis:
     image: redis:alpine
     container_name: nextcloud-redis
-    restart: always
+    restart: unless-stopped
     networks:
       - nextcloud-network
 
@@ -44,7 +44,7 @@ services:
     image: nextcloud:latest
     container_name: nextcloud-app
     hostname: nextcloud
-    restart: always
+    restart: unless-stopped
     networks:
       - nextcloud-network
       - default
@@ -67,4 +67,4 @@ services:
       - MYSQL_USER=nextcloud
       - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
       - OVERWRITEHOST=$nextcloud_domain
-      - OVERWRITEPROTOCOL=http
+      - OVERWRITEPROTOCOL=https
