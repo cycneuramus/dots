@@ -65,4 +65,4 @@ services:
       - MYSQL_USER=nextcloud
       - NEXTCLOUD_TRUSTED_DOMAINS="$nextcloud_domain"
       - OVERWRITEHOST=$nextcloud_domain
-      - OVERWRITEPROTOCOL=http
+      - OVERWRITEPROTOCOL=https
