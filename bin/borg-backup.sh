@@ -19,10 +19,8 @@ fi
 
 trap 'push "$(basename $0) stötte på fel"' err
 
-# export BORG_REPO=ssh://antsva@localhost//mnt/extern/backup/x230/borgbak
 export BORG_REPO=/mnt/extern/backup/x230/borgbak
 export BORG_PASSPHRASE="$borg_pass"
-export RCLONE_CONFIG_PASS="$rclone_config_pass"
 
 remote_path="$borg_repo"
 src_path=/mnt/extern/backup/x230/borgbak
@@ -33,9 +31,6 @@ exclude=/home/antsva/bin/borg.exclude
 log=/home/antsva/log/borg-backup.log
 running_containers=$(docker ps -q)
 
-# Kommenterar ut detta och sköter loggdirigering från CRON i stället
-# exec 1>$log 2>&1
-
 cp /etc/default/tlp /home/antsva/bak/tlp.bak
 cp /etc/systemd/resolved.conf.d/adguardhome.conf /home/antsva/bak/adguardhome.conf.bak
 cp /etc/update-motd.d/20-sysinfo /home/antsva/bak/20-sysinfo.bak
@@ -43,7 +38,7 @@ cp /etc/update-motd.d/20-sysinfo /home/antsva/bak/20-sysinfo.bak
 crontab -l > /home/antsva/bak/crontab-root.bak
 crontab -u antsva -l > /home/antsva/bak/crontab-antsva.bak
 
-docker stop $running_containers
+docker pause $running_containers
 
 echo "Påbörjar säkerhetskopiering..."
 borg create								\
@@ -59,7 +54,7 @@ borg create								\
 
 backup_exit=$?
 
-docker start $running_containers
+docker unpause $running_containers
 
 echo "Trimmar säkerhetskopior..."
 borg prune							\
