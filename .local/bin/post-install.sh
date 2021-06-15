@@ -186,11 +186,19 @@ sandboxing() {
 	echo ""
 
 	flatpak_steam=$HOME/.local/share/flatpak/exports/bin/com.valvesoftware.Steam
+	flatpak_lutris=$HOME/.local/share/flatpak/exports/bin/net.lutris.lutris
 
 	if [[ $(command -v flatpak) ]]; then
 		if [[ ! -f $flatpak_steam ]]; then
 			flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 			flatpak --user install flathub com.valvesoftware.Steam
+		fi
+
+		if [[ ! -f $flatpak_lutris ]]; then
+			flatpak remote-add --user flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+			flatpak update --appstream
+			flatpak install --user flathub-beta net.lutris.Lutris//beta
+			flatpak install --user flathub org.gnome.Platform.Compat.i386 org.freedesktop.Platform.GL32.default org.freedesktop.Platform.GL.default
 		fi
 	fi
 

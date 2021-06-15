@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Starcraft Remastered
+Icon=lutris
+Exec=lutris lutris:rungameid/1
+Categories=Game
