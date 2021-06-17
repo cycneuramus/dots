@@ -69,7 +69,7 @@ fi
 #	  notify-send -t 60000 "fwupdmgr" "Uppdateringar tillgängliga"
 # fi
 
-flatpak update -y
+flatpak --user update -y
 
 # https://github.com/rand256/valetudo/issues/41#issuecomment-565130242
 curl http://192.168.1.5/api/get_config > $HOME/Nextcloud/Säkerhetskopior/Dammsugare/valetudo_bak.json

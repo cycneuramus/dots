@@ -486,7 +486,7 @@ sys-clean() {
 	[[ $(sudo pacman -Qtdq) ]] && sudo pacman -Rns $(sudo pacman -Qtdq)
 
 	if [[ $(command -v flatpak) ]]; then
-		flatpak uninstall --unused
+		flatpak --user uninstall --unused
 	fi
 
 	sudo pacdiff
