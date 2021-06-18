@@ -17,8 +17,14 @@ wifi_type=$(wifi_type)
 vpn=$(nmcli con show -a | grep "Wireguard\|pivpn")
 
 if [[ "$interface" == "$wifi_interface" && "$status" == "up" ]]; then
+	sudo -u antsva DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
+		notify-send -i nm-device-wireless "Wi-Fi ansluten" "$(ssid)"
+
 	if [[ "$wifi_type" != @(home|hotspot) && ! "$vpn" ]]; then 
 		vpn on
+		if [[ $(ip-local) = 192.168.1* ]]; then
+			vpn-fix
+		fi
 	elif [[ "$wifi_type" == @(home|hotspot) && "$vpn" ]]; then
 		vpn off
 	fi

@@ -2,5 +2,5 @@
 Type=Application
 Name=Starcraft Remastered
 Icon=lutris
-Exec=lutris lutris:rungameid/1
+Exec=flatpak run net.lutris.Lutris//beta lutris:rungameid/1
 Categories=Game
