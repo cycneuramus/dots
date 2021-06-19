@@ -29,7 +29,7 @@ rclone_cfg=/home/antsva/.config/rclone/rclone.conf
 exclude=/home/antsva/bin/borg.exclude
 
 log=/home/antsva/log/borg-backup.log
-running_containers=$(docker ps -q)
+# running_containers=$(docker ps -q)
 
 cp /etc/default/tlp /home/antsva/bak/tlp.bak
 cp /etc/systemd/resolved.conf.d/adguardhome.conf /home/antsva/bak/adguardhome.conf.bak
@@ -38,7 +38,7 @@ cp /etc/update-motd.d/20-sysinfo /home/antsva/bak/20-sysinfo.bak
 crontab -l > /home/antsva/bak/crontab-root.bak
 crontab -u antsva -l > /home/antsva/bak/crontab-antsva.bak
 
-docker pause $running_containers
+# docker pause $running_containers
 
 echo "Påbörjar säkerhetskopiering..."
 borg create								\
@@ -54,7 +54,7 @@ borg create								\
 
 backup_exit=$?
 
-docker unpause $running_containers
+# docker unpause $running_containers
 
 echo "Trimmar säkerhetskopior..."
 borg prune							\

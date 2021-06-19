@@ -9,7 +9,7 @@ apt update && apt upgrade -y
 apt install sudo -y
 usermod -aG sudo [user]
 
-chsh -s /bin/bash/ [user]
+chsh -s /bin/bash [user]
 su [user]
 cd
 

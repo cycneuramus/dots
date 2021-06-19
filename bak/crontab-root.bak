@@ -25,7 +25,7 @@ SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/home/antsva/bin
 MAILTO=""
 
-0 3 * * 7       uppdateringskoll.sh
-0 4 * * *	borg-backup.sh > /home/antsva/log/borg-backup.log 2>&1
+0 2 * * 7       uppdateringskoll.sh
+0 3 * * *	borg-backup.sh > /home/antsva/log/borg-backup.log 2>&1
 0 */1 * * *	hdparm.sh
 @reboot         autostart.sh > /home/antsva/log/autostart.log 2>&1
