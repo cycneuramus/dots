@@ -16,7 +16,6 @@ main() {
 	system-configs
 }
 
-# Prepare directories in ~
 home-dirs() {
 	echo ""
 	echo $FUNCNAME
@@ -108,6 +107,7 @@ crontabs() {
 	if [[ -f $HOME/bak/crontab-antsva.bak ]]; then
 		crontab $HOME/bak/crontab-antsva.bak
 	fi
+
 	if [[ -f $HOME/bak/crontab-root.bak ]]; then
 		sudo crontab $HOME/bak/crontab-root.bak
 	fi
@@ -127,6 +127,7 @@ external-hd() {
 
 	echo "options usb-storage quirks=0bc2:231a:" \
 		| sudo tee -a /etc/modprobe.d/ext_hd_quirk.conf
+
 	sudo update-initramfs -u
 }
 
@@ -160,7 +161,11 @@ docker() {
 		$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 	sudo apt update
-	sudo apt install -y docker-ce docker-ce-cli docker-compose containerd.io
+	sudo apt install -y \
+		docker-ce 		\
+		docker-ce-cli 	\
+		docker-compose 	\
+		containerd.io
 
 	if ! grep -q "^docker:" /etc/group; then
 		sudo groupadd docker
@@ -192,6 +197,7 @@ system-configs() {
 		if [[ ! -d /etc/terminfo/x ]]; then
 			sudo mkdir -p /etc/terminfo/x
 		fi
+
 		sudo cp $HOME/.terminfo/x/xterm-kitty /etc/terminfo/x/
 	fi
 
@@ -199,6 +205,7 @@ system-configs() {
 		if [[ ! -d /etc/systemd/resolved.conf.d ]]; then
 			sudo mkdir -p /etc/systemd/resolved.conf.d
 		fi
+
 		sudo cp $HOME/bak/adguardhome.conf.bak /etc/systemd/resolved.conf.d/adguardhome.conf
 
 		if [[ -f /etc/resolv.conf ]]; then
