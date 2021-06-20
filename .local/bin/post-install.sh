@@ -265,6 +265,7 @@ system-hooks() {
 	if [[ ! -d /etc/pacman.d/hooks/ ]]; then
 		sudo mkdir -p /etc/pacman.d/hooks
 	fi
+
 	if [[ -f $HOME/.local/cfg/polybar.hook ]]; then
 		sudo ln -s /home/$USER/.local/cfg/polybar.hook /etc/pacman.d/hooks/polybar.hook
 	fi
@@ -379,7 +380,7 @@ restore-backup() {
 				--include /home/$USER/.crypt								\
 				--include /home/$USER/.local/share/zotero					\
 				--include /home/$USER/.local/share/digikam-db/				\
-				--include /home/$USER/.local/share/scli					\
+				--include /home/$USER/.local/share/scli						\
 				--include /home/$USER/.local/share/signal-cli				
 		fi
 		break

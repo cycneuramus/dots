@@ -726,7 +726,7 @@ vpn-fix() {
 
 
 # Test Wi-Fi connection
-wifi_type() {
+wifi-type() {
 	# Full path b/c of system script (90-on-wifi.sh)
 	. /home/antsva/.local/bin/secrets > /dev/null 2>&1
 

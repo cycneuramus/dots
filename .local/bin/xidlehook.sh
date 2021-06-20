@@ -12,5 +12,5 @@ xidlehook \
   	'$HOME/.local/bin/screensaver.sh' \
 	'if [[ $(wmctrl -l | grep unimatrix) ]]; then wmctrl -lp | awk "/unimatrix/{print \$3}" | xargs kill; fi' \
   --timer 300 \
-  'if [[ $(acpi) == *Discharging* ]]; then bash $HOME/.local/bin/lock.sh && systemctl suspend; fi' \
+  	'$HOME/.local/bin/suspend.sh' \
 	''
