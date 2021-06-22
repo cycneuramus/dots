@@ -32,6 +32,7 @@ application/x-shellscript=vim.desktop;
 application/x-zerosize=ranger.desktop;
 application/xml=vim.desktop;
 audio/aac=mpv.desktop;
+audio/x-hx-aac-adts=mpv.desktop;
 audio/mp4=mpv.desktop;
 audio/mpeg=mpv.desktop;
 audio/ogg=mpv.desktop;
