@@ -81,10 +81,10 @@ bt() {
 		sudo rfkill unblock bluetooth
 		sudo bluetooth on 
 		while [[ $(bluetoothctl power on) == *Error* ]]; do
-			fix
+			# fix
 			sleep 0.5
-			sudo rfkill unblock bluetooth
-			bluetoothctl power on
+			# sudo rfkill unblock bluetooth
+			# bluetoothctl power on
 			(( count++ ))
 			if (( count > 5 )); then break; fi
 		done

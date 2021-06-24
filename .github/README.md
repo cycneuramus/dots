@@ -23,7 +23,6 @@ wget https://raw.githubusercontent.com/cycneuramus/dots/master/.local/bin/post-i
 chmod +x post-install.sh
 
 ./post-install.sh
-rm post-install.sh
 ```
 
 ---
