@@ -263,6 +263,15 @@ ip-local() {
 }
 
 
+# Quick start KDE Connect with tray indicator
+kconnect() {
+	pkill kdeconnectd
+	pkill kdeconnect-indi
+	/usr/lib/kdeconnectd & disown
+	kdeconnect-indicator & disown
+}
+
+
 # Check if laptop open or closed
 lid() {
 	if [[ $(upower -d | grep lid-is-closed | awk '{ print $2 }') = no ]]; then
