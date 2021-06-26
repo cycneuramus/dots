@@ -17,8 +17,6 @@ wget https://raw.githubusercontent.com/cycneuramus/dots/homeserver/bin/post-inst
 chmod +x post-install.sh
 
 ./post-install.sh
-rm post-install.sh
-
 sudo reboot now
 
 bin/borg-restore.sh
