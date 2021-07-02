@@ -110,6 +110,7 @@ pkgconf
 pkgfile
 python-html2text
 python-pillow
+qbittorrent-nox
 qemu
 qt5ct
 ranger
