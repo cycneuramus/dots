@@ -229,7 +229,7 @@ bindsym $mod+r mode "resize"
 
 exec_always --no-startup-id autotiling
 exec_always --no-startup-id picom
-exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
+# exec_always --no-startup-id setxkbmap -option compose:lctrl-altgr
 exec_always --no-startup-id udiskie -a -s
 exec_always --no-startup-id libinput-gestures-setup restart
 exec_always --no-startup-id xss-lock $BIN/lock.sh
