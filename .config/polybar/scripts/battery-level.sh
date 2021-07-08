@@ -86,13 +86,11 @@ else
 		icon="${yellow}󰁼"
 	elif [ "$battery_percent" -ge 10 ]; then
 		icon="${red}󰁻"
+		$HOME/.config/polybar/scripts/battery-notify.sh critical
 	else
 		icon="${red}󰁺"
 	fi
 
-	if [ "$battery_percent" -eq 20 ]; then
-		$HOME/.config/polybar/scripts/battery-notify.sh critical
-	fi
 	# echo "$icon %{F-}%{T1}$battery_percent % "
 	echo "$icon"
 fi
