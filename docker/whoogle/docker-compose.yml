@@ -9,24 +9,24 @@ networks:
 
 services:
   whoogle:
-    image: benbusby/whoogle-search
+    image: benbusby/whoogle-search:latest
     container_name: whoogle
     hostname: whoogle
     restart: unless-stopped
     # pids_limit: 50
     # mem_limit: 256mb
     # memswap_limit: 256mb
-    # # user debian-tor from tor package
-    # user: '102'
-    # tmpfs:
-    #   - /config/:size=10M,uid=102,gid=102,mode=1700
-    #   - /var/lib/tor/:size=10M,uid=102,gid=102,mode=1700
-    #   - /run/tor/:size=1M,uid=102,gid=102,mode=1700
+    # user debian-tor from tor package
+    user: '102'
+    tmpfs:
+      - /config/:size=10M,uid=102,gid=102,mode=1700
+      - /var/lib/tor/:size=10M,uid=102,gid=102,mode=1700
+      - /run/tor/:size=1M,uid=102,gid=102,mode=1700
     security_opt:
       - no-new-privileges
     cap_drop:
       - ALL
-    read_only: true
+    # read_only: true
     environment: 
       - WHOOGLE_CONFIG_URL=$whoogle_config_url
       - WHOOGLE_CONFIG_COUNTRY_$whoogle_config_country

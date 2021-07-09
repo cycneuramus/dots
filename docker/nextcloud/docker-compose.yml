@@ -31,7 +31,7 @@ services:
       - nextcloud-network
 
   collabora:
-    image: collabora/code
+    image: collabora/code:6.4.9.3
     container_name: collabora
     restart: unless-stopped
     environment:

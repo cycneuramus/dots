@@ -21,8 +21,8 @@
 }
 
 collabora.{$DOMAIN} {
-	import security
 	reverse_proxy collabora:9980
+	import security
 }
 
 libreddit.{$DOMAIN} {
