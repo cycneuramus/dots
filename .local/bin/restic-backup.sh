@@ -49,7 +49,8 @@ restic forget						\
 	-o rclone.args="$rclone_args"	\
 	--keep-daily 1					\
 	--keep-weekly 2					\
-	--keep-monthly 2				\
+	--keep-monthly 3				\
+	--keep-yearly 1					\
 	--prune
 prune_exit=$?
 
