@@ -14,6 +14,7 @@ services:
       - $movies:/movies
       - $documentaries:/documentaries
       - "$jackie:/jackie"
+      - $manburst:/manburst
       - /home/antsva/bin:/usrbin:ro
     environment:
       - TZ=Europe/Stockholm
