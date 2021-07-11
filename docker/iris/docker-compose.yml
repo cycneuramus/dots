@@ -1,0 +1,27 @@
+version: "3"
+services:
+  snapserver:
+    image: jaedb/snapserver
+    container_name: iris-snapserver
+    restart: unless-stopped
+    ports:
+      - 1704:1704
+      - 1705:1705
+      - 1780:1780
+    volumes:
+      - /tmp/snapfifo:/tmp
+      - ./snapserver.conf:/etc/snapserver.conf
+  mopidy:
+    image: jaedb/iris
+    container_name: iris-mopidy
+    restart: unless-stopped
+    depends_on:
+      - snapserver
+    ports:
+      - 6600:6600
+      - 6680:6680
+    volumes:
+      - ./data:/var/lib/mopidy/iris
+      - ./mopidy.conf:/config/mopidy.conf
+      # - HOST_MUSIC_DIRECTORY:/var/lib/mopidy/media
+      - /tmp/snapfifo:/tmp

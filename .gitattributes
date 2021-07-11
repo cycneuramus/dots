@@ -2,5 +2,6 @@
 *secrets* filter=crypt diff=crypt merge=crypt
 accounts.conf filter=crypt diff=crypt merge=crypt
 notify.sh filter=crypt diff=crypt merge=crypt
+mopidy.conf filter=crypt diff=crypt merge=crypt
 rclone.conf filter=crypt diff=crypt merge=crypt
 .env filter=crypt diff=crypt merge=crypt

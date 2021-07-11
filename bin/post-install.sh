@@ -40,6 +40,7 @@ pkg-install() {
 		black 				\
 		borgbackup 			\
 		curl 				\
+		ffmpeg				\
 		flake8 				\
 		git 				\
 		hdparm				\
