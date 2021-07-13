@@ -13,3 +13,7 @@ if [[ $muted ]]; then
 else
 	echo "󰍬"
 fi
+
+if [[ $1 == "toggle" ]]; then
+	polybar-msg hook microphone 1 &>/dev/null
+fi
