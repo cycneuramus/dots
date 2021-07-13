@@ -2,14 +2,14 @@
 
 if [[ $(nmcli radio wifi) == "enabled" ]]; then
 	connection=$(nmcli -t -f name,device,state connection show --order type --active 2>/dev/null | grep -v ":bridge:")
-	vpn=$(echo $connection | grep "Wireguard\|pivpn")
+	vpn=$(echo $connection | grep "Wireguard\|pivpn" >/dev/null)
 
 	if [[ $vpn ]]; then
-		connection=$(echo $connection | head -n 1)
+		connection=$(echo $connection | head -n 1 >/dev/null)
 	fi
 
-	ssid=$(echo $connection | cut -d ":" -f 1)
-	interface=$(echo $connection | cut -d ":" -f 2)
+	ssid=$(echo $connection | cut -d ":" -f 1 >/dev/null)
+	interface=$(echo $connection | cut -d ":" -f 2 >/dev/null)
 
 	signal=$(nmcli -f in-use,signal device wifi | awk '/\*/{print $2}')
 	if [[ -z $signal ]]; then

@@ -24,4 +24,4 @@ export ALBERT_ICONTHEME=Papirus-Dark
 
 export MOZ_USE_XINPUT2=1
 export MOZ_X11_EGL=1
-export MOZ_APP_LAUNCHER=/usr/bin/firejail
+# export MOZ_APP_LAUNCHER=/usr/bin/firejail
