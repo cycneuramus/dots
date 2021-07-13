@@ -5,9 +5,13 @@ termux-wake-lock
 trap 'termux-wake-unlock' err exit
 
 wifi-home-check() {
+	# home=""
+	# wifi_on=""
+	# wifi_info=""
+
 	wifi_info=$(termux-wifi-connectioninfo)
 
-	if [[ $(echo wifi_info | grep COMPLETED) ]]; then
+	if [[ $(echo $wifi_info | grep COMPLETED) ]]; then
 		wifi_on=1
 	else
 		wifi_on=0
