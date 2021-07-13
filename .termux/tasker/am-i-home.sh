@@ -52,7 +52,7 @@ elif [[ "$1" == *loc* ]]; then
 			location_name="not_home"
 		fi
 
-		curl -H "Content-Type: application/json" -X POST -d '{"service": "device_tracker.see", "dev_id": "tasker_anton", "gps": ["$lat","$lon"], "location_name": "$location_home"}' http://192.168.1.94:8123/api/webhook/anton_homeaway
+		curl -H "Content-Type: application/json" -X POST -d "{\"service\": \"device_tracker.see\", \"dev_id\": \"tasker_anton\", \"gps\": [$lat, $lon], \"location_name\": \"$location_name\"}" http://192.168.1.94:8123/api/webhook/anton_homeaway
 	else
 		echo "Kunde inte fastställa plats, avbryter..."
 		termux-notification -c "Kunde inte fastställa plats" --icon location_off
