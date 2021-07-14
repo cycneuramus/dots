@@ -87,7 +87,7 @@ class fzf_select(Command):
             hidden = ('--hidden' if self.fm.settings.show_hidden else '')
             exclude = "--no-ignore-vcs --exclude '.git' --exclude '.firejail' --exclude '*steam' --exclude '.cache' --exclude '*.py[co]' --exclude '__pycache__'"
             only_directories = ('--type directory' if self.quantifier else '')
-            fzf_default_command = '{} --follow {} {} {} --color=always'.format(
+            fzf_default_command = '{} {} {} {} --color=always'.format(
                 fd, hidden, exclude, only_directories
             )
         else:

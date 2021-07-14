@@ -19,6 +19,7 @@ RenderMode=Recolor
 ShellOpenFileInTabs=true
 
 [Main View]
+ShowBottomBar=true
 ShowLeftPanel=false
 SplitterSizes=315,639
 
@@ -30,7 +31,6 @@ SidebarShowText=false
 
 [PageView]
 BackgroundColor=46,52,64
-MouseMode=TextSelect
 UseCustomBackgroundColor=true
 
 [Reviews]
