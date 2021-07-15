@@ -365,8 +365,8 @@ pdoc() {
 	if [[ "$firstline" == %* ]]; then
 		pandoc -f markdown -t beamer "$1" -V theme:metropolis -V lang:sv -V mainfont="Source Sans Pro" -i --pdf-engine=tectonic -o "${1%.*}".pdf
 	else
-		# pandoc $PREAMBLE --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
-		pandoc $HOME/Bokmall.yaml --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
+		pandoc $PREAMBLE --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
+		# pandoc $HOME/Bokmall.yaml --citeproc "$1" -o "${1%.*}".pdf --pdf-engine=tectonic --verbose
 	fi
 }
 

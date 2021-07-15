@@ -146,14 +146,14 @@ power-management() {
 	echo $FUNCNAME
 	echo ""
 
-	if [[ $(command -v acpid) ]]; then
+	if [[ $(command -v acpid) && -f $HOME/.local/bin/handler.sh ]]; then
 		sudo systemctl enable acpid.service
 		sudo systemctl start acpid.service
 		sudo rm /etc/acpi/handler.sh
 		sudo ln -s /home/$USER/.local/bin/handler.sh /etc/acpi/handler.sh
 	fi
 
-	if [[ $(command -v tlp) ]]; then
+	if [[ $(command -v tlp) && -f $HOME/.local/cfg/tlp.conf ]]; then
 		if [[ -f $HOME/.local/cfg/tlp.conf ]]; then
 			sudo rm /etc/tlp.conf 
 			sudo ln -s /home/$USER/.local/cfg/tlp.conf /etc/tlp.conf
@@ -300,9 +300,6 @@ system-services() {
 
 	if [[ $(command -v libinput-gestures) ]]; then
 		sudo gpasswd -a $USER input
-	elif [[ $(command -v gebaar) ]]; then
-		ln -s /home/$USER/.local/cfg/gebaard.toml /home/$USER/.config/gebaar/gebaard.toml
-		sudo usermod -a -G input $USER
 	fi
 
 	if [[ $(command -v clight) ]]; then
@@ -345,7 +342,7 @@ printer-support() {
 		sudo systemctl start cups.service
 	fi
 
-	if [[ $(ls /usr/lib/libnss_mdns*) ]]; then
+	if [[ $(ls /usr/lib/libnss_mdns*) && -f $HOME/.local/cfg/nsswitch.conf ]]; then
 		sudo rm /etc/nsswitch.conf
 		sudo ln -s /home/$USER/.local/cfg/nsswitch.conf /etc/nsswitch.conf
 	fi
@@ -379,7 +376,7 @@ restore-backup() {
 				--include /home/$USER/.zotero								\
 				--include /home/$USER/.crypt								\
 				--include /home/$USER/.local/share/zotero					\
-				--include /home/$USER/.local/share/digikam-db/				\
+				--include /home/$USER/.local/share/digikam-db				\
 				--include /home/$USER/.local/share/scli						\
 				--include /home/$USER/.local/share/signal-cli				
 		fi

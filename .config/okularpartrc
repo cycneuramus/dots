@@ -21,7 +21,7 @@ ShellOpenFileInTabs=true
 [Main View]
 ShowBottomBar=true
 ShowLeftPanel=false
-SplitterSizes=315,639
+SplitterSizes=432,1484
 
 [Nav Panel]
 GroupByAuthor=false
