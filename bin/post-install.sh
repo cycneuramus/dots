@@ -49,6 +49,7 @@ pkg-install() {
 		openjdk-11-jre		\
 		openssh-server		\
 		python3 			\
+		qrencode			\
 		rclone 				\
 		rsync 				\
 		tlp 				\

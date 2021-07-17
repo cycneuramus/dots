@@ -23,5 +23,5 @@ services:
     volumes:
       - ./data:/var/lib/mopidy/iris
       - ./mopidy.conf:/config/mopidy.conf
-      # - HOST_MUSIC_DIRECTORY:/var/lib/mopidy/media
+      - /home/antsva/docker/nextcloud/data/antsva/files/Ljud/Musik:/var/lib/mopidy/media:ro
       - /tmp/snapfifo:/tmp
