@@ -9,7 +9,7 @@ networks:
 
 services:
   db:
-    image: mariadb:latest
+    image: mariadb:10.5
     container_name: nextcloud-db
     volumes:
       - ./db:/var/lib/mysql
